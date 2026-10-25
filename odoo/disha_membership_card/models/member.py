@@ -2,7 +2,8 @@ import base64
 import io
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 from odoo.tools import file_open
 
 _logger = logging.getLogger(__name__)
@@ -18,8 +19,68 @@ def _logo_uri():
         return ""
 
 
+DISHA_TYPE_CODES = ("DISHA-GEN", "DISHA-ASC")
+DISHA_REPORT = "disha_membership_card.action_report_disha_card"
+
+
 class AssociationMember(models.Model):
     _inherit = "association.member"
+
+    def _is_disha(self):
+        self.ensure_one()
+        return self.membership_type_id.code in DISHA_TYPE_CODES
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """DISHA members get their own number series; every other member keeps the stock ASM/ number."""
+        disha_ids = set(self.env["association.membership.type"].sudo().search(
+            [("code", "in", DISHA_TYPE_CODES)]).ids)
+        for vals in vals_list:
+            if vals.get("membership_type_id") in disha_ids and vals.get("member_number", "New") in ("New", False, ""):
+                vals["member_number"] = self.env["ir.sequence"].sudo().next_by_code("disha.association.member") or "New"
+        return super().create(vals_list)
+
+    def action_print_card(self):
+        self.ensure_one()
+        if not self._is_disha():
+            return super().action_print_card()
+        if not self.digital_card_enabled:
+            raise UserError(_("Digital card is not enabled for this membership type."))
+        if self.status not in ("active", "suspended", "expired"):
+            raise UserError(_("A digital card can only be issued once the member has an active membership."))
+        self._ensure_card_token()
+        return self.env.ref(DISHA_REPORT).report_action(self)
+
+    def action_email_card(self):
+        self.ensure_one()
+        if not self._is_disha():
+            return super().action_email_card()
+        if not self.digital_card_enabled:
+            raise UserError(_("Digital card is not enabled for this membership type."))
+        if self.status not in ("active", "suspended", "expired"):
+            raise UserError(_("A digital card can only be issued once the member has an active membership."))
+        if not self.partner_id.email:
+            raise UserError(_("This member's contact has no email address on file."))
+        self._ensure_card_token()
+        report = self.env.ref(DISHA_REPORT)
+        pdf_content, _fmt = report.sudo()._render_qweb_pdf(report, res_ids=[self.id])
+        attachment = self.env["ir.attachment"].create({
+            "name": "DISHA Membership Card - %s.pdf" % (self.member_number or self.name),
+            "type": "binary", "datas": base64.b64encode(pdf_content),
+            "res_model": self._name, "res_id": self.id, "mimetype": "application/pdf",
+        })
+        body_html = _(
+            "<p>Dear %(name)s,</p>"
+            "<p>Welcome to DISHA. Please find attached your Digital Membership Card (%(number)s).</p>"
+            "<p>Scan the QR code on the back of the card to verify its status.</p>"
+        ) % {"name": self.name, "number": self.member_number}
+        self.env["mail.mail"].sudo().create({
+            "subject": _("Your DISHA Digital Membership Card - %s") % self.member_number,
+            "body_html": body_html, "email_to": self.partner_id.email,
+            "attachment_ids": [(6, 0, [attachment.id])], "auto_delete": False,
+        }).send()
+        self.message_post(body=_("Digital membership card emailed to %s.") % self.partner_id.email)
+        return True
 
     def _disha_card_qr_uri(self):
         """QR as an inline data URI. wkhtmltopdf cannot reliably fetch /report/barcode URLs from

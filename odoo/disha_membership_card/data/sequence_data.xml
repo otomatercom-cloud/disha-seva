@@ -1,0 +1,12 @@
+<odoo>
+    <data noupdate="1">
+        <!-- DISHA member numbers: separate from the stock ASM/ sequence, so other organisations in the same DB are unaffected. -->
+        <record id="seq_disha_member" model="ir.sequence">
+            <field name="name">DISHA Member</field>
+            <field name="code">disha.association.member</field>
+            <field name="prefix">DISHA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

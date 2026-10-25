@@ -6,7 +6,7 @@ logo, colours and the 22-field paper **Membership Application Form** (General / 
 - `web`: Next.js 15 site (TypeScript, Tailwind v4). Pages: Home, About (formation, vision/mission, structure, office bearers),
   Indians in KSA, Our Activities, Gallery, Partners, Reports, Contact, **Membership application**, **Support + token tracking**, Privacy, Terms.
 - `odoo/disha_membership`: applications model, workflow (New → Under Review → Contacted → Approved/Rejected), "For office use" fields, secure API.
-- `odoo/disha_membership_card`: on Approve creates the member (type General or Associate), number `DISHA/<year>/#####`, and emails a two-sided PDF ID card with QR verify. Menu *Approved Members*.
+- `odoo/disha_membership_card`: on Approve creates the member (type General or Associate), number `DISHA/<year>/#####`, and emails a two-sided PDF ID card with QR verify. Menu *Approved Members*. Uses its OWN report/paperformat/number series and never edits the stock card, so it can share one database with the IOF card addon (`iof_volunteer_card`) or any other organisation using `association_membership`.
 - `odoo/disha_site_content`: everything on the website is editable in Odoo (menu *DISHA Website*): texts, gallery, reports, lists/cards, logo.
 - `odoo/disha_support_ticket`: support tickets (visa, iqama, passport, labour, medical, legal, emergency) with priority/SLA and a private tracking token.
 - `docs`: API contract, deployment.

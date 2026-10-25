@@ -7,8 +7,7 @@
     "license": "OPL-1",
     "category": "Customizations",
     "depends": ["disha_membership", "association_membership"],
-    "data": ["security/security.xml", "data/membership_type_data.xml", "report/card_templates.xml", "views/registration_views.xml", "views/menu.xml"],
+    "data": ["security/security.xml", "data/membership_type_data.xml", "data/sequence_data.xml", "report/card_templates.xml", "views/registration_views.xml", "views/menu.xml"],
     "external_dependencies": {"python": ["qrcode"]},
-    "post_init_hook": "post_init_hook",
     "installable": True,
 }

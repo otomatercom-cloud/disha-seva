@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- The stock paperformat (86x54 + Landscape) makes wkhtmltopdf swap to a 54x86 portrait page, so the card sits
-         at the top of a tall page. Width 86 x height 54 with Portrait gives the true landscape CR80 page. -->
-    <record id="association_membership.paperformat_membership_card" model="report.paperformat">
+    <!-- DISHA has its OWN paperformat, template and report. It never modifies association_membership's stock card
+         or paperformat, so it can live in the same database as other organisations' card addons (e.g. IOF).
+         Page 86 x 54 with Portrait gives the true landscape CR80 page in wkhtmltopdf. -->
+    <record id="paperformat_disha_card" model="report.paperformat">
+        <field name="name">DISHA Membership Card (ID-1)</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">54</field>
+        <field name="page_width">86</field>
         <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
     </record>
 
-    <!-- Professional two-sided CR80 (86 x 54 mm) card. Replaces the stock card design of association_membership.
-         wkhtmltopdf: NO flex/grid, no table borders; absolute positioning only. -->
-    <template id="report_card_professional" inherit_id="association_membership.report_membership_card_document">
-        <xpath expr="//div[hasclass('ms_card')]" position="replace">
+    <!-- Two-sided CR80 card. wkhtmltopdf: NO flex/grid; absolute positioning only. -->
+    <template id="report_disha_card_document">
             <t t-set="info" t-value="member._disha_card_info()"/>
             <style>html, body {margin:0 !important; padding:0 !important;} .disha_card {page-break-inside: avoid;}</style>
             <div t-attf-style="zoom: #{member._disha_card_zoom()};">
@@ -75,6 +86,30 @@
                 <div style="position:absolute; left:5mm; right:5mm; bottom:1.3mm; font-size:4.6px; color:#44546a; white-space:nowrap; overflow:hidden;" t-esc="member.card_verify_url"/>
             </div>
             </div>
+    </template>
+
+    <template id="report_disha_card">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="member">
+                <t t-call="disha_membership_card.report_disha_card_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_disha_card" model="ir.actions.report">
+        <field name="name">DISHA Membership Card</field>
+        <field name="model">association.member</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">disha_membership_card.report_disha_card</field>
+        <field name="report_file">disha_membership_card.report_disha_card</field>
+        <field name="print_report_name">'DISHA Membership Card - %s' % (object.member_number or '')</field>
+        <field name="paperformat_id" ref="paperformat_disha_card"/>
+    </record>
+
+    <!-- Portal "Download as PDF" for DISHA members must use the DISHA card; everyone else keeps the stock link. -->
+    <template id="portal_disha_card_link" inherit_id="association_membership.portal_my_membership_card">
+        <xpath expr="//a[contains(@t-attf-href, 'report_membership_card')]" position="attributes">
+            <attribute name="t-attf-href">/report/pdf/#{'disha_membership_card.report_disha_card' if member.membership_type_id.code in ('DISHA-GEN', 'DISHA-ASC') else 'association_membership.report_membership_card'}/#{member.id}</attribute>
         </xpath>
     </template>
 </odoo>

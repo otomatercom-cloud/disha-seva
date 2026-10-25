@@ -21,6 +21,10 @@ VALID = {
 }
 
 
+def _report_name(act):
+    return act.get("report_name") or act.get("context", {}).get("report_action", {}).get("report_name")
+
+
 def _jpeg(size=(60, 80)):
     buf = io.BytesIO()
     Image.new("RGB", size, (30, 90, 160)).save(buf, "JPEG")
@@ -47,6 +51,32 @@ class TestMemberCard(TransactionCase):
         self.assertEqual(m.iqama_number, "2412345678")
         self.assertEqual(rec.application_id.membership_type_id.code, "DISHA-GEN")
         self.assertEqual(rec.card_status, "active")
+
+    def test_disha_number_series_and_stock_untouched(self):
+        rec = self._make()
+        rec.action_approve()
+        self.assertTrue(rec.member_id.member_number.startswith("DISHA/"), rec.member_id.member_number)
+        stock = self.env.ref("association_membership.report_membership_card_document")
+        self.assertIn("ms_card", stock.arch_db)  # DISHA never rewrites the shared stock template
+        self.assertFalse(stock.inherit_children_ids.filtered(lambda v: v.key and v.key.startswith("disha_membership_card")
+                                                             and "report_membership_card_document" in (v.inherit_id.key or "")))
+
+    def test_other_orgs_member_keeps_stock_behaviour(self):
+        mtype = self.env["association.membership.type"].create({
+            "name": "Other Org", "code": "OTH", "duration": 1, "duration_unit": "years", "digital_card_enabled": True})
+        app = self.env["association.membership.application"].create({
+            "applicant_name": "Other Person", "mobile": "+966500000009", "email": "other@example.com",
+            "membership_type_id": mtype.id})
+        app.action_submit(); app.action_start_verification(); app.action_approve()
+        member = app.member_id
+        self.assertTrue(member.member_number.startswith("ASM/"), member.member_number)
+        act = member.action_print_card()
+        self.assertEqual(_report_name(act), "association_membership.report_membership_card")
+
+    def test_disha_member_prints_disha_report(self):
+        rec = self._make()
+        rec.action_approve()
+        self.assertEqual(_report_name(rec.member_id.action_print_card()), "disha_membership_card.report_disha_card")
 
     def test_associate_gets_associate_type(self):
         rec = self._make(category="associate")
@@ -79,7 +109,7 @@ class TestMemberCard(TransactionCase):
     def test_pdf_renders(self):
         rec = self._make(photo=_jpeg())
         rec.action_approve()
-        report = self.env.ref("association_membership.action_report_membership_card")
+        report = self.env.ref("disha_membership_card.action_report_disha_card")
         html = report._render_qweb_html(report.report_name, rec.member_id.ids)[0]
         self.assertIn(rec.member_id.member_number.encode(), html)
 
@@ -99,7 +129,7 @@ class TestMemberCard(TransactionCase):
         rec.action_approve()
         self.assertEqual(rec.member_id.nationality_id, self.env.ref("base.in"))
         self.assertTrue(rec.member_id._disha_card_qr_uri().startswith("data:image/png;base64,"))
-        report = self.env.ref("association_membership.action_report_membership_card")
+        report = self.env.ref("disha_membership_card.action_report_disha_card")
         html = report._render_qweb_html(report.report_name, rec.member_id.ids)[0].decode()
         self.assertIn("Dedicated team for Indo Saudi Holistic Alignment", html)
         self.assertIn("data:image/png;base64", html)
