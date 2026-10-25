@@ -9,7 +9,7 @@ export type Slide = { src: string; alt: string };
 const INTERVAL_MS = 5000;
 
 /** Hero photo slideshow: crossfade, pause on hover/focus, manual controls, no autoplay for reduced-motion users. */
-export function HeroSlideshow({ slides }: { slides: Slide[] }) {
+export function HeroSlideshow({ slides, full = false }: { slides: Slide[]; full?: boolean }) {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
@@ -36,7 +36,7 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
   return (
     <div
       role="region" aria-roledescription="carousel" aria-label="Photos from DISHA programmes"
-      className="relative size-full overflow-hidden rounded-[36px] bg-navy-700 shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]"
+      className={full ? "absolute inset-0 overflow-hidden bg-navy-900" : "relative size-full overflow-hidden rounded-[36px] bg-navy-700 shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]"}
       onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}
     >
@@ -44,16 +44,20 @@ export function HeroSlideshow({ slides }: { slides: Slide[] }) {
         <div key={s.src} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${count}`}
           aria-hidden={i !== index}
           className={`absolute inset-0 transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"}`}>
-          <Image src={s.src} alt={s.alt} fill priority={i === 0} sizes="(min-width:1024px) 40vw, 90vw"
+          <Image src={s.src} alt={s.alt} fill priority={i === 0} sizes={full ? "100vw" : "(min-width:1024px) 40vw, 90vw"}
             className={`object-cover ${i === index && playing ? "scale-105 transition-transform duration-[6000ms] ease-out" : "scale-100"}`} />
         </div>
       ))}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-950/85 to-transparent" />
-      <p className="absolute inset-x-5 bottom-14 text-sm font-medium leading-snug text-white drop-shadow" aria-live={playing ? "off" : "polite"}>
+      {full ? (
+        <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy-950/90 via-navy-950/65 to-navy-950/25" />
+      ) : (
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-950/85 to-transparent" />
+      )}
+      <p hidden={full} className="absolute inset-x-5 bottom-14 text-sm font-medium leading-snug text-white drop-shadow" aria-live={playing ? "off" : "polite"}>
         {slides[index]?.alt}
       </p>
       {count > 1 && (
-        <div className="absolute inset-x-4 bottom-3 flex items-center justify-between">
+        <div className={full ? "absolute bottom-6 right-6 z-20 flex items-center gap-4" : "absolute inset-x-4 bottom-3 flex items-center justify-between"}>
           <div className="flex gap-1.5">
             {slides.map((s, i) => (
               <button key={s.src} type="button" onClick={() => go(i)} aria-label={`Show photo ${i + 1}`} aria-current={i === index}

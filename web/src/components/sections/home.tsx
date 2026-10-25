@@ -41,60 +41,40 @@ export async function Hero() {
   const c = await getContent();
   const cards = c.items("hero_cards");
   const slides = c.items("gallery").filter((g) => g.image).slice(0, 6).map((g) => ({ src: g.image, alt: g.title }));
-  const floats = ["anim-float left-0 top-[7%]", "anim-float-2 right-0 top-[42%]", "anim-float-3 -bottom-[5%] left-[6%]"];
   const tones = ["bg-saffron-50 text-saffron-700", "bg-seva-50 text-seva-700", "bg-navy-50 text-navy-900"];
   return (
-    <section className="relative overflow-hidden bg-navy-900 text-white">
-      <DotGrid id="hero-dots" />
-      <div className="relative mx-auto flex max-w-7xl flex-wrap items-center gap-14 px-4 pb-24 pt-16 sm:px-8 lg:pt-24">
-        <div className="min-w-0 flex-[1_1_520px]">
-          <span className="anim-up inline-flex items-center gap-2.5 rounded-full bg-navy-700 px-4 py-2 text-[13px] font-semibold text-slate-200">
+    <section className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-navy-900 text-white">
+      {slides.length > 0 ? <HeroSlideshow slides={slides} full /> : <DotGrid id="hero-dots" />}
+      <div className="pointer-events-none relative z-10 mx-auto w-full max-w-7xl px-4 pb-28 pt-16 sm:px-8">
+        <div className="pointer-events-auto max-w-2xl">
+          <span className="anim-up inline-flex items-center gap-2.5 rounded-full bg-navy-700/80 px-4 py-2 text-[13px] font-semibold text-slate-200 backdrop-blur">
             <span className="size-2 rounded-full bg-green-400" /> {c.t("home.hero.badge")}
           </span>
           <h1 className="anim-up delay-1 mt-6 text-5xl font-extrabold leading-[1.04] tracking-[-0.03em] text-white sm:text-6xl lg:text-[68px]">
-            {c.t("home.hero.title_main")} <span className="text-[#ff9a5c]">{c.t("home.hero.title_accent")}</span>
+            {c.t("home.hero.title_main")} <span className="text-[#ffb27a]">{c.t("home.hero.title_accent")}</span>
           </h1>
-          <p className="anim-up delay-2 mt-6 max-w-[540px] text-lg leading-relaxed text-slate-300 sm:text-xl">
-            {c.t("home.hero.intro")}
-          </p>
+          <p className="anim-up delay-2 mt-6 max-w-[540px] text-lg leading-relaxed text-slate-200 sm:text-xl">{c.t("home.hero.intro")}</p>
           <div className="anim-up delay-3 mt-9 flex flex-wrap gap-3.5">
-            <Link href="/membership" className="btn-lift anim-pulse inline-flex items-center gap-2.5 rounded-full bg-saffron-600 px-8 py-4 text-base font-bold text-white">
+            <Link href="/membership" className="btn-lift inline-flex items-center gap-2.5 rounded-full bg-saffron-600 px-8 py-4 text-base font-bold text-white">
               {c.t("home.hero.cta1")} <ArrowRight className="size-[18px]" aria-hidden />
             </Link>
-            <Link href="/seva-activities" className="btn-lift inline-flex items-center rounded-full bg-white px-8 py-4 text-base font-bold text-navy-900">
-              {c.t("home.hero.cta2")}
-            </Link>
+            <Link href="/seva-activities" className="btn-lift inline-flex items-center rounded-full bg-white px-8 py-4 text-base font-bold text-navy-900">{c.t("home.hero.cta2")}</Link>
           </div>
-          <ul className="anim-up delay-4 mt-11 flex flex-wrap gap-7 text-sm font-medium text-slate-300">
+          <ul className="anim-up delay-4 mt-10 flex flex-wrap gap-x-7 gap-y-2 text-sm font-medium text-slate-200">
             {c.items("hero_checks").map((t) => (
               <li key={t.title} className="flex items-center gap-2"><Check className="size-[18px] text-green-400" aria-hidden />{t.title}</li>
             ))}
           </ul>
         </div>
-
-        <div className="anim-up delay-2 relative h-[540px] min-w-0 max-w-[560px] flex-[1_1_440px]">
-          <svg aria-hidden viewBox="0 0 520 520" className="anim-spin absolute inset-0 size-full">
-            <circle cx="260" cy="260" r="240" fill="none" stroke="#2a5088" strokeWidth="1.5" strokeDasharray="4 10" />
-            <circle cx="260" cy="20" r="9" fill="#ff9a5c" /><circle cx="500" cy="260" r="6" fill="#4ade80" />
-          </svg>
-          <div className="absolute left-[12%] top-[11%] h-[78%] w-[76%]">
-            {slides.length > 0 ? <HeroSlideshow slides={slides} /> : (
-              <div className="size-full overflow-hidden rounded-[36px] bg-navy-700 shadow-[0_40px_80px_-30px_rgba(0,0,0,.6)]">
-            <svg aria-hidden viewBox="0 0 400 420" className="size-full">
-              <path className="anim-draw" d="M-10 330 C80 260 140 360 220 280 S340 200 420 250" fill="none" stroke="#ff9a5c" strokeWidth="3" strokeLinecap="round" />
-              <path className="anim-draw" d="M-10 370 C90 310 150 400 230 330 S350 260 420 300" fill="none" stroke="#4ade80" strokeWidth="3" strokeLinecap="round" opacity=".8" />
-              <circle cx="200" cy="130" r="64" fill="#0c1b5e" /><circle cx="200" cy="130" r="64" fill="none" stroke="#2a5088" strokeWidth="2" />
-              <path d="M200 100 c-14 -20 -42 -8 -36 14 c4 16 24 28 36 40 c12 -12 32 -24 36 -40 c6 -22 -22 -34 -36 -14z" fill="#d24e0a" />
-            </svg>
-              </div>
-            )}
-          </div>
-          {cards.slice(0, 3).map((k, i) => (
-            <FloatCard key={k.title} className={floats[i]} tone={tones[i]} icon={<Icon name={k.icon} className="size-[22px]" />}
-              title={k.title} text={k.text} />
-          ))}
-        </div>
       </div>
+      <ul className="absolute bottom-6 left-4 z-10 hidden gap-3 sm:left-8 lg:flex">
+        {cards.slice(0, 3).map((k, i) => (
+          <li key={k.title} className="flex items-center gap-3 rounded-2xl bg-white/95 px-4 py-3 shadow-xl">
+            <span className={`flex size-10 items-center justify-center rounded-xl ${tones[i]}`}><Icon name={k.icon} className="size-5" /></span>
+            <span className="flex flex-col"><b className="text-sm text-navy-900">{k.title}</b><span className="text-xs text-slate-500">{k.text}</span></span>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
