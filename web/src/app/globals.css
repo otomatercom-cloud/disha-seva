@@ -15,7 +15,9 @@
 
 html { scroll-behavior: smooth; }
 body { @apply bg-white text-slate-700 antialiased; font-family: var(--font-sans); }
-h1, h2, h3, h4 { @apply text-navy-900 font-bold tracking-tight; }
+@layer base {
+  h1, h2, h3, h4 { @apply text-navy-900 font-bold tracking-tight; }
+}
 :focus-visible { outline: 3px solid var(--color-saffron-600); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
