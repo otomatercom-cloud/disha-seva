@@ -1,0 +1,26 @@
+<odoo>
+    <data noupdate="1">
+        <record id="membership_type_general" model="association.membership.type">
+            <field name="name">DISHA General Member</field>
+            <field name="code">DISHA-GEN</field>
+            <field name="description">General membership of DISHA (includes digital ID card).</field>
+            <field name="membership_fee">0</field>
+            <field name="renewal_fee">0</field>
+            <field name="joining_fee">0</field>
+            <field name="duration">2</field>
+            <field name="duration_unit">years</field>
+            <field name="digital_card_enabled" eval="True"/>
+        </record>
+        <record id="membership_type_associate" model="association.membership.type">
+            <field name="name">DISHA Associate Member</field>
+            <field name="code">DISHA-ASC</field>
+            <field name="description">Associate membership of DISHA (includes digital ID card).</field>
+            <field name="membership_fee">0</field>
+            <field name="renewal_fee">0</field>
+            <field name="joining_fee">0</field>
+            <field name="duration">2</field>
+            <field name="duration_unit">years</field>
+            <field name="digital_card_enabled" eval="True"/>
+        </record>
+    </data>
+</odoo>

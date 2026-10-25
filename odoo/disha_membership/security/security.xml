@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_disha_membership" model="res.groups.privilege">
+        <field name="name">DISHA Membership Applications</field>
+        <field name="category_id" ref="base.module_category_customizations"/>
+    </record>
+
+    <record id="group_disha_membership_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_disha_membership"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_disha_membership_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="privilege_disha_membership"/>
+        <field name="implied_ids" eval="[(4, ref('group_disha_membership_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

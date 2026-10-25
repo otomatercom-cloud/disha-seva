@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Volunteer managers issue/print/email ID cards, so they need to read members and the card attachments. -->
+    <record id="disha_membership.group_disha_membership_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('association_membership.group_membership_staff'))]"/>
+    </record>
+</odoo>

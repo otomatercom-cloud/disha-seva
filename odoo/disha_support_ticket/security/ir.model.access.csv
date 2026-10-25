@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_disha_ticket_user,disha.support.ticket user,model_disha_support_ticket,group_disha_support_user,1,1,1,0
+access_disha_ticket_manager,disha.support.ticket manager,model_disha_support_ticket,group_disha_support_manager,1,1,1,1
+access_disha_ticket_msg_user,disha.support.message user,model_disha_support_message,group_disha_support_user,1,1,1,0
+access_disha_ticket_msg_manager,disha.support.message manager,model_disha_support_message,group_disha_support_manager,1,1,1,1

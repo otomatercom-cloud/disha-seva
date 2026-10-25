@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_disha_membership_form_card" model="ir.ui.view">
+        <field name="name">disha.membership.application.form.card</field>
+        <field name="model">disha.membership.application</field>
+        <field name="inherit_id" ref="disha_membership.view_disha_registration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_issue_card" string="Issue ID Card" type="object"
+                        groups="disha_membership.group_disha_membership_manager"
+                        invisible="state != 'approved' or member_id"/>
+                <button name="action_print_card" string="Print ID Card" type="object" class="btn-secondary"
+                        groups="disha_membership.group_disha_membership_manager"
+                        invisible="not member_id"/>
+                <button name="action_email_card" string="Email ID Card" type="object"
+                        groups="disha_membership.group_disha_membership_manager"
+                        invisible="not member_id"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group string="ID Card">
+                    <field name="photo" widget="image" options="{'size': [90, 120]}"/>
+                    <field name="member_id" readonly="1"/>
+                    <field name="member_number"/>
+                    <field name="card_status"/>
+                    <field name="application_id" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

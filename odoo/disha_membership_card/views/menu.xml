@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_registration_list_approved" model="ir.ui.view">
+        <field name="name">disha.membership.application.list.approved</field>
+        <field name="model">disha.membership.application</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="photo" widget="image" options="{'size': [32, 40]}"/>
+                <field name="name"/>
+                <field name="full_name"/>
+                <field name="member_number" string="Member ID"/>
+                <field name="card_status" widget="badge" decoration-success="card_status == 'active'"
+                       decoration-warning="card_status in ('suspended', 'expired')"
+                       decoration-danger="card_status == 'cancelled'"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <field name="category"/>
+                <field name="ksa_city"/>
+                <field name="registration_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_disha_approved_members" model="ir.actions.act_window">
+        <field name="name">Approved Members</field>
+        <field name="res_model">disha.membership.application</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'approved')]</field>
+        <field name="search_view_id" ref="disha_membership.view_disha_registration_search"/>
+        <field name="context">{}</field>
+    </record>
+    <record id="action_disha_approved_members_list" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_disha_approved_members"/>
+        <field name="view_mode">list</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_disha_registration_list_approved"/>
+    </record>
+    <record id="action_disha_approved_members_form" model="ir.actions.act_window.view">
+        <field name="act_window_id" ref="action_disha_approved_members"/>
+        <field name="view_mode">form</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <menuitem id="menu_disha_approved_members" name="Approved Members"
+              parent="disha_membership.menu_disha_root"
+              action="action_disha_approved_members" sequence="20"/>
+</odoo>

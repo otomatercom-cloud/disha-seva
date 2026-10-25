@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_site_text_list" model="ir.ui.view">
+        <field name="name">disha.site.text.list</field>
+        <field name="model">disha.site.text</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" create="0" delete="0" decoration-info="is_changed">
+                <field name="page"/>
+                <field name="label"/>
+                <field name="kind" optional="hide"/>
+                <field name="value" invisible="kind == 'image'"/>
+                <field name="image" widget="image" options="{'size': [40, 40]}" invisible="kind != 'image'"/>
+                <field name="is_changed" optional="hide"/>
+                <field name="key" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_disha_site_text_form" model="ir.ui.view">
+        <field name="name">disha.site.text.form</field>
+        <field name="model">disha.site.text</field>
+        <field name="arch" type="xml">
+            <form create="0" delete="0">
+                <header><button name="action_reset" type="object" string="Reset to default"
+                                invisible="not is_changed"/></header>
+                <sheet>
+                    <group>
+                        <field name="page"/><field name="label"/><field name="key"/><field name="kind" invisible="1"/>
+                        <field name="value" nolabel="0" invisible="kind == 'image'" widget="text"/>
+                        <field name="image" widget="image" invisible="kind != 'image'"/>
+                        <field name="default_value" invisible="kind == 'image'"/>
+                        <field name="is_changed" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_disha_site_text_search" model="ir.ui.view">
+        <field name="name">disha.site.text.search</field>
+        <field name="model">disha.site.text</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="label"/><field name="value"/><field name="key"/>
+                <filter name="changed" string="Changed" domain="[('is_changed','=',True)]"/>
+                <group><filter name="by_page" string="Page" context="{'group_by': 'page'}"/></group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_disha_site_text" model="ir.actions.act_window">
+        <field name="name">Page Texts</field>
+        <field name="res_model">disha.site.text</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_by_page': 1}</field>
+    </record>
+
+    <record id="view_disha_site_item_list" model="ir.ui.view">
+        <field name="name">disha.site.item.list</field>
+        <field name="model">disha.site.item</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="collection"/>
+                <field name="title"/>
+                <field name="text" optional="show"/>
+                <field name="image" widget="image" options="{'size': [40, 40]}" optional="show"/>
+                <field name="published" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_disha_site_item_form" model="ir.ui.view">
+        <field name="name">disha.site.item.form</field>
+        <field name="model">disha.site.item</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="collection"/>
+                            <field name="title"/>
+                            <field name="text"/>
+                            <field name="icon" invisible="collection in ('gallery','services','goals','member_tags','hero_checks','faq','collab_cards','reports','steps','helps')"/>
+                            <field name="sequence"/>
+                            <field name="published"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" options="{'size': [200, 200]}"
+                                   invisible="collection != 'gallery'"/>
+                            <field name="file" filename="file_name" invisible="collection != 'reports'"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_disha_site_item_search" model="ir.ui.view">
+        <field name="name">disha.site.item.search</field>
+        <field name="model">disha.site.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title"/><field name="text"/>
+                <filter name="unpublished" string="Hidden" domain="[('published','=',False)]"/>
+                <group><filter name="by_collection" string="List" context="{'group_by': 'collection'}"/></group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_disha_site_item" model="ir.actions.act_window">
+        <field name="name">Lists &amp; Cards</field>
+        <field name="res_model">disha.site.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_by_collection': 1}</field>
+    </record>
+
+    <record id="action_disha_site_gallery" model="ir.actions.act_window">
+        <field name="name">Photo Gallery</field>
+        <field name="res_model">disha.site.item</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('collection','=','gallery')]</field>
+        <field name="context">{'default_collection': 'gallery'}</field>
+    </record>
+
+    <record id="view_disha_site_gallery_kanban" model="ir.ui.view">
+        <field name="name">disha.site.item.kanban</field>
+        <field name="model">disha.site.item</field>
+        <field name="arch" type="xml">
+            <kanban default_order="sequence">
+                <templates>
+                    <t t-name="card">
+                        <field name="image" widget="image" options="{'size': [240, 160]}"/>
+                        <field name="title" class="fw-bold mt-2"/>
+                        <field name="published" widget="boolean_toggle"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_disha_site_reports" model="ir.actions.act_window">
+        <field name="name">Reports</field>
+        <field name="res_model">disha.site.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('collection','=','reports')]</field>
+        <field name="context">{'default_collection': 'reports'}</field>
+    </record>
+</odoo>

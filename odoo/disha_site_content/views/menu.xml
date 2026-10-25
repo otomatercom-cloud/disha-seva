@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_disha_site_root" name="Website Content" sequence="41"
+              groups="disha_site_content.group_disha_site_editor"/>
+    <menuitem id="menu_disha_site_gallery" name="Photo Gallery" parent="menu_disha_site_root"
+              action="action_disha_site_gallery" sequence="10"/>
+    <menuitem id="menu_disha_site_reports" name="Reports" parent="menu_disha_site_root"
+              action="action_disha_site_reports" sequence="20"/>
+    <menuitem id="menu_disha_site_text" name="Page Texts" parent="menu_disha_site_root"
+              action="action_disha_site_text" sequence="30"/>
+    <menuitem id="menu_disha_site_item" name="Lists &amp; Cards" parent="menu_disha_site_root"
+              action="action_disha_site_item" sequence="40"/>
+</odoo>

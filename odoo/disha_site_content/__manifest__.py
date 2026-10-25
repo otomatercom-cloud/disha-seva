@@ -1,0 +1,19 @@
+{
+    "name": "DISHA Website Content",
+    "version": "19.0.1.0.0",
+    "summary": "Edit every text, list, photo and report of the DISHA Next.js website from Odoo",
+    "author": "Otomater",
+    "website": "https://otomater.com",
+    "license": "OPL-1",
+    "category": "Customizations",
+    "depends": ["base"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/seed.xml",
+        "views/content_views.xml",
+        "views/menu.xml",
+    ],
+    "application": True,
+    "installable": True,
+}

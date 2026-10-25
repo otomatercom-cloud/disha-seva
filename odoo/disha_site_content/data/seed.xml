@@ -1,0 +1,1705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="text_site_name" model="disha.site.text">
+            <field name="key">site.name</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Organisation name</field>
+            <field name="kind">line</field>
+            <field name="value">DISHA</field>
+            <field name="default_value">DISHA</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="text_site_tagline" model="disha.site.text">
+            <field name="key">site.tagline</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Header tagline</field>
+            <field name="kind">line</field>
+            <field name="value">Dedicated team for Indo Saudi Holistic Alignment</field>
+            <field name="default_value">Dedicated team for Indo Saudi Holistic Alignment</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="text_site_logo" model="disha.site.text">
+            <field name="key">site.logo</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Logo (square PNG, transparent)</field>
+            <field name="kind">image</field>
+            <field name="value"></field>
+            <field name="default_value"></field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="text_site_email" model="disha.site.text">
+            <field name="key">site.email</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Contact email</field>
+            <field name="kind">line</field>
+            <field name="value">dishaindians@gmail.com</field>
+            <field name="default_value">dishaindians@gmail.com</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="text_site_address" model="disha.site.text">
+            <field name="key">site.address</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Address</field>
+            <field name="kind">line</field>
+            <field name="value">Kingdom of Saudi Arabia (National Committee)</field>
+            <field name="default_value">Kingdom of Saudi Arabia (National Committee)</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="text_site_hours" model="disha.site.text">
+            <field name="key">site.hours</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Office hours</field>
+            <field name="kind">line</field>
+            <field name="value">Sun – Thu, 9am – 6pm</field>
+            <field name="default_value">Sun – Thu, 9am – 6pm</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="text_site_join" model="disha.site.text">
+            <field name="key">site.join</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Membership button label</field>
+            <field name="kind">line</field>
+            <field name="value">Become a Member</field>
+            <field name="default_value">Become a Member</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="text_seo_title" model="disha.site.text">
+            <field name="key">seo.title</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Browser title (home)</field>
+            <field name="kind">line</field>
+            <field name="value">DISHA | Dedicated team for Indo Saudi Holistic Alignment</field>
+            <field name="default_value">DISHA | Dedicated team for Indo Saudi Holistic Alignment</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="text_seo_description" model="disha.site.text">
+            <field name="key">seo.description</field>
+            <field name="page">Site-wide</field>
+            <field name="label">Search-engine description</field>
+            <field name="kind">text</field>
+            <field name="value">DISHA is a socio-cultural organisation in the Kingdom of Saudi Arabia enhancing holistic alignment between India and Saudi Arabia through culture, yoga, community welfare and service.</field>
+            <field name="default_value">DISHA is a socio-cultural organisation in the Kingdom of Saudi Arabia enhancing holistic alignment between India and Saudi Arabia through culture, yoga, community welfare and service.</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="text_nav_home" model="disha.site.text">
+            <field name="key">nav.home</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Home</field>
+            <field name="kind">line</field>
+            <field name="value">Home</field>
+            <field name="default_value">Home</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="text_nav_about" model="disha.site.text">
+            <field name="key">nav.about</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: About</field>
+            <field name="kind">line</field>
+            <field name="value">About Us</field>
+            <field name="default_value">About Us</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="text_nav_indians" model="disha.site.text">
+            <field name="key">nav.indians</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Indians in KSA</field>
+            <field name="kind">line</field>
+            <field name="value">Indians in KSA</field>
+            <field name="default_value">Indians in KSA</field>
+            <field name="sequence">120</field>
+        </record>
+        <record id="text_nav_seva" model="disha.site.text">
+            <field name="key">nav.seva</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Activities</field>
+            <field name="kind">line</field>
+            <field name="value">Our Activities</field>
+            <field name="default_value">Our Activities</field>
+            <field name="sequence">130</field>
+        </record>
+        <record id="text_nav_gallery" model="disha.site.text">
+            <field name="key">nav.gallery</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Gallery</field>
+            <field name="kind">line</field>
+            <field name="value">Gallery</field>
+            <field name="default_value">Gallery</field>
+            <field name="sequence">140</field>
+        </record>
+        <record id="text_nav_collab" model="disha.site.text">
+            <field name="key">nav.collab</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Collaborations</field>
+            <field name="kind">line</field>
+            <field name="value">Partners</field>
+            <field name="default_value">Partners</field>
+            <field name="sequence">150</field>
+        </record>
+        <record id="text_nav_reports" model="disha.site.text">
+            <field name="key">nav.reports</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Reports</field>
+            <field name="kind">line</field>
+            <field name="value">Reports</field>
+            <field name="default_value">Reports</field>
+            <field name="sequence">160</field>
+        </record>
+        <record id="text_nav_contact" model="disha.site.text">
+            <field name="key">nav.contact</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Contact</field>
+            <field name="kind">line</field>
+            <field name="value">Contact</field>
+            <field name="default_value">Contact</field>
+            <field name="sequence">170</field>
+        </record>
+        <record id="text_nav_support" model="disha.site.text">
+            <field name="key">nav.support</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Menu: Support</field>
+            <field name="kind">line</field>
+            <field name="value">Support</field>
+            <field name="default_value">Support</field>
+            <field name="sequence">180</field>
+        </record>
+        <record id="text_footer_support" model="disha.site.text">
+            <field name="key">footer.support</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer link: Track a request</field>
+            <field name="kind">line</field>
+            <field name="value">Track a Support Request</field>
+            <field name="default_value">Track a Support Request</field>
+            <field name="sequence">190</field>
+        </record>
+        <record id="text_footer_about" model="disha.site.text">
+            <field name="key">footer.about</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer description</field>
+            <field name="kind">text</field>
+            <field name="value">A leading socio-cultural organisation in the Kingdom of Saudi Arabia, working for cultural enrichment and social service.</field>
+            <field name="default_value">A leading socio-cultural organisation in the Kingdom of Saudi Arabia, working for cultural enrichment and social service.</field>
+            <field name="sequence">200</field>
+        </record>
+        <record id="text_footer_explore" model="disha.site.text">
+            <field name="key">footer.explore</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer heading: Explore</field>
+            <field name="kind">line</field>
+            <field name="value">Explore</field>
+            <field name="default_value">Explore</field>
+            <field name="sequence">210</field>
+        </record>
+        <record id="text_footer_join" model="disha.site.text">
+            <field name="key">footer.join</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer link: Membership</field>
+            <field name="kind">line</field>
+            <field name="value">Membership Application</field>
+            <field name="default_value">Membership Application</field>
+            <field name="sequence">220</field>
+        </record>
+        <record id="text_footer_contact" model="disha.site.text">
+            <field name="key">footer.contact</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer heading: Contact</field>
+            <field name="kind">line</field>
+            <field name="value">Contact</field>
+            <field name="default_value">Contact</field>
+            <field name="sequence">230</field>
+        </record>
+        <record id="text_footer_rights" model="disha.site.text">
+            <field name="key">footer.rights</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Copyright line (after year and name)</field>
+            <field name="kind">line</field>
+            <field name="value">All rights reserved.</field>
+            <field name="default_value">All rights reserved.</field>
+            <field name="sequence">240</field>
+        </record>
+        <record id="text_footer_privacy" model="disha.site.text">
+            <field name="key">footer.privacy</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer link: Privacy</field>
+            <field name="kind">line</field>
+            <field name="value">Privacy Policy</field>
+            <field name="default_value">Privacy Policy</field>
+            <field name="sequence">250</field>
+        </record>
+        <record id="text_footer_terms" model="disha.site.text">
+            <field name="key">footer.terms</field>
+            <field name="page">Menu &amp; footer</field>
+            <field name="label">Footer link: Terms</field>
+            <field name="kind">line</field>
+            <field name="value">Terms &amp; Conditions</field>
+            <field name="default_value">Terms &amp; Conditions</field>
+            <field name="sequence">260</field>
+        </record>
+        <record id="text_home_hero_badge" model="disha.site.text">
+            <field name="key">home.hero.badge</field>
+            <field name="page">Home</field>
+            <field name="label">Hero badge</field>
+            <field name="kind">line</field>
+            <field name="value">DISHA · Kingdom of Saudi Arabia</field>
+            <field name="default_value">DISHA · Kingdom of Saudi Arabia</field>
+            <field name="sequence">270</field>
+        </record>
+        <record id="text_home_hero_title_main" model="disha.site.text">
+            <field name="key">home.hero.title_main</field>
+            <field name="page">Home</field>
+            <field name="label">Hero headline (white part)</field>
+            <field name="kind">line</field>
+            <field name="value">Aligning India and Saudi Arabia,</field>
+            <field name="default_value">Aligning India and Saudi Arabia,</field>
+            <field name="sequence">280</field>
+        </record>
+        <record id="text_home_hero_title_accent" model="disha.site.text">
+            <field name="key">home.hero.title_accent</field>
+            <field name="page">Home</field>
+            <field name="label">Hero headline (orange word)</field>
+            <field name="kind">line</field>
+            <field name="value">Holistically.</field>
+            <field name="default_value">Holistically.</field>
+            <field name="sequence">290</field>
+        </record>
+        <record id="text_home_hero_intro" model="disha.site.text">
+            <field name="key">home.hero.intro</field>
+            <field name="page">Home</field>
+            <field name="label">Hero paragraph</field>
+            <field name="kind">text</field>
+            <field name="value">Cultural enrichment combined with social service to create a loving community, through yoga, culture, welfare and volunteering across the Kingdom.</field>
+            <field name="default_value">Cultural enrichment combined with social service to create a loving community, through yoga, culture, welfare and volunteering across the Kingdom.</field>
+            <field name="sequence">300</field>
+        </record>
+        <record id="text_home_hero_cta1" model="disha.site.text">
+            <field name="key">home.hero.cta1</field>
+            <field name="page">Home</field>
+            <field name="label">Hero button 1</field>
+            <field name="kind">line</field>
+            <field name="value">Become a Member</field>
+            <field name="default_value">Become a Member</field>
+            <field name="sequence">310</field>
+        </record>
+        <record id="text_home_hero_cta2" model="disha.site.text">
+            <field name="key">home.hero.cta2</field>
+            <field name="page">Home</field>
+            <field name="label">Hero button 2</field>
+            <field name="kind">line</field>
+            <field name="value">Our Activities</field>
+            <field name="default_value">Our Activities</field>
+            <field name="sequence">320</field>
+        </record>
+        <record id="text_home_intro_image" model="disha.site.text">
+            <field name="key">home.intro.image</field>
+            <field name="page">Home</field>
+            <field name="label">About section photo</field>
+            <field name="kind">image</field>
+            <field name="value"></field>
+            <field name="default_value"></field>
+            <field name="sequence">330</field>
+        </record>
+        <record id="text_home_intro_image_alt" model="disha.site.text">
+            <field name="key">home.intro.image_alt</field>
+            <field name="page">Home</field>
+            <field name="label">About section photo description</field>
+            <field name="kind">line</field>
+            <field name="value">Mass yoga performance at a DISHA Yoga Meet</field>
+            <field name="default_value">Mass yoga performance at a DISHA Yoga Meet</field>
+            <field name="sequence">340</field>
+        </record>
+        <record id="text_home_intro_badge" model="disha.site.text">
+            <field name="key">home.intro.badge</field>
+            <field name="page">Home</field>
+            <field name="label">About section orange badge</field>
+            <field name="kind">line</field>
+            <field name="value">Serving since 2021</field>
+            <field name="default_value">Serving since 2021</field>
+            <field name="sequence">350</field>
+        </record>
+        <record id="text_home_intro_eyebrow" model="disha.site.text">
+            <field name="key">home.intro.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">About eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">About DISHA</field>
+            <field name="default_value">About DISHA</field>
+            <field name="sequence">360</field>
+        </record>
+        <record id="text_home_intro_title" model="disha.site.text">
+            <field name="key">home.intro.title</field>
+            <field name="page">Home</field>
+            <field name="label">About heading</field>
+            <field name="kind">line</field>
+            <field name="value">A socio-cultural family across the Kingdom</field>
+            <field name="default_value">A socio-cultural family across the Kingdom</field>
+            <field name="sequence">370</field>
+        </record>
+        <record id="text_home_intro_body" model="disha.site.text">
+            <field name="key">home.intro.body</field>
+            <field name="page">Home</field>
+            <field name="label">About paragraph</field>
+            <field name="kind">text</field>
+            <field name="value">DISHA was officially inaugurated on 23 June 2021 and works with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and Saudi cultural organisations, besides many community welfare activities for both Indian and Saudi people.</field>
+            <field name="default_value">DISHA was officially inaugurated on 23 June 2021 and works with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and Saudi cultural organisations, besides many community welfare activities for both Indian and Saudi people.</field>
+            <field name="sequence">380</field>
+        </record>
+        <record id="text_home_intro_link" model="disha.site.text">
+            <field name="key">home.intro.link</field>
+            <field name="page">Home</field>
+            <field name="label">About link text</field>
+            <field name="kind">line</field>
+            <field name="value">Learn more about us</field>
+            <field name="default_value">Learn more about us</field>
+            <field name="sequence">390</field>
+        </record>
+        <record id="text_home_pillars_eyebrow" model="disha.site.text">
+            <field name="key">home.pillars.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Pillars eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">What we do</field>
+            <field name="default_value">What we do</field>
+            <field name="sequence">400</field>
+        </record>
+        <record id="text_home_pillars_title" model="disha.site.text">
+            <field name="key">home.pillars.title</field>
+            <field name="page">Home</field>
+            <field name="label">Pillars heading</field>
+            <field name="kind">line</field>
+            <field name="value">Culture, service and community</field>
+            <field name="default_value">Culture, service and community</field>
+            <field name="sequence">410</field>
+        </record>
+        <record id="text_home_impact_eyebrow" model="disha.site.text">
+            <field name="key">home.impact.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Impact eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Our reach</field>
+            <field name="default_value">Our reach</field>
+            <field name="sequence">420</field>
+        </record>
+        <record id="text_home_impact_number" model="disha.site.text">
+            <field name="key">home.impact.number</field>
+            <field name="page">Home</field>
+            <field name="label">Impact big number</field>
+            <field name="kind">line</field>
+            <field name="value">3250</field>
+            <field name="default_value">3250</field>
+            <field name="sequence">430</field>
+        </record>
+        <record id="text_home_impact_suffix" model="disha.site.text">
+            <field name="key">home.impact.suffix</field>
+            <field name="page">Home</field>
+            <field name="label">Impact number suffix</field>
+            <field name="kind">line</field>
+            <field name="value">+</field>
+            <field name="default_value">+</field>
+            <field name="sequence">440</field>
+        </record>
+        <record id="text_home_impact_text" model="disha.site.text">
+            <field name="key">home.impact.text</field>
+            <field name="page">Home</field>
+            <field name="label">Impact sentence</field>
+            <field name="kind">text</field>
+            <field name="value">active volunteers from different parts of India, working through 232 centres across the Kingdom of Saudi Arabia.</field>
+            <field name="default_value">active volunteers from different parts of India, working through 232 centres across the Kingdom of Saudi Arabia.</field>
+            <field name="sequence">450</field>
+        </record>
+        <record id="text_home_moments_eyebrow" model="disha.site.text">
+            <field name="key">home.moments.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Moments eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Our Moments</field>
+            <field name="default_value">Our Moments</field>
+            <field name="sequence">460</field>
+        </record>
+        <record id="text_home_moments_title" model="disha.site.text">
+            <field name="key">home.moments.title</field>
+            <field name="page">Home</field>
+            <field name="label">Moments heading</field>
+            <field name="kind">line</field>
+            <field name="value">Snapshots of community spirit</field>
+            <field name="default_value">Snapshots of community spirit</field>
+            <field name="sequence">470</field>
+        </record>
+        <record id="text_home_moments_intro" model="disha.site.text">
+            <field name="key">home.moments.intro</field>
+            <field name="page">Home</field>
+            <field name="label">Moments sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Yoga meets, cultural programmes and community service across Saudi Arabia.</field>
+            <field name="default_value">Yoga meets, cultural programmes and community service across Saudi Arabia.</field>
+            <field name="sequence">480</field>
+        </record>
+        <record id="text_home_moments_link" model="disha.site.text">
+            <field name="key">home.moments.link</field>
+            <field name="page">Home</field>
+            <field name="label">Moments link text</field>
+            <field name="kind">line</field>
+            <field name="value">View full gallery</field>
+            <field name="default_value">View full gallery</field>
+            <field name="sequence">490</field>
+        </record>
+        <record id="text_home_join_eyebrow" model="disha.site.text">
+            <field name="key">home.join.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Membership eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Membership</field>
+            <field name="default_value">Membership</field>
+            <field name="sequence">500</field>
+        </record>
+        <record id="text_home_join_title" model="disha.site.text">
+            <field name="key">home.join.title</field>
+            <field name="page">Home</field>
+            <field name="label">Membership heading</field>
+            <field name="kind">line</field>
+            <field name="value">Be part of the DISHA family.</field>
+            <field name="default_value">Be part of the DISHA family.</field>
+            <field name="sequence">510</field>
+        </record>
+        <record id="text_home_join_body" model="disha.site.text">
+            <field name="key">home.join.body</field>
+            <field name="page">Home</field>
+            <field name="label">Membership paragraph</field>
+            <field name="kind">text</field>
+            <field name="value">Indian nationals residing in the Kingdom of Saudi Arabia can apply as a General or Associate member. Apply online in a few minutes and receive your digital membership ID card once approved.</field>
+            <field name="default_value">Indian nationals residing in the Kingdom of Saudi Arabia can apply as a General or Associate member. Apply online in a few minutes and receive your digital membership ID card once approved.</field>
+            <field name="sequence">520</field>
+        </record>
+        <record id="text_home_join_note" model="disha.site.text">
+            <field name="key">home.join.note</field>
+            <field name="page">Home</field>
+            <field name="label">Membership small note</field>
+            <field name="kind">line</field>
+            <field name="value">General &amp; Associate membership · Digital ID card</field>
+            <field name="default_value">General &amp; Associate membership · Digital ID card</field>
+            <field name="sequence">530</field>
+        </record>
+        <record id="text_home_collab_eyebrow" model="disha.site.text">
+            <field name="key">home.collab.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Partners eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Partners</field>
+            <field name="default_value">Partners</field>
+            <field name="sequence">540</field>
+        </record>
+        <record id="text_home_collab_title" model="disha.site.text">
+            <field name="key">home.collab.title</field>
+            <field name="page">Home</field>
+            <field name="label">Partners heading</field>
+            <field name="kind">line</field>
+            <field name="value">Working together with embassies and institutions</field>
+            <field name="default_value">Working together with embassies and institutions</field>
+            <field name="sequence">550</field>
+        </record>
+        <record id="text_home_collab_body" model="disha.site.text">
+            <field name="key">home.collab.body</field>
+            <field name="page">Home</field>
+            <field name="label">Partners paragraph</field>
+            <field name="kind">text</field>
+            <field name="value">DISHA collaborates with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and community partners to deliver cultural and welfare programmes.</field>
+            <field name="default_value">DISHA collaborates with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and community partners to deliver cultural and welfare programmes.</field>
+            <field name="sequence">560</field>
+        </record>
+        <record id="text_home_collab_cta" model="disha.site.text">
+            <field name="key">home.collab.cta</field>
+            <field name="page">Home</field>
+            <field name="label">Partners button</field>
+            <field name="kind">line</field>
+            <field name="value">Partnership enquiries</field>
+            <field name="default_value">Partnership enquiries</field>
+            <field name="sequence">570</field>
+        </record>
+        <record id="text_home_reports_eyebrow" model="disha.site.text">
+            <field name="key">home.reports.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Reports eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Programmes and highlights</field>
+            <field name="default_value">Programmes and highlights</field>
+            <field name="sequence">580</field>
+        </record>
+        <record id="text_home_contact_title" model="disha.site.text">
+            <field name="key">home.contact.title</field>
+            <field name="page">Home</field>
+            <field name="label">Contact strip heading</field>
+            <field name="kind">line</field>
+            <field name="value">Get in touch</field>
+            <field name="default_value">Get in touch</field>
+            <field name="sequence">590</field>
+        </record>
+        <record id="text_about_title" model="disha.site.text">
+            <field name="key">about.title</field>
+            <field name="page">About</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">About DISHA</field>
+            <field name="default_value">About DISHA</field>
+            <field name="sequence">600</field>
+        </record>
+        <record id="text_about_intro" model="disha.site.text">
+            <field name="key">about.intro</field>
+            <field name="page">About</field>
+            <field name="label">Page intro</field>
+            <field name="kind">text</field>
+            <field name="value">Dedicated team for Indo Saudi Holistic Alignment: a leading socio-cultural organisation in the Kingdom of Saudi Arabia.</field>
+            <field name="default_value">Dedicated team for Indo Saudi Holistic Alignment: a leading socio-cultural organisation in the Kingdom of Saudi Arabia.</field>
+            <field name="sequence">610</field>
+        </record>
+        <record id="text_about_formation_title" model="disha.site.text">
+            <field name="key">about.formation.title</field>
+            <field name="page">About</field>
+            <field name="label">Formation heading</field>
+            <field name="kind">line</field>
+            <field name="value">Our formation</field>
+            <field name="default_value">Our formation</field>
+            <field name="sequence">620</field>
+        </record>
+        <record id="text_about_formation_text" model="disha.site.text">
+            <field name="key">about.formation.text</field>
+            <field name="page">About</field>
+            <field name="label">Formation text</field>
+            <field name="kind">text</field>
+            <field name="value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
+            <field name="default_value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
+            <field name="sequence">630</field>
+        </record>
+        <record id="text_about_vision_title" model="disha.site.text">
+            <field name="key">about.vision.title</field>
+            <field name="page">About</field>
+            <field name="label">Vision heading</field>
+            <field name="kind">line</field>
+            <field name="value">Our vision</field>
+            <field name="default_value">Our vision</field>
+            <field name="sequence">640</field>
+        </record>
+        <record id="text_about_vision_text" model="disha.site.text">
+            <field name="key">about.vision.text</field>
+            <field name="page">About</field>
+            <field name="label">Vision text</field>
+            <field name="kind">text</field>
+            <field name="value">Be part of cultural enrichment combined with social service to create a loving community.</field>
+            <field name="default_value">Be part of cultural enrichment combined with social service to create a loving community.</field>
+            <field name="sequence">650</field>
+        </record>
+        <record id="text_about_mission_title" model="disha.site.text">
+            <field name="key">about.mission.title</field>
+            <field name="page">About</field>
+            <field name="label">Mission heading</field>
+            <field name="kind">line</field>
+            <field name="value">Our mission</field>
+            <field name="default_value">Our mission</field>
+            <field name="sequence">660</field>
+        </record>
+        <record id="text_about_mission_text" model="disha.site.text">
+            <field name="key">about.mission.text</field>
+            <field name="page">About</field>
+            <field name="label">Mission text</field>
+            <field name="kind">text</field>
+            <field name="value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
+            <field name="default_value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
+            <field name="sequence">670</field>
+        </record>
+        <record id="text_about_goals_title" model="disha.site.text">
+            <field name="key">about.goals.title</field>
+            <field name="page">About</field>
+            <field name="label">Goals heading</field>
+            <field name="kind">line</field>
+            <field name="value">What we focus on</field>
+            <field name="default_value">What we focus on</field>
+            <field name="sequence">680</field>
+        </record>
+        <record id="text_about_forums_title" model="disha.site.text">
+            <field name="key">about.forums.title</field>
+            <field name="page">About</field>
+            <field name="label">Structure heading</field>
+            <field name="kind">line</field>
+            <field name="value">Our structure</field>
+            <field name="default_value">Our structure</field>
+            <field name="sequence">690</field>
+        </record>
+        <record id="text_about_forums_intro" model="disha.site.text">
+            <field name="key">about.forums.intro</field>
+            <field name="page">About</field>
+            <field name="label">Structure sentence</field>
+            <field name="kind">line</field>
+            <field name="value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
+            <field name="default_value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
+            <field name="sequence">700</field>
+        </record>
+        <record id="text_about_team_title" model="disha.site.text">
+            <field name="key">about.team.title</field>
+            <field name="page">About</field>
+            <field name="label">Office bearers heading</field>
+            <field name="kind">line</field>
+            <field name="value">Key office bearers</field>
+            <field name="default_value">Key office bearers</field>
+            <field name="sequence">710</field>
+        </record>
+        <record id="text_about_team_intro" model="disha.site.text">
+            <field name="key">about.team.intro</field>
+            <field name="page">About</field>
+            <field name="label">Office bearers sentence</field>
+            <field name="kind">line</field>
+            <field name="value">The National Committee and advisors guiding DISHA.</field>
+            <field name="default_value">The National Committee and advisors guiding DISHA.</field>
+            <field name="sequence">720</field>
+        </record>
+        <record id="text_about_support_title" model="disha.site.text">
+            <field name="key">about.support.title</field>
+            <field name="page">About</field>
+            <field name="label">Community support heading</field>
+            <field name="kind">line</field>
+            <field name="value">What our members do</field>
+            <field name="default_value">What our members do</field>
+            <field name="sequence">730</field>
+        </record>
+        <record id="text_indians_title" model="disha.site.text">
+            <field name="key">indians.title</field>
+            <field name="page">Indians in KSA</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Indians in KSA</field>
+            <field name="default_value">Indians in KSA</field>
+            <field name="sequence">740</field>
+        </record>
+        <record id="text_indians_intro" model="disha.site.text">
+            <field name="key">indians.intro</field>
+            <field name="page">Indians in KSA</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">Information and support for Indian residents across Saudi Arabia.</field>
+            <field name="default_value">Information and support for Indian residents across Saudi Arabia.</field>
+            <field name="sequence">750</field>
+        </record>
+        <record id="text_indians_helps_title" model="disha.site.text">
+            <field name="key">indians.helps.title</field>
+            <field name="page">Indians in KSA</field>
+            <field name="label">How DISHA helps heading</field>
+            <field name="kind">line</field>
+            <field name="value">How DISHA helps</field>
+            <field name="default_value">How DISHA helps</field>
+            <field name="sequence">760</field>
+        </record>
+        <record id="text_indians_faq_title" model="disha.site.text">
+            <field name="key">indians.faq.title</field>
+            <field name="page">Indians in KSA</field>
+            <field name="label">FAQ heading</field>
+            <field name="kind">line</field>
+            <field name="value">Frequently asked questions</field>
+            <field name="default_value">Frequently asked questions</field>
+            <field name="sequence">770</field>
+        </record>
+        <record id="text_indians_faq_note" model="disha.site.text">
+            <field name="key">indians.faq.note</field>
+            <field name="page">Indians in KSA</field>
+            <field name="label">FAQ disclaimer</field>
+            <field name="kind">text</field>
+            <field name="value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
+            <field name="default_value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
+            <field name="sequence">780</field>
+        </record>
+        <record id="text_seva_title" model="disha.site.text">
+            <field name="key">seva.title</field>
+            <field name="page">Activities</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Our Activities</field>
+            <field name="default_value">Our Activities</field>
+            <field name="sequence">790</field>
+        </record>
+        <record id="text_seva_intro" model="disha.site.text">
+            <field name="key">seva.intro</field>
+            <field name="page">Activities</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
+            <field name="default_value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
+            <field name="sequence">800</field>
+        </record>
+        <record id="text_seva_gallery_title" model="disha.site.text">
+            <field name="key">seva.gallery.title</field>
+            <field name="page">Activities</field>
+            <field name="label">Gallery section heading</field>
+            <field name="kind">line</field>
+            <field name="value">Gallery</field>
+            <field name="default_value">Gallery</field>
+            <field name="sequence">810</field>
+        </record>
+        <record id="text_seva_gallery_intro" model="disha.site.text">
+            <field name="key">seva.gallery.intro</field>
+            <field name="page">Activities</field>
+            <field name="label">Gallery section sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Snapshots of DISHA programmes across the Kingdom.</field>
+            <field name="default_value">Snapshots of DISHA programmes across the Kingdom.</field>
+            <field name="sequence">820</field>
+        </record>
+        <record id="text_seva_gallery_link" model="disha.site.text">
+            <field name="key">seva.gallery.link</field>
+            <field name="page">Activities</field>
+            <field name="label">Gallery link text</field>
+            <field name="kind">line</field>
+            <field name="value">View full gallery</field>
+            <field name="default_value">View full gallery</field>
+            <field name="sequence">830</field>
+        </record>
+        <record id="text_gallery_title" model="disha.site.text">
+            <field name="key">gallery.title</field>
+            <field name="page">Gallery</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Photo Gallery</field>
+            <field name="default_value">Photo Gallery</field>
+            <field name="sequence">840</field>
+        </record>
+        <record id="text_gallery_intro" model="disha.site.text">
+            <field name="key">gallery.intro</field>
+            <field name="page">Gallery</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
+            <field name="default_value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
+            <field name="sequence">850</field>
+        </record>
+        <record id="text_gallery_cta" model="disha.site.text">
+            <field name="key">gallery.cta</field>
+            <field name="page">Gallery</field>
+            <field name="label">Call-to-action sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Be part of the next moment.</field>
+            <field name="default_value">Be part of the next moment.</field>
+            <field name="sequence">860</field>
+        </record>
+        <record id="text_collab_title" model="disha.site.text">
+            <field name="key">collab.title</field>
+            <field name="page">Partners</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Partners &amp; Collaborations</field>
+            <field name="default_value">Partners &amp; Collaborations</field>
+            <field name="sequence">870</field>
+        </record>
+        <record id="text_collab_intro" model="disha.site.text">
+            <field name="key">collab.intro</field>
+            <field name="page">Partners</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">DISHA works with embassies, cultural bodies and community organisations.</field>
+            <field name="default_value">DISHA works with embassies, cultural bodies and community organisations.</field>
+            <field name="sequence">880</field>
+        </record>
+        <record id="text_collab_enquiry_title" model="disha.site.text">
+            <field name="key">collab.enquiry.title</field>
+            <field name="page">Partners</field>
+            <field name="label">Enquiry heading</field>
+            <field name="kind">line</field>
+            <field name="value">Partnership enquiries</field>
+            <field name="default_value">Partnership enquiries</field>
+            <field name="sequence">890</field>
+        </record>
+        <record id="text_collab_enquiry_text" model="disha.site.text">
+            <field name="key">collab.enquiry.text</field>
+            <field name="page">Partners</field>
+            <field name="label">Enquiry sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Tell us about your organisation and how you would like to collaborate.</field>
+            <field name="default_value">Tell us about your organisation and how you would like to collaborate.</field>
+            <field name="sequence">900</field>
+        </record>
+        <record id="text_collab_enquiry_button" model="disha.site.text">
+            <field name="key">collab.enquiry.button</field>
+            <field name="page">Partners</field>
+            <field name="label">Enquiry button (before email)</field>
+            <field name="kind">line</field>
+            <field name="value">Email</field>
+            <field name="default_value">Email</field>
+            <field name="sequence">910</field>
+        </record>
+        <record id="text_reports_title" model="disha.site.text">
+            <field name="key">reports.title</field>
+            <field name="page">Reports</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Programmes &amp; Reports</field>
+            <field name="default_value">Programmes &amp; Reports</field>
+            <field name="sequence">920</field>
+        </record>
+        <record id="text_reports_intro" model="disha.site.text">
+            <field name="key">reports.intro</field>
+            <field name="page">Reports</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">A look at what DISHA volunteers and supporters have achieved together.</field>
+            <field name="default_value">A look at what DISHA volunteers and supporters have achieved together.</field>
+            <field name="sequence">930</field>
+        </record>
+        <record id="text_reports_download" model="disha.site.text">
+            <field name="key">reports.download</field>
+            <field name="page">Reports</field>
+            <field name="label">Download link label</field>
+            <field name="kind">line</field>
+            <field name="value">Download report</field>
+            <field name="default_value">Download report</field>
+            <field name="sequence">940</field>
+        </record>
+        <record id="text_contact_title" model="disha.site.text">
+            <field name="key">contact.title</field>
+            <field name="page">Contact</field>
+            <field name="label">Page heading</field>
+            <field name="kind">line</field>
+            <field name="value">Contact Us</field>
+            <field name="default_value">Contact Us</field>
+            <field name="sequence">950</field>
+        </record>
+        <record id="text_contact_intro" model="disha.site.text">
+            <field name="key">contact.intro</field>
+            <field name="page">Contact</field>
+            <field name="label">Page intro</field>
+            <field name="kind">line</field>
+            <field name="value">We'd love to hear from you.</field>
+            <field name="default_value">We'd love to hear from you.</field>
+            <field name="sequence">960</field>
+        </record>
+        <record id="text_contact_email_label" model="disha.site.text">
+            <field name="key">contact.email_label</field>
+            <field name="page">Contact</field>
+            <field name="label">Card title: Email</field>
+            <field name="kind">line</field>
+            <field name="value">Email</field>
+            <field name="default_value">Email</field>
+            <field name="sequence">970</field>
+        </record>
+        <record id="text_contact_address_label" model="disha.site.text">
+            <field name="key">contact.address_label</field>
+            <field name="page">Contact</field>
+            <field name="label">Card title: Address</field>
+            <field name="kind">line</field>
+            <field name="value">Address</field>
+            <field name="default_value">Address</field>
+            <field name="sequence">980</field>
+        </record>
+        <record id="text_contact_hours_label" model="disha.site.text">
+            <field name="key">contact.hours_label</field>
+            <field name="page">Contact</field>
+            <field name="label">Card title: Office hours</field>
+            <field name="kind">line</field>
+            <field name="value">Office hours</field>
+            <field name="default_value">Office hours</field>
+            <field name="sequence">990</field>
+        </record>
+        <record id="text_contact_cta" model="disha.site.text">
+            <field name="key">contact.cta</field>
+            <field name="page">Contact</field>
+            <field name="label">Call-to-action sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
+            <field name="default_value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
+            <field name="sequence">1000</field>
+        </record>
+        <record id="text_join_eyebrow" model="disha.site.text">
+            <field name="key">join.eyebrow</field>
+            <field name="page">Membership page</field>
+            <field name="label">Eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Membership Application</field>
+            <field name="default_value">Membership Application</field>
+            <field name="sequence">1010</field>
+        </record>
+        <record id="text_join_title" model="disha.site.text">
+            <field name="key">join.title</field>
+            <field name="page">Membership page</field>
+            <field name="label">Heading</field>
+            <field name="kind">line</field>
+            <field name="value">Apply for DISHA membership</field>
+            <field name="default_value">Apply for DISHA membership</field>
+            <field name="sequence">1020</field>
+        </record>
+        <record id="text_join_intro" model="disha.site.text">
+            <field name="key">join.intro</field>
+            <field name="page">Membership page</field>
+            <field name="label">Intro</field>
+            <field name="kind">text</field>
+            <field name="value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
+            <field name="default_value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
+            <field name="sequence">1030</field>
+        </record>
+        <record id="text_join_time" model="disha.site.text">
+            <field name="key">join.time</field>
+            <field name="page">Membership page</field>
+            <field name="label">Progress label left</field>
+            <field name="kind">line</field>
+            <field name="value">About 5 minutes</field>
+            <field name="default_value">About 5 minutes</field>
+            <field name="sequence">1040</field>
+        </record>
+        <record id="text_join_sections" model="disha.site.text">
+            <field name="key">join.sections</field>
+            <field name="page">Membership page</field>
+            <field name="label">Progress label right</field>
+            <field name="kind">line</field>
+            <field name="value">4 short sections</field>
+            <field name="default_value">4 short sections</field>
+            <field name="sequence">1050</field>
+        </record>
+        <record id="text_join_next_title" model="disha.site.text">
+            <field name="key">join.next.title</field>
+            <field name="page">Membership page</field>
+            <field name="label">Side card heading</field>
+            <field name="kind">line</field>
+            <field name="value">What happens next</field>
+            <field name="default_value">What happens next</field>
+            <field name="sequence">1060</field>
+        </record>
+        <record id="text_join_help_title" model="disha.site.text">
+            <field name="key">join.help.title</field>
+            <field name="page">Membership page</field>
+            <field name="label">Questions card heading</field>
+            <field name="kind">line</field>
+            <field name="value">Questions?</field>
+            <field name="default_value">Questions?</field>
+            <field name="sequence">1070</field>
+        </record>
+        <record id="text_join_help_text" model="disha.site.text">
+            <field name="key">join.help.text</field>
+            <field name="page">Membership page</field>
+            <field name="label">Questions card text</field>
+            <field name="kind">text</field>
+            <field name="value">Write to us and we will help you choose between General and Associate membership.</field>
+            <field name="default_value">Write to us and we will help you choose between General and Associate membership.</field>
+            <field name="sequence">1080</field>
+        </record>
+        <record id="text_support_eyebrow" model="disha.site.text">
+            <field name="key">support.eyebrow</field>
+            <field name="page">Support</field>
+            <field name="label">Request page: eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">DISHA Support</field>
+            <field name="default_value">DISHA Support</field>
+            <field name="sequence">1090</field>
+        </record>
+        <record id="text_support_title" model="disha.site.text">
+            <field name="key">support.title</field>
+            <field name="page">Support</field>
+            <field name="label">Request page: heading</field>
+            <field name="kind">line</field>
+            <field name="value">Get help with visa, iqama and other issues</field>
+            <field name="default_value">Get help with visa, iqama and other issues</field>
+            <field name="sequence">1100</field>
+        </record>
+        <record id="text_support_intro" model="disha.site.text">
+            <field name="key">support.intro</field>
+            <field name="page">Support</field>
+            <field name="label">Request page: intro</field>
+            <field name="kind">text</field>
+            <field name="value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
+            <field name="default_value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
+            <field name="sequence">1110</field>
+        </record>
+        <record id="text_support_next_title" model="disha.site.text">
+            <field name="key">support.next.title</field>
+            <field name="page">Support</field>
+            <field name="label">Side card heading</field>
+            <field name="kind">line</field>
+            <field name="value">How it works</field>
+            <field name="default_value">How it works</field>
+            <field name="sequence">1120</field>
+        </record>
+        <record id="text_support_track_title" model="disha.site.text">
+            <field name="key">support.track.title</field>
+            <field name="page">Support</field>
+            <field name="label">Track card heading</field>
+            <field name="kind">line</field>
+            <field name="value">Already have a token?</field>
+            <field name="default_value">Already have a token?</field>
+            <field name="sequence">1130</field>
+        </record>
+        <record id="text_support_track_text" model="disha.site.text">
+            <field name="key">support.track.text</field>
+            <field name="page">Support</field>
+            <field name="label">Track card text</field>
+            <field name="kind">text</field>
+            <field name="value">Check the status of your request and read replies from our team.</field>
+            <field name="default_value">Check the status of your request and read replies from our team.</field>
+            <field name="sequence">1140</field>
+        </record>
+        <record id="text_support_track_button" model="disha.site.text">
+            <field name="key">support.track.button</field>
+            <field name="page">Support</field>
+            <field name="label">Track card button</field>
+            <field name="kind">line</field>
+            <field name="value">Track my request</field>
+            <field name="default_value">Track my request</field>
+            <field name="sequence">1150</field>
+        </record>
+        <record id="text_track_title" model="disha.site.text">
+            <field name="key">track.title</field>
+            <field name="page">Support</field>
+            <field name="label">Track page: heading</field>
+            <field name="kind">line</field>
+            <field name="value">Track your support request</field>
+            <field name="default_value">Track your support request</field>
+            <field name="sequence">1160</field>
+        </record>
+        <record id="text_track_intro" model="disha.site.text">
+            <field name="key">track.intro</field>
+            <field name="page">Support</field>
+            <field name="label">Track page: intro</field>
+            <field name="kind">text</field>
+            <field name="value">Enter the token you received when you submitted your request.</field>
+            <field name="default_value">Enter the token you received when you submitted your request.</field>
+            <field name="sequence">1170</field>
+        </record>
+        <record id="text_track_new" model="disha.site.text">
+            <field name="key">track.new</field>
+            <field name="page">Support</field>
+            <field name="label">Track page: new request link</field>
+            <field name="kind">line</field>
+            <field name="value">Need to raise a new request?</field>
+            <field name="default_value">Need to raise a new request?</field>
+            <field name="sequence">1180</field>
+        </record>
+        <record id="text_privacy_title" model="disha.site.text">
+            <field name="key">privacy.title</field>
+            <field name="page">Legal</field>
+            <field name="label">Privacy: heading</field>
+            <field name="kind">line</field>
+            <field name="value">Privacy Policy</field>
+            <field name="default_value">Privacy Policy</field>
+            <field name="sequence">1190</field>
+        </record>
+        <record id="text_privacy_intro" model="disha.site.text">
+            <field name="key">privacy.intro</field>
+            <field name="page">Legal</field>
+            <field name="label">Privacy: intro</field>
+            <field name="kind">line</field>
+            <field name="value">How DISHA handles membership and support information.</field>
+            <field name="default_value">How DISHA handles membership and support information.</field>
+            <field name="sequence">1200</field>
+        </record>
+        <record id="text_privacy_body" model="disha.site.text">
+            <field name="key">privacy.body</field>
+            <field name="page">Legal</field>
+            <field name="label">Privacy: body (## = heading, - = bullet, {email} = contact email)</field>
+            <field name="kind">long</field>
+            <field name="value">This policy explains what personal information DISHA collects when you apply for membership or raise a support request, why we collect it and how it is protected.
+
+## Information we collect
+Through the membership application form we collect the details on DISHA's paper application: your name, gender, date of birth, nationality, contact numbers and email, blood group (optional), education and occupation, your city and region in Saudi Arabia, your Iqama and passport numbers, your permanent address in India, two emergency contacts, an optional passport-size photograph, and your declaration of consent. We ask only for what membership administration needs.
+
+## How we use it
+- To review your application, create your membership record and issue your digital ID card.
+- To contact you about DISHA activities, programmes and official communication.
+- To contact your emergency contacts if needed during activities.
+
+## Sensitive identity details
+Iqama and passport numbers are visible only to DISHA managers authorised to approve memberships. They are never shown on your ID card or in the card's QR code, which confirms membership status only.
+
+## Storage and access
+Applications are stored in DISHA's secure membership system and are accessible only to authorised DISHA office bearers and staff. Data is sent over encrypted connections. We do not sell your information.
+
+## Sharing
+We do not share your personal information with third parties except where required by law.
+
+## Your choices
+You may ask to see, correct or delete your information, or withdraw your consent to be contacted, by emailing {email} and quoting your application number.
+
+## Contact
+Questions about this policy: {email}.</field>
+            <field name="default_value">This policy explains what personal information DISHA collects when you apply for membership or raise a support request, why we collect it and how it is protected.
+
+## Information we collect
+Through the membership application form we collect the details on DISHA's paper application: your name, gender, date of birth, nationality, contact numbers and email, blood group (optional), education and occupation, your city and region in Saudi Arabia, your Iqama and passport numbers, your permanent address in India, two emergency contacts, an optional passport-size photograph, and your declaration of consent. We ask only for what membership administration needs.
+
+## How we use it
+- To review your application, create your membership record and issue your digital ID card.
+- To contact you about DISHA activities, programmes and official communication.
+- To contact your emergency contacts if needed during activities.
+
+## Sensitive identity details
+Iqama and passport numbers are visible only to DISHA managers authorised to approve memberships. They are never shown on your ID card or in the card's QR code, which confirms membership status only.
+
+## Storage and access
+Applications are stored in DISHA's secure membership system and are accessible only to authorised DISHA office bearers and staff. Data is sent over encrypted connections. We do not sell your information.
+
+## Sharing
+We do not share your personal information with third parties except where required by law.
+
+## Your choices
+You may ask to see, correct or delete your information, or withdraw your consent to be contacted, by emailing {email} and quoting your application number.
+
+## Contact
+Questions about this policy: {email}.</field>
+            <field name="sequence">1210</field>
+        </record>
+        <record id="text_terms_title" model="disha.site.text">
+            <field name="key">terms.title</field>
+            <field name="page">Legal</field>
+            <field name="label">Terms: heading</field>
+            <field name="kind">line</field>
+            <field name="value">Terms &amp; Conditions</field>
+            <field name="default_value">Terms &amp; Conditions</field>
+            <field name="sequence">1220</field>
+        </record>
+        <record id="text_terms_intro" model="disha.site.text">
+            <field name="key">terms.intro</field>
+            <field name="page">Legal</field>
+            <field name="label">Terms: intro</field>
+            <field name="kind">line</field>
+            <field name="value">Terms for using this website and applying for membership.</field>
+            <field name="default_value">Terms for using this website and applying for membership.</field>
+            <field name="sequence">1230</field>
+        </record>
+        <record id="text_terms_body" model="disha.site.text">
+            <field name="key">terms.body</field>
+            <field name="page">Legal</field>
+            <field name="label">Terms: body (## = heading, - = bullet, {email} = contact email)</field>
+            <field name="kind">long</field>
+            <field name="value">## Use of this website
+This website is provided by DISHA (Dedicated team for Indo Saudi Holistic Alignment) to share information about our activities and to receive membership applications and support requests. Please use it lawfully and do not attempt to disrupt or misuse it.
+
+## Membership application
+By applying you confirm that the information you provide is true and correct, and that you agree to abide by the constitution, rules, code of conduct and decisions of the organisation. Submitting an application does not guarantee membership; DISHA may review, approve or decline applications.
+
+## Accuracy of information
+General guidance on this site (for example on passports or Iqama services) is not official advice. Always confirm requirements with the relevant embassy or authority.
+
+## Changes
+We may update these terms from time to time. Continued use of the site means you accept the updated terms.
+
+## Contact
+Questions: {email}.</field>
+            <field name="default_value">## Use of this website
+This website is provided by DISHA (Dedicated team for Indo Saudi Holistic Alignment) to share information about our activities and to receive membership applications and support requests. Please use it lawfully and do not attempt to disrupt or misuse it.
+
+## Membership application
+By applying you confirm that the information you provide is true and correct, and that you agree to abide by the constitution, rules, code of conduct and decisions of the organisation. Submitting an application does not guarantee membership; DISHA may review, approve or decline applications.
+
+## Accuracy of information
+General guidance on this site (for example on passports or Iqama services) is not official advice. Always confirm requirements with the relevant embassy or authority.
+
+## Changes
+We may update these terms from time to time. Continued use of the site means you accept the updated terms.
+
+## Contact
+Questions: {email}.</field>
+            <field name="sequence">1240</field>
+        </record>
+        <record id="item_hero_checks_1" model="disha.site.item">
+            <field name="collection">hero_checks</field>
+            <field name="title">Yoga Meets and cultural exchange</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_hero_checks_2" model="disha.site.item">
+            <field name="collection">hero_checks</field>
+            <field name="title">Blood donation and welfare camps</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_hero_checks_3" model="disha.site.item">
+            <field name="collection">hero_checks</field>
+            <field name="title">Legal awareness for expats</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_hero_cards_1" model="disha.site.item">
+            <field name="collection">hero_cards</field>
+            <field name="title">Yoga Meet 2023</field>
+            <field name="text">2,780 joined in Riyadh alone</field>
+            <field name="icon">flower</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_hero_cards_2" model="disha.site.item">
+            <field name="collection">hero_cards</field>
+            <field name="title">Blood Donation</field>
+            <field name="text">150+ donors in 2024 camps</field>
+            <field name="icon">droplet</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_hero_cards_3" model="disha.site.item">
+            <field name="collection">hero_cards</field>
+            <field name="title">Legal Awareness</field>
+            <field name="text">115+ expats attended online</field>
+            <field name="icon">scale</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_services_1" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Yoga Meets</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_services_2" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Cultural Exchange</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_services_3" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Blood Donation</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_services_4" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Chithranjali (children's art)</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_services_5" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Legal Awareness</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="item_services_6" model="disha.site.item">
+            <field name="collection">services</field>
+            <field name="title">Onam Vasanthotsavam</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="item_goals_1" model="disha.site.item">
+            <field name="collection">goals</field>
+            <field name="title">Cultural enrichment combined with social service.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_goals_2" model="disha.site.item">
+            <field name="collection">goals</field>
+            <field name="title">Social, cultural, art, language and academic exchanges between Saudi Arabia and India.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_goals_3" model="disha.site.item">
+            <field name="collection">goals</field>
+            <field name="title">Trade and community welfare for citizens and residents of Saudi Arabia.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_pillars_1" model="disha.site.item">
+            <field name="collection">pillars</field>
+            <field name="title">Yoga &amp; Wellbeing</field>
+            <field name="text">International Day of Yoga celebrations in partnership with the Saudi Yoga Committee, with thousands taking part.</field>
+            <field name="icon">flower</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_pillars_2" model="disha.site.item">
+            <field name="collection">pillars</field>
+            <field name="title">Cultural Exchange</field>
+            <field name="text">Indo-Saudi cultural events, festival celebrations and Universal Oneness Day that share the idea of one family.</field>
+            <field name="icon">party-popper</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_pillars_3" model="disha.site.item">
+            <field name="collection">pillars</field>
+            <field name="title">Community Welfare</field>
+            <field name="text">Blood donation camps with leading hospitals and support for the community in need.</field>
+            <field name="icon">heart-pulse</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_pillars_4" model="disha.site.item">
+            <field name="collection">pillars</field>
+            <field name="title">Awareness &amp; Education</field>
+            <field name="text">Legal awareness sessions for expats and Chithranjali art programmes that encourage children.</field>
+            <field name="icon">graduation-cap</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_impact_1" model="disha.site.item">
+            <field name="collection">impact</field>
+            <field name="title">Yoga Meets</field>
+            <field name="text">2,780 people in Riyadh and 1,910 in Dammam joined the 2023 Yoga Meet.</field>
+            <field name="icon">flower</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_impact_2" model="disha.site.item">
+            <field name="collection">impact</field>
+            <field name="title">Blood donation camps</field>
+            <field name="text">Camps with King Khalid Hospital, Prince Sultan Center for Health and King Saud University Medical City.</field>
+            <field name="icon">droplet</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_impact_3" model="disha.site.item">
+            <field name="collection">impact</field>
+            <field name="title">Chithranjali</field>
+            <field name="text">More than 100 children took part in each centre across the three regions.</field>
+            <field name="icon">palette</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_member_tags_1" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Yoga</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_member_tags_2" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Culture &amp; Art</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_member_tags_3" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Blood Donation</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_member_tags_4" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Children's Programmes</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_member_tags_5" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Legal Awareness</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="item_member_tags_6" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Community Welfare</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="item_member_tags_7" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Language &amp; Academics</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="item_member_tags_8" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Indo-Saudi Exchange</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="item_member_tags_9" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Festival Celebrations</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="item_member_tags_10" model="disha.site.item">
+            <field name="collection">member_tags</field>
+            <field name="title">Youth</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="item_forums_1" model="disha.site.item">
+            <field name="collection">forums</field>
+            <field name="title">Central Province Committee</field>
+            <field name="text">Unit councils: Al-Kharj, South Riyadh, North Riyadh, Qassim.</field>
+            <field name="icon">users</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_forums_2" model="disha.site.item">
+            <field name="collection">forums</field>
+            <field name="title">Western Province Committee</field>
+            <field name="text">Unit councils: Jeddah, Najran, Jizan, Yanbu, Taif.</field>
+            <field name="icon">users</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_forums_3" model="disha.site.item">
+            <field name="collection">forums</field>
+            <field name="title">Eastern Province Committee</field>
+            <field name="text">Unit councils: Dammam, Jubail, Al-Khobar.</field>
+            <field name="icon">users</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_team_1" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Kanakalal KM</field>
+            <field name="text">National President</field>
+            <field name="icon">users</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_team_2" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Rajendran Cheriyal</field>
+            <field name="text">General Secretary</field>
+            <field name="icon">users</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_team_3" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Arun S Balan</field>
+            <field name="text">Secretary</field>
+            <field name="icon">users</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_team_4" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">V Rajesh Moolaveettil</field>
+            <field name="text">Treasurer</field>
+            <field name="icon">users</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_team_5" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Suresh K</field>
+            <field name="text">National Co-ordinator</field>
+            <field name="icon">users</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="item_team_6" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">R Ganesh Babu</field>
+            <field name="text">National Advisor, Arab Region</field>
+            <field name="icon">users</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="item_team_7" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Sajeev Surya B</field>
+            <field name="text">Advisor, Arab Region</field>
+            <field name="icon">users</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="item_team_8" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Byju Parol</field>
+            <field name="text">Regional Advisor, Dammam</field>
+            <field name="icon">users</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="item_team_9" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Sivaprasad</field>
+            <field name="text">Regional Advisor, Dammam</field>
+            <field name="icon">users</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="item_team_10" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Chandra Babu</field>
+            <field name="text">Regional Advisor, Jeddah</field>
+            <field name="icon">users</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="item_team_11" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Unni Ponnaramthottam</field>
+            <field name="text">Regional Co-Advisor, Jeddah</field>
+            <field name="icon">users</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="item_team_12" model="disha.site.item">
+            <field name="collection">team</field>
+            <field name="title">Libin Vadavathi</field>
+            <field name="text">Regional Co-Advisor, Riyadh</field>
+            <field name="icon">users</field>
+            <field name="sequence">120</field>
+        </record>
+        <record id="item_stats_1" model="disha.site.item">
+            <field name="collection">stats</field>
+            <field name="title">232</field>
+            <field name="text">Working centres in KSA</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_stats_2" model="disha.site.item">
+            <field name="collection">stats</field>
+            <field name="title">3,250+</field>
+            <field name="text">Active volunteers</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_stats_3" model="disha.site.item">
+            <field name="collection">stats</field>
+            <field name="title">3</field>
+            <field name="text">Provincial committees</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_stats_4" model="disha.site.item">
+            <field name="collection">stats</field>
+            <field name="title">12</field>
+            <field name="text">Unit councils</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_support_1" model="disha.site.item">
+            <field name="collection">support</field>
+            <field name="title">Cultural Events</field>
+            <field name="text">Festival celebrations, Onam Vasanthotsavam and Indo-Saudi cultural exchange.</field>
+            <field name="icon">party-popper</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_support_2" model="disha.site.item">
+            <field name="collection">support</field>
+            <field name="title">Yoga Meets</field>
+            <field name="text">International Day of Yoga with the Saudi Yoga Committee.</field>
+            <field name="icon">flower</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_support_3" model="disha.site.item">
+            <field name="collection">support</field>
+            <field name="title">Blood Donation</field>
+            <field name="text">Camps with hospitals around Saudi Founding Day.</field>
+            <field name="icon">droplet</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_support_4" model="disha.site.item">
+            <field name="collection">support</field>
+            <field name="title">Legal Awareness</field>
+            <field name="text">Sessions with legal experts so expats know the rules and regulations.</field>
+            <field name="icon">scale</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_activities_1" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">DISHA Yoga Meet</field>
+            <field name="text">Celebrating the International Day of Yoga with the Saudi Yoga Committee and the support of the Embassy of India, with mass yoga and cultural performances in Riyadh, Dammam and Jeddah.</field>
+            <field name="icon">flower</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_activities_2" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Universal Oneness Day</field>
+            <field name="text">The first Raksha Bandhan celebration of its kind in Saudi Arabia, held with the Saudi Brotherhood and the Arab Yoga Foundation to share 'Vasudhaiva Kutumbakam'.</field>
+            <field name="icon">globe</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_activities_3" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Indo-Saudi Cultural Exchange</field>
+            <field name="text">Cultural exchange events as part of Saudi National Day celebrations with dignitaries from India and Saudi Arabia.</field>
+            <field name="icon">handshake</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_activities_4" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Blood Donation Camps</field>
+            <field name="text">Camps by unit councils around Saudi Founding Day with King Khalid Hospital, Prince Sultan Center for Health and King Saud University Medical City.</field>
+            <field name="icon">droplet</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_activities_5" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Chithranjali</field>
+            <field name="text">Children's art programmes in all three regions to encourage, motivate and enhance children from different communities.</field>
+            <field name="icon">palette</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="item_activities_6" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Legal Awareness</field>
+            <field name="text">Online legal awareness programme for expats with First Advice Lawfirm, covering the rules and regulations of KSA.</field>
+            <field name="icon">scale</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="item_activities_7" model="disha.site.item">
+            <field name="collection">activities</field>
+            <field name="title">Onam Vasanthotsavam</field>
+            <field name="text">Festival celebrations led by unit councils with people from many states of India, Nepal and Bangladesh.</field>
+            <field name="icon">party-popper</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="item_helps_1" model="disha.site.item">
+            <field name="collection">helps</field>
+            <field name="title">Legal awareness</field>
+            <field name="text">Sessions with legal experts so residents understand the rules and regulations of the Kingdom.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_helps_2" model="disha.site.item">
+            <field name="collection">helps</field>
+            <field name="title">Health and blood donation</field>
+            <field name="text">Blood donation camps and community welfare activities run by unit councils.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_helps_3" model="disha.site.item">
+            <field name="collection">helps</field>
+            <field name="title">Children and culture</field>
+            <field name="text">Chithranjali art programmes, festival celebrations and yoga events for families.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_helps_4" model="disha.site.item">
+            <field name="collection">helps</field>
+            <field name="title">Support requests</field>
+            <field name="text">Raise a visa, iqama or other request on this site and track it with a private token.</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_faq_1" model="disha.site.item">
+            <field name="collection">faq</field>
+            <field name="title">Passport renewal</field>
+            <field name="text">Check the embassy website for current guidelines and required documents.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_faq_2" model="disha.site.item">
+            <field name="collection">faq</field>
+            <field name="title">Iqama services</field>
+            <field name="text">Visit the Jawazat office or use the Absher online portal.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_faq_3" model="disha.site.item">
+            <field name="collection">faq</field>
+            <field name="title">Madad registration</field>
+            <field name="text">Register on the Madad platform through the embassy website.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_faq_4" model="disha.site.item">
+            <field name="collection">faq</field>
+            <field name="title">Travel advisories</field>
+            <field name="text">Look in the news section of the embassy website.</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="item_faq_5" model="disha.site.item">
+            <field name="collection">faq</field>
+            <field name="title">DISHA membership</field>
+            <field name="text">Fill out the membership application form on this website.</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="item_collab_cards_1" model="disha.site.item">
+            <field name="collection">collab_cards</field>
+            <field name="title">Embassy of India, Riyadh</field>
+            <field name="text">DISHA programmes are aligned with and supported by the Embassy.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_collab_cards_2" model="disha.site.item">
+            <field name="collection">collab_cards</field>
+            <field name="title">Saudi Yoga Committee &amp; Arab Yoga Foundation</field>
+            <field name="text">Partners for Yoga Meets and the Olympic virtual yoga competition for children.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_collab_cards_3" model="disha.site.item">
+            <field name="collection">collab_cards</field>
+            <field name="title">SALAM and community partners</field>
+            <field name="text">Saudi cultural organisation SALAM and hospitals, schools and law firms.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_reports_1" model="disha.site.item">
+            <field name="collection">reports</field>
+            <field name="title">Yoga Meet 2023</field>
+            <field name="text">Held on 16 June 2023 in Riyadh (2,780 participants), Dammam (1,910) and Jeddah (300) with the Saudi Yoga Committee.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_reports_2" model="disha.site.item">
+            <field name="collection">reports</field>
+            <field name="title">Blood donation 2023-2024</field>
+            <field name="text">101 donors in 2023 and 150+ in 2024 across camps in Al-Kharj and Riyadh.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_reports_3" model="disha.site.item">
+            <field name="collection">reports</field>
+            <field name="title">Legal awareness 2024</field>
+            <field name="text">Online programme on 17 January 2024 with First Advice Lawfirm, attended by more than 115 people.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_steps_1" model="disha.site.item">
+            <field name="collection">steps</field>
+            <field name="title">We receive your application</field>
+            <field name="text">You get an application number straight away, generated by our membership system.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_steps_2" model="disha.site.item">
+            <field name="collection">steps</field>
+            <field name="title">Our committee reviews it</field>
+            <field name="text">A DISHA office bearer reviews your details and category (General or Associate).</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_steps_3" model="disha.site.item">
+            <field name="collection">steps</field>
+            <field name="title">Your ID card is emailed</field>
+            <field name="text">Once approved, your digital membership ID card (PDF with QR) arrives by email.</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="item_support_steps_1" model="disha.site.item">
+            <field name="collection">support_steps</field>
+            <field name="title">Submit your request</field>
+            <field name="text">Choose a category and urgency. Emergencies and medical cases are prioritised automatically.</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="item_support_steps_2" model="disha.site.item">
+            <field name="collection">support_steps</field>
+            <field name="title">Save your token</field>
+            <field name="text">You receive a private token once. Keep it safe: it is the only way to open your request.</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="item_support_steps_3" model="disha.site.item">
+            <field name="collection">support_steps</field>
+            <field name="title">Track and reply</field>
+            <field name="text">Use the token on the Track page to see status, read our replies and add messages.</field>
+            <field name="sequence">30</field>
+        </record>
+    </data>
+</odoo>

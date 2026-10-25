@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_ticket_list" model="ir.ui.view">
+        <field name="name">disha.support.ticket.list</field>
+        <field name="model">disha.support.ticket</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="is_overdue" decoration-muted="state in ('resolved','closed')">
+                <field name="priority" widget="badge" decoration-danger="priority == '3'"
+                       decoration-warning="priority == '2'" decoration-info="priority == '1'"/>
+                <field name="name"/>
+                <field name="create_date" string="Created"/>
+                <field name="category"/>
+                <field name="subject"/>
+                <field name="requester_name"/>
+                <field name="mobile" optional="show"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="deadline" optional="show"/>
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="state" widget="badge" decoration-info="state == 'new'" decoration-warning="state == 'in_progress'"
+                       decoration-primary="state == 'waiting_user'" decoration-success="state == 'resolved'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_disha_ticket_form" model="ir.ui.view">
+        <field name="name">disha.support.ticket.form</field>
+        <field name="model">disha.support.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" string="Take / Start" type="object" class="btn-primary"
+                            invisible="state != 'new'"/>
+                    <button name="action_wait" string="Waiting for Requester" type="object"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_resolve" string="Resolve" type="object" class="btn-success"
+                            invisible="state not in ('new', 'in_progress', 'waiting_user')"/>
+                    <button name="action_close" string="Close" type="object" invisible="state == 'closed'"/>
+                    <button name="action_reopen" string="Reopen" type="object" invisible="state not in ('resolved', 'closed')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,in_progress,waiting_user,resolved"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="not is_overdue">This ticket is past its response deadline.</div>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group string="Request">
+                            <field name="category"/>
+                            <field name="subject"/>
+                            <field name="urgency"/>
+                            <field name="priority"/>
+                            <field name="user_id"/>
+                            <field name="deadline"/>
+                            <field name="is_overdue" invisible="1"/>
+                        </group>
+                        <group string="Requester">
+                            <field name="requester_name"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="city"/>
+                            <field name="source"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details"><field name="description" readonly="source == 'website'"/></page>
+                        <page string="Conversation">
+                            <p class="text-muted">"Visible to requester" rows are shown on the website tracking page and emailed as an update. Untick it for internal notes.</p>
+                            <field name="message_ids_public">
+                                <list editable="bottom">
+                                    <field name="create_date" string="Date" readonly="1"/>
+                                    <field name="author_type"/>
+                                    <field name="body"/>
+                                    <field name="is_public"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_disha_ticket_kanban" model="ir.ui.view">
+        <field name="name">disha.support.ticket.kanban</field>
+        <field name="model">disha.support.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" group_create="0">
+                <templates>
+                    <t t-name="card">
+                        <div class="fw-bold"><field name="name"/> · <field name="category"/></div>
+                        <div><field name="subject"/></div>
+                        <div class="text-muted"><field name="requester_name"/></div>
+                        <footer>
+                            <field name="priority" widget="badge" decoration-danger="priority == '3'" decoration-warning="priority == '2'"/>
+                            <field name="user_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_disha_ticket_search" model="ir.ui.view">
+        <field name="name">disha.support.ticket.search</field>
+        <field name="model">disha.support.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="requester_name"/><field name="email"/><field name="mobile"/><field name="subject"/>
+                <filter name="open" string="Open" domain="[('state', 'in', ('new','in_progress','waiting_user'))]"/>
+                <filter name="mine" string="My Tickets" domain="[('user_id', '=', uid)]"/>
+                <filter name="unassigned" string="Unassigned" domain="[('user_id', '=', False)]"/>
+                <filter name="critical" string="Critical / High" domain="[('priority', 'in', ('2','3'))]"/>
+                <filter name="overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <group>
+                    <filter name="g_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="g_cat" string="Category" context="{'group_by': 'category'}"/>
+                    <filter name="g_prio" string="Priority" context="{'group_by': 'priority'}"/>
+                    <filter name="g_user" string="Assigned to" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_disha_ticket" model="ir.actions.act_window">
+        <field name="name">Support Tickets</field>
+        <field name="res_model">disha.support.ticket</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_disha_ticket_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+</odoo>

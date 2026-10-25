@@ -1,0 +1,20 @@
+{
+    "name": "DISHA Support Tickets",
+    "version": "19.0.1.0.0",
+    "summary": "Support tickets raised from the DISHA website (visa, iqama, passport, medical...) with priority, SLA and a private tracking token",
+    "author": "Otomater",
+    "website": "https://otomater.com",
+    "license": "OPL-1",
+    "category": "Customizations",
+    "depends": ["base", "mail"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/sequence_data.xml",
+        "views/ticket_views.xml",
+        "views/menu.xml",
+    ],
+    "post_init_hook": "post_init_hook",
+    "application": True,
+    "installable": True,
+}

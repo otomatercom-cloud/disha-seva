@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_disha_support_root" name="DISHA Support" sequence="42"
+              groups="disha_support_ticket.group_disha_support_user"/>
+    <menuitem id="menu_disha_support_tickets" name="Tickets" parent="menu_disha_support_root"
+              action="action_disha_ticket" sequence="10"/>
+</odoo>

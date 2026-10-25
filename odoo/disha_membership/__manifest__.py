@@ -1,0 +1,20 @@
+{
+    "name": "DISHA Membership Applications",
+    "version": "19.0.1.0.0",
+    "summary": "Membership applications (General / Associate) from the DISHA website (Next.js) with workflow and secure API",
+    "author": "Otomater",
+    "website": "https://otomater.com",
+    "license": "OPL-1",
+    "category": "Customizations",
+    "depends": ["base", "mail"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/sequence_data.xml",
+        "views/registration_views.xml",
+        "views/menu.xml",
+    ],
+    "post_init_hook": "post_init_hook",
+    "application": True,
+    "installable": True,
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The stock paperformat (86x54 + Landscape) makes wkhtmltopdf swap to a 54x86 portrait page, so the card sits
+         at the top of a tall page. Width 86 x height 54 with Portrait gives the true landscape CR80 page. -->
+    <record id="association_membership.paperformat_membership_card" model="report.paperformat">
+        <field name="orientation">Portrait</field>
+    </record>
+
+    <!-- Professional two-sided CR80 (86 x 54 mm) card. Replaces the stock card design of association_membership.
+         wkhtmltopdf: NO flex/grid, no table borders; absolute positioning only. -->
+    <template id="report_card_professional" inherit_id="association_membership.report_membership_card_document">
+        <xpath expr="//div[hasclass('ms_card')]" position="replace">
+            <t t-set="info" t-value="member._disha_card_info()"/>
+            <style>html, body {margin:0 !important; padding:0 !important;} .disha_card {page-break-inside: avoid;}</style>
+            <div t-attf-style="zoom: #{member._disha_card_zoom()};">
+            <!-- ============ FRONT ============ -->
+            <div class="disha_card" style="width:86mm; height:53.6mm; position:relative; overflow:hidden; background:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#0c1b5e; page-break-after:always;">
+                <div style="position:absolute; top:0; left:0; right:0; height:12mm; background:#0c1b5e;"/>
+                <div style="position:absolute; top:12mm; left:0; right:0; height:1mm; background:#f26a0a;"/>
+                <div style="position:absolute; top:13mm; left:0; right:0; height:0.6mm; background:#15803d;"/>
+                <div style="position:absolute; top:1.2mm; left:3mm; width:9.6mm; height:9.6mm; background:#ffffff; border-radius:5mm;"><img t-att-src="info['logo']" style="width:8.6mm; height:8.6mm; margin:0.5mm;"/></div>
+                <div style="position:absolute; top:3.2mm; left:14.5mm; right:5mm;">
+                    <div style="font-size:9.5px; font-weight:bold; letter-spacing:0.6px; color:#ffffff; text-transform:uppercase;" t-esc="info['org']"/>
+                    <div style="font-size:4.4px; letter-spacing:0.5px; color:#ffb27a; margin-top:0.8mm; text-transform:uppercase;">Dedicated team for Indo Saudi Holistic Alignment</div>
+                </div>
+
+                <!-- photo -->
+                <div style="position:absolute; top:17mm; left:5mm; width:20mm; height:25mm; border:0.35mm solid #0c1b5e; background:#eef2f8;">
+                    <img t-if="member.photo" t-att-src="image_data_uri(member.photo)" style="width:20mm; height:25mm;"/>
+                </div>
+
+                <!-- details -->
+                <div style="position:absolute; top:16.5mm; left:29mm; right:5mm;">
+                    <div style="font-size:11.5px; font-weight:bold; line-height:1.15; color:#0c1b5e;" t-esc="member.name"/>
+                    <div style="margin-top:1mm;"><span style="display:inline-block; background:#f26a0a; color:#ffffff; font-size:5.4px; font-weight:bold; letter-spacing:1px; padding:0.6mm 2mm; text-transform:uppercase;"><t t-esc="(('Associate' if member.membership_type_id.code == 'DISHA-ASC' else 'Member'))"/></span></div>
+                    <div style="margin-top:2.4mm; font-size:5.2px; letter-spacing:0.8px; color:#6b7a90; text-transform:uppercase;">Member ID</div>
+                    <div style="font-size:8.4px; font-weight:bold; letter-spacing:0.6px;" t-esc="member.member_number"/>
+                    <div style="margin-top:1.6mm; font-size:5.2px; letter-spacing:0.8px; color:#6b7a90; text-transform:uppercase;">Area / Nationality</div>
+                    <div style="font-size:7px; font-weight:bold;">
+                        <t t-esc="member.ksa_area or member.city or '-'"/><t t-if="member.nationality_id"> &#183; <t t-esc="member.nationality_id.name"/></t>
+                    </div>
+                </div>
+
+                <!-- footer -->
+                <div style="position:absolute; left:0; right:0; bottom:0; height:6.5mm; background:#f1f4f9; border-top:0.2mm solid #d8e0ec;"/>
+                <div style="position:absolute; left:5mm; bottom:2.1mm; font-size:5.4px; color:#44546a; letter-spacing:0.3px;">
+                    Valid thru <b t-esc="member.current_membership_id.expiry_date.strftime('%d %b %Y') if member.current_membership_id.expiry_date else '-'"/>
+                </div>
+                <div style="position:absolute; right:5mm; bottom:2.1mm; font-size:5.4px; color:#44546a;" t-esc="info['contact']"/>
+            </div>
+
+            <!-- ============ BACK ============ -->
+            <div class="disha_card" style="width:86mm; height:53.6mm; position:relative; overflow:hidden; background:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#0c1b5e;">
+                <div style="position:absolute; top:0; left:0; right:0; height:8mm; background:#0c1b5e;"/>
+                <div style="position:absolute; top:8mm; left:0; right:0; height:0.9mm; background:#f26a0a;"/>
+                <div style="position:absolute; top:1mm; left:3mm; width:6mm; height:6mm; background:#ffffff; border-radius:3mm;"><img t-att-src="info['logo']" style="width:5.4mm; height:5.4mm; margin:0.3mm;"/></div>
+                <div style="position:absolute; top:2.6mm; left:10.5mm; font-size:7px; font-weight:bold; letter-spacing:0.6px; color:#ffffff; text-transform:uppercase;" t-esc="info['org']"/>
+
+                <div style="position:absolute; top:12.5mm; left:5mm; width:24mm; height:24mm; border:0.3mm solid #0c1b5e; padding:0.8mm; background:#ffffff;">
+                    <img t-if="member.card_verify_url" t-att-src="member._disha_card_qr_uri()" style="width:22.2mm; height:22.2mm;"/>
+                </div>
+                <div style="position:absolute; top:38.2mm; left:5mm; width:24mm; text-align:center; font-size:5.2px; font-weight:bold; letter-spacing:1px; color:#f26a0a; text-transform:uppercase;">Scan to verify</div>
+
+                <div style="position:absolute; top:12.5mm; left:33mm; right:5mm; font-size:5.8px; line-height:1.45; color:#2b3a52;">
+                    <div style="font-size:6.6px; font-weight:bold; color:#0c1b5e; margin-bottom:1mm;">This card identifies a DISHA member.</div>
+                    The holder is a registered member of <t t-esc="info['org']"/>. Authenticity can be confirmed by scanning
+                    the QR code, which shows the membership status only.
+                    <div style="margin-top:1.4mm;">This card remains the property of <t t-esc="info['org']"/>. If found, please contact
+                        <b t-esc="info['contact']"/>.</div>
+                </div>
+                <div style="position:absolute; left:33mm; right:5mm; bottom:9.5mm; border-top:0.2mm solid #0c1b5e;"/>
+                <div style="position:absolute; left:33mm; bottom:6.6mm; font-size:5.2px; color:#6b7a90; letter-spacing:0.6px; text-transform:uppercase;">Authorised signatory</div>
+
+                <div style="position:absolute; left:0; right:0; bottom:0; height:4.6mm; background:#f1f4f9; border-top:0.2mm solid #d8e0ec;"/>
+                <div style="position:absolute; left:5mm; right:5mm; bottom:1.3mm; font-size:4.6px; color:#44546a; white-space:nowrap; overflow:hidden;" t-esc="member.card_verify_url"/>
+            </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

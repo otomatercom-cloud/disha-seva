@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_disha_root" name="DISHA Members" sequence="40"
+              groups="disha_membership.group_disha_membership_user"/>
+    <menuitem id="menu_disha_registrations" name="Applications" parent="menu_disha_root"
+              action="action_disha_registration" sequence="10"/>
+</odoo>
