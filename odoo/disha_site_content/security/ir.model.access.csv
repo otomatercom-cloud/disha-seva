@@ -3,3 +3,5 @@ access_disha_site_text_editor,disha.site.text editor,model_disha_site_text,group
 access_disha_site_text_manager,disha.site.text manager,model_disha_site_text,group_disha_site_manager,1,1,1,1
 access_disha_site_item_editor,disha.site.item editor,model_disha_site_item,group_disha_site_editor,1,1,1,1
 access_disha_site_item_manager,disha.site.item manager,model_disha_site_item,group_disha_site_manager,1,1,1,1
+access_disha_site_event_editor,disha.site.event editor,model_disha_site_event,group_disha_site_editor,1,1,1,1
+access_disha_site_event_manager,disha.site.event manager,model_disha_site_event,group_disha_site_manager,1,1,1,1

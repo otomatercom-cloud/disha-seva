@@ -4,7 +4,7 @@ import { membershipSchema, submissionSchema } from "@/lib/validation/membership"
 const valid = {
   category: "general", full_name: "Asha Nair", gender: "female", date_of_birth: "1992-04-12", nationality: "Indian",
   mobile: "+966501234567", whatsapp: "", email: "asha@example.com", blood_group: "O+",
-  ksa_region: "Central", ksa_city: "Riyadh", passport_number: "P1234567",
+  ksa_region: "central", ksa_city: "Riyadh", passport_number: "P1234567",
   india_state: "Kerala", india_district: "Thrissur", india_village: "Irinjalakuda", india_pin: "680121",
   india_address: "Nair House, Irinjalakada P.O.",
   ksa_emergency_name: "Ravi Nair", ksa_emergency_relationship: "Brother", ksa_emergency_phone: "+966500000001",
@@ -42,6 +42,13 @@ describe("membership application schema", () => {
     expect(membershipSchema.safeParse({ ...valid, category: "vip" }).success).toBe(false);
     expect(membershipSchema.safeParse({ ...valid, blood_group: "" }).success).toBe(true);
     expect(membershipSchema.safeParse({ ...valid, blood_group: "Z+" }).success).toBe(false);
+  });
+
+  it("accepts only the known provinces", () => {
+    expect(membershipSchema.safeParse({ ...valid, ksa_region: "eastern" }).success).toBe(true);
+    for (const bad of ["Central", "mars", ""]) {
+      expect(membershipSchema.safeParse({ ...valid, ksa_region: bad }).success).toBe(false);
+    }
   });
 
   it("rejects future and malformed birth dates", () => {

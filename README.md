@@ -8,10 +8,11 @@ logo, colours and the 22-field paper **Membership Application Form** (General / 
 - `odoo/disha_membership`: applications model, workflow (New → Under Review → Contacted → Approved/Rejected), "For office use" fields, secure API.
 - `odoo/disha_membership_card`: on Approve creates the member (type General or Associate), number `DISHA/<year>/#####`, and emails a two-sided PDF ID card with QR verify. Menu *Approved Members*. Uses its OWN report/paperformat/number series and never edits the stock card, so it can share one database with the IOF card addon (`iof_volunteer_card`) or any other organisation using `association_membership`.
 - `odoo/disha_site_content`: everything on the website is editable in Odoo (menu *DISHA Website*): texts, gallery, reports, lists/cards, logo.
+- `odoo/disha_event_notify`: events (Odoo menu *Website Content > Events*: title, date, time, place, details, photo, **province**) show in the home-page Events block. The **Email Members** button sends the event to every approved member of that province (or all provinces). Sent once; *Email again* is explicit. Needs an Outgoing Mail Server + Alias Domain; optional parameters `disha_event_notify.site_url` (link in the email) and `disha_event_notify.contact`. Members choose their province on the website form (Central, Western, Eastern, Northern, Southern).
 - `odoo/disha_support_ticket`: support tickets (visa, iqama, passport, labour, medical, legal, emergency) with priority/SLA and a private tracking token.
 - `docs`: API contract, deployment.
 
-Depends on the `association_membership` addon (install untouched). Tests: `cd web && npm test`; Odoo: `odoo-bin -d <new db> -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_support_ticket --test-enable --stop-after-init`.
+Depends on the `association_membership` addon (install untouched). Tests: `cd web && npm test`; Odoo: `odoo-bin -d <new db> -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --test-enable --stop-after-init`.
 
 ## Membership form (matches the paper form)
 1 Personal information (category, name as in passport, gender, DOB, nationality, mobile, WhatsApp, email, blood group,

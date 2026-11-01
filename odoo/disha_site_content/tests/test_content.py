@@ -86,3 +86,34 @@ class TestSiteContentHttp(HttpCase):
         self.assertEqual(self.url_open(f"/disha/site-media/item/{hidden.id}/image").status_code, 404)
         self.assertEqual(self.url_open(f"/disha/site-media/item/{shown.id}/secret").status_code, 404)
         self.assertEqual(self.url_open(f"/disha/site-media/res.users/1/image").status_code, 404)
+
+
+@tagged("post_install", "-at_install")
+class TestSiteEvents(HttpCase):
+
+    def test_event_rules_and_api(self):
+        Event = self.env["disha.site.event"]
+        with self.assertRaises(ValidationError):
+            Event.create({"name": "Bad", "event_date": "2026-11-10", "end_date": "2026-11-09"})
+        with self.assertRaises(ValidationError):
+            Event.create({"name": "Bad img", "event_date": "2026-11-10", "image": base64.b64encode(b"<svg onload=x>")})
+        past = Event.create({"name": "Old camp", "event_date": "2020-01-05"})
+        multi = Event.create({"name": "Long fest", "event_date": "2020-01-01", "end_date": "2999-01-01"})
+        self.assertFalse(past.is_upcoming)
+        self.assertTrue(multi.is_upcoming)
+        self.assertIn(multi, Event.search([("is_upcoming", "=", True)]))
+        self.assertNotIn(multi, Event.search([("is_upcoming", "=", False)]))
+        shown = Event.create({"name": "Blood camp", "event_date": "2999-02-02", "time_text": "6 PM", "region": "eastern",
+                              "location": "Riyadh", "details": "Join us", "image": _png()})
+        hidden = Event.create({"name": "Secret", "event_date": "2999-03-03", "image": _png(), "published": False})
+        self.env.cr.flush()
+        data = json.loads(self.url_open("/api/disha/site-content").content)
+        titles = [e["title"] for e in data["events"]]
+        self.assertIn("Blood camp", titles)
+        self.assertNotIn("Secret", titles)
+        ev = next(e for e in data["events"] if e["title"] == "Blood camp")
+        self.assertEqual((ev["date"], ev["time"], ev["location"]), ("2999-02-02", "6 PM", "Riyadh"))
+        self.assertEqual((ev["region"], ev["region_label"]), ("eastern", "Eastern Province"))
+        self.assertEqual(self.url_open(ev["image"]).status_code, 200)
+        self.assertEqual(self.url_open(f"/disha/site-media/event/{hidden.id}/image").status_code, 404)
+        self.assertEqual(self.url_open(f"/disha/site-media/event/{shown.id}/secret").status_code, 404)

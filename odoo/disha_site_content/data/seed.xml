@@ -406,6 +406,60 @@
             <field name="default_value">active volunteers from different parts of India, working through 232 centres across the Kingdom of Saudi Arabia.</field>
             <field name="sequence">450</field>
         </record>
+        <record id="text_home_events_eyebrow" model="disha.site.text">
+            <field name="key">home.events.eyebrow</field>
+            <field name="page">Home</field>
+            <field name="label">Events eyebrow</field>
+            <field name="kind">line</field>
+            <field name="value">Events</field>
+            <field name="default_value">Events</field>
+            <field name="sequence">460</field>
+        </record>
+        <record id="text_home_events_title" model="disha.site.text">
+            <field name="key">home.events.title</field>
+            <field name="page">Home</field>
+            <field name="label">Events heading</field>
+            <field name="kind">line</field>
+            <field name="value">Upcoming events and gatherings</field>
+            <field name="default_value">Upcoming events and gatherings</field>
+            <field name="sequence">470</field>
+        </record>
+        <record id="text_home_events_intro" model="disha.site.text">
+            <field name="key">home.events.intro</field>
+            <field name="page">Home</field>
+            <field name="label">Events sentence</field>
+            <field name="kind">line</field>
+            <field name="value">Yoga meets, cultural programmes and welfare drives across the Kingdom. Everyone is welcome.</field>
+            <field name="default_value">Yoga meets, cultural programmes and welfare drives across the Kingdom. Everyone is welcome.</field>
+            <field name="sequence">480</field>
+        </record>
+        <record id="text_home_events_empty" model="disha.site.text">
+            <field name="key">home.events.empty</field>
+            <field name="page">Home</field>
+            <field name="label">Events empty message</field>
+            <field name="kind">line</field>
+            <field name="value">New events will be announced here soon.</field>
+            <field name="default_value">New events will be announced here soon.</field>
+            <field name="sequence">490</field>
+        </record>
+        <record id="text_home_events_upcoming" model="disha.site.text">
+            <field name="key">home.events.upcoming</field>
+            <field name="page">Home</field>
+            <field name="label">Events 'upcoming' label</field>
+            <field name="kind">line</field>
+            <field name="value">Upcoming</field>
+            <field name="default_value">Upcoming</field>
+            <field name="sequence">500</field>
+        </record>
+        <record id="text_home_events_past" model="disha.site.text">
+            <field name="key">home.events.past</field>
+            <field name="page">Home</field>
+            <field name="label">Events 'past' label</field>
+            <field name="kind">line</field>
+            <field name="value">Past event</field>
+            <field name="default_value">Past event</field>
+            <field name="sequence">510</field>
+        </record>
         <record id="text_home_moments_eyebrow" model="disha.site.text">
             <field name="key">home.moments.eyebrow</field>
             <field name="page">Home</field>
@@ -413,7 +467,7 @@
             <field name="kind">line</field>
             <field name="value">Our Moments</field>
             <field name="default_value">Our Moments</field>
-            <field name="sequence">460</field>
+            <field name="sequence">520</field>
         </record>
         <record id="text_home_moments_title" model="disha.site.text">
             <field name="key">home.moments.title</field>
@@ -422,7 +476,7 @@
             <field name="kind">line</field>
             <field name="value">Snapshots of community spirit</field>
             <field name="default_value">Snapshots of community spirit</field>
-            <field name="sequence">470</field>
+            <field name="sequence">530</field>
         </record>
         <record id="text_home_moments_intro" model="disha.site.text">
             <field name="key">home.moments.intro</field>
@@ -431,7 +485,7 @@
             <field name="kind">line</field>
             <field name="value">Yoga meets, cultural programmes and community service across Saudi Arabia.</field>
             <field name="default_value">Yoga meets, cultural programmes and community service across Saudi Arabia.</field>
-            <field name="sequence">480</field>
+            <field name="sequence">540</field>
         </record>
         <record id="text_home_moments_link" model="disha.site.text">
             <field name="key">home.moments.link</field>
@@ -440,7 +494,7 @@
             <field name="kind">line</field>
             <field name="value">View full gallery</field>
             <field name="default_value">View full gallery</field>
-            <field name="sequence">490</field>
+            <field name="sequence">550</field>
         </record>
         <record id="text_home_join_eyebrow" model="disha.site.text">
             <field name="key">home.join.eyebrow</field>
@@ -449,7 +503,7 @@
             <field name="kind">line</field>
             <field name="value">Membership</field>
             <field name="default_value">Membership</field>
-            <field name="sequence">500</field>
+            <field name="sequence">560</field>
         </record>
         <record id="text_home_join_title" model="disha.site.text">
             <field name="key">home.join.title</field>
@@ -458,7 +512,7 @@
             <field name="kind">line</field>
             <field name="value">Be part of the DISHA family.</field>
             <field name="default_value">Be part of the DISHA family.</field>
-            <field name="sequence">510</field>
+            <field name="sequence">570</field>
         </record>
         <record id="text_home_join_body" model="disha.site.text">
             <field name="key">home.join.body</field>
@@ -467,7 +521,7 @@
             <field name="kind">text</field>
             <field name="value">Indian nationals residing in the Kingdom of Saudi Arabia can apply as a General or Associate member. Apply online in a few minutes and receive your digital membership ID card once approved.</field>
             <field name="default_value">Indian nationals residing in the Kingdom of Saudi Arabia can apply as a General or Associate member. Apply online in a few minutes and receive your digital membership ID card once approved.</field>
-            <field name="sequence">520</field>
+            <field name="sequence">580</field>
         </record>
         <record id="text_home_join_note" model="disha.site.text">
             <field name="key">home.join.note</field>
@@ -476,7 +530,7 @@
             <field name="kind">line</field>
             <field name="value">General &amp; Associate membership · Digital ID card</field>
             <field name="default_value">General &amp; Associate membership · Digital ID card</field>
-            <field name="sequence">530</field>
+            <field name="sequence">590</field>
         </record>
         <record id="text_home_collab_eyebrow" model="disha.site.text">
             <field name="key">home.collab.eyebrow</field>
@@ -485,7 +539,7 @@
             <field name="kind">line</field>
             <field name="value">Partners</field>
             <field name="default_value">Partners</field>
-            <field name="sequence">540</field>
+            <field name="sequence">600</field>
         </record>
         <record id="text_home_collab_title" model="disha.site.text">
             <field name="key">home.collab.title</field>
@@ -494,7 +548,7 @@
             <field name="kind">line</field>
             <field name="value">Working together with embassies and institutions</field>
             <field name="default_value">Working together with embassies and institutions</field>
-            <field name="sequence">550</field>
+            <field name="sequence">610</field>
         </record>
         <record id="text_home_collab_body" model="disha.site.text">
             <field name="key">home.collab.body</field>
@@ -503,7 +557,7 @@
             <field name="kind">text</field>
             <field name="value">DISHA collaborates with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and community partners to deliver cultural and welfare programmes.</field>
             <field name="default_value">DISHA collaborates with the Embassy of India Riyadh, the Saudi Yoga Committee, the Arab Yoga Foundation and community partners to deliver cultural and welfare programmes.</field>
-            <field name="sequence">560</field>
+            <field name="sequence">620</field>
         </record>
         <record id="text_home_collab_cta" model="disha.site.text">
             <field name="key">home.collab.cta</field>
@@ -512,7 +566,7 @@
             <field name="kind">line</field>
             <field name="value">Partnership enquiries</field>
             <field name="default_value">Partnership enquiries</field>
-            <field name="sequence">570</field>
+            <field name="sequence">630</field>
         </record>
         <record id="text_home_reports_eyebrow" model="disha.site.text">
             <field name="key">home.reports.eyebrow</field>
@@ -521,7 +575,7 @@
             <field name="kind">line</field>
             <field name="value">Programmes and highlights</field>
             <field name="default_value">Programmes and highlights</field>
-            <field name="sequence">580</field>
+            <field name="sequence">640</field>
         </record>
         <record id="text_home_contact_title" model="disha.site.text">
             <field name="key">home.contact.title</field>
@@ -530,7 +584,7 @@
             <field name="kind">line</field>
             <field name="value">Get in touch</field>
             <field name="default_value">Get in touch</field>
-            <field name="sequence">590</field>
+            <field name="sequence">650</field>
         </record>
         <record id="text_about_title" model="disha.site.text">
             <field name="key">about.title</field>
@@ -539,7 +593,7 @@
             <field name="kind">line</field>
             <field name="value">About DISHA</field>
             <field name="default_value">About DISHA</field>
-            <field name="sequence">600</field>
+            <field name="sequence">660</field>
         </record>
         <record id="text_about_intro" model="disha.site.text">
             <field name="key">about.intro</field>
@@ -548,7 +602,7 @@
             <field name="kind">text</field>
             <field name="value">Dedicated team for Indo Saudi Holistic Alignment: a leading socio-cultural organisation in the Kingdom of Saudi Arabia.</field>
             <field name="default_value">Dedicated team for Indo Saudi Holistic Alignment: a leading socio-cultural organisation in the Kingdom of Saudi Arabia.</field>
-            <field name="sequence">610</field>
+            <field name="sequence">670</field>
         </record>
         <record id="text_about_formation_title" model="disha.site.text">
             <field name="key">about.formation.title</field>
@@ -557,7 +611,7 @@
             <field name="kind">line</field>
             <field name="value">Our formation</field>
             <field name="default_value">Our formation</field>
-            <field name="sequence">620</field>
+            <field name="sequence">680</field>
         </record>
         <record id="text_about_formation_text" model="disha.site.text">
             <field name="key">about.formation.text</field>
@@ -566,7 +620,7 @@
             <field name="kind">text</field>
             <field name="value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
             <field name="default_value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
-            <field name="sequence">630</field>
+            <field name="sequence">690</field>
         </record>
         <record id="text_about_vision_title" model="disha.site.text">
             <field name="key">about.vision.title</field>
@@ -575,7 +629,7 @@
             <field name="kind">line</field>
             <field name="value">Our vision</field>
             <field name="default_value">Our vision</field>
-            <field name="sequence">640</field>
+            <field name="sequence">700</field>
         </record>
         <record id="text_about_vision_text" model="disha.site.text">
             <field name="key">about.vision.text</field>
@@ -584,7 +638,7 @@
             <field name="kind">text</field>
             <field name="value">Be part of cultural enrichment combined with social service to create a loving community.</field>
             <field name="default_value">Be part of cultural enrichment combined with social service to create a loving community.</field>
-            <field name="sequence">650</field>
+            <field name="sequence">710</field>
         </record>
         <record id="text_about_mission_title" model="disha.site.text">
             <field name="key">about.mission.title</field>
@@ -593,7 +647,7 @@
             <field name="kind">line</field>
             <field name="value">Our mission</field>
             <field name="default_value">Our mission</field>
-            <field name="sequence">660</field>
+            <field name="sequence">720</field>
         </record>
         <record id="text_about_mission_text" model="disha.site.text">
             <field name="key">about.mission.text</field>
@@ -602,7 +656,7 @@
             <field name="kind">text</field>
             <field name="value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
             <field name="default_value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
-            <field name="sequence">670</field>
+            <field name="sequence">730</field>
         </record>
         <record id="text_about_goals_title" model="disha.site.text">
             <field name="key">about.goals.title</field>
@@ -611,7 +665,7 @@
             <field name="kind">line</field>
             <field name="value">What we focus on</field>
             <field name="default_value">What we focus on</field>
-            <field name="sequence">680</field>
+            <field name="sequence">740</field>
         </record>
         <record id="text_about_forums_title" model="disha.site.text">
             <field name="key">about.forums.title</field>
@@ -620,7 +674,7 @@
             <field name="kind">line</field>
             <field name="value">Our structure</field>
             <field name="default_value">Our structure</field>
-            <field name="sequence">690</field>
+            <field name="sequence">750</field>
         </record>
         <record id="text_about_forums_intro" model="disha.site.text">
             <field name="key">about.forums.intro</field>
@@ -629,7 +683,7 @@
             <field name="kind">line</field>
             <field name="value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
             <field name="default_value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
-            <field name="sequence">700</field>
+            <field name="sequence">760</field>
         </record>
         <record id="text_about_team_title" model="disha.site.text">
             <field name="key">about.team.title</field>
@@ -638,7 +692,7 @@
             <field name="kind">line</field>
             <field name="value">Key office bearers</field>
             <field name="default_value">Key office bearers</field>
-            <field name="sequence">710</field>
+            <field name="sequence">770</field>
         </record>
         <record id="text_about_team_intro" model="disha.site.text">
             <field name="key">about.team.intro</field>
@@ -647,7 +701,7 @@
             <field name="kind">line</field>
             <field name="value">The National Committee and advisors guiding DISHA.</field>
             <field name="default_value">The National Committee and advisors guiding DISHA.</field>
-            <field name="sequence">720</field>
+            <field name="sequence">780</field>
         </record>
         <record id="text_about_support_title" model="disha.site.text">
             <field name="key">about.support.title</field>
@@ -656,7 +710,7 @@
             <field name="kind">line</field>
             <field name="value">What our members do</field>
             <field name="default_value">What our members do</field>
-            <field name="sequence">730</field>
+            <field name="sequence">790</field>
         </record>
         <record id="text_indians_title" model="disha.site.text">
             <field name="key">indians.title</field>
@@ -665,7 +719,7 @@
             <field name="kind">line</field>
             <field name="value">Indians in KSA</field>
             <field name="default_value">Indians in KSA</field>
-            <field name="sequence">740</field>
+            <field name="sequence">800</field>
         </record>
         <record id="text_indians_intro" model="disha.site.text">
             <field name="key">indians.intro</field>
@@ -674,7 +728,7 @@
             <field name="kind">line</field>
             <field name="value">Information and support for Indian residents across Saudi Arabia.</field>
             <field name="default_value">Information and support for Indian residents across Saudi Arabia.</field>
-            <field name="sequence">750</field>
+            <field name="sequence">810</field>
         </record>
         <record id="text_indians_helps_title" model="disha.site.text">
             <field name="key">indians.helps.title</field>
@@ -683,7 +737,7 @@
             <field name="kind">line</field>
             <field name="value">How DISHA helps</field>
             <field name="default_value">How DISHA helps</field>
-            <field name="sequence">760</field>
+            <field name="sequence">820</field>
         </record>
         <record id="text_indians_faq_title" model="disha.site.text">
             <field name="key">indians.faq.title</field>
@@ -692,7 +746,7 @@
             <field name="kind">line</field>
             <field name="value">Frequently asked questions</field>
             <field name="default_value">Frequently asked questions</field>
-            <field name="sequence">770</field>
+            <field name="sequence">830</field>
         </record>
         <record id="text_indians_faq_note" model="disha.site.text">
             <field name="key">indians.faq.note</field>
@@ -701,7 +755,7 @@
             <field name="kind">text</field>
             <field name="value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
             <field name="default_value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
-            <field name="sequence">780</field>
+            <field name="sequence">840</field>
         </record>
         <record id="text_seva_title" model="disha.site.text">
             <field name="key">seva.title</field>
@@ -710,7 +764,7 @@
             <field name="kind">line</field>
             <field name="value">Our Activities</field>
             <field name="default_value">Our Activities</field>
-            <field name="sequence">790</field>
+            <field name="sequence">850</field>
         </record>
         <record id="text_seva_intro" model="disha.site.text">
             <field name="key">seva.intro</field>
@@ -719,7 +773,7 @@
             <field name="kind">line</field>
             <field name="value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
             <field name="default_value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
-            <field name="sequence">800</field>
+            <field name="sequence">860</field>
         </record>
         <record id="text_seva_gallery_title" model="disha.site.text">
             <field name="key">seva.gallery.title</field>
@@ -728,7 +782,7 @@
             <field name="kind">line</field>
             <field name="value">Gallery</field>
             <field name="default_value">Gallery</field>
-            <field name="sequence">810</field>
+            <field name="sequence">870</field>
         </record>
         <record id="text_seva_gallery_intro" model="disha.site.text">
             <field name="key">seva.gallery.intro</field>
@@ -737,7 +791,7 @@
             <field name="kind">line</field>
             <field name="value">Snapshots of DISHA programmes across the Kingdom.</field>
             <field name="default_value">Snapshots of DISHA programmes across the Kingdom.</field>
-            <field name="sequence">820</field>
+            <field name="sequence">880</field>
         </record>
         <record id="text_seva_gallery_link" model="disha.site.text">
             <field name="key">seva.gallery.link</field>
@@ -746,7 +800,7 @@
             <field name="kind">line</field>
             <field name="value">View full gallery</field>
             <field name="default_value">View full gallery</field>
-            <field name="sequence">830</field>
+            <field name="sequence">890</field>
         </record>
         <record id="text_gallery_title" model="disha.site.text">
             <field name="key">gallery.title</field>
@@ -755,7 +809,7 @@
             <field name="kind">line</field>
             <field name="value">Photo Gallery</field>
             <field name="default_value">Photo Gallery</field>
-            <field name="sequence">840</field>
+            <field name="sequence">900</field>
         </record>
         <record id="text_gallery_intro" model="disha.site.text">
             <field name="key">gallery.intro</field>
@@ -764,7 +818,7 @@
             <field name="kind">line</field>
             <field name="value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
             <field name="default_value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
-            <field name="sequence">850</field>
+            <field name="sequence">910</field>
         </record>
         <record id="text_gallery_cta" model="disha.site.text">
             <field name="key">gallery.cta</field>
@@ -773,7 +827,7 @@
             <field name="kind">line</field>
             <field name="value">Be part of the next moment.</field>
             <field name="default_value">Be part of the next moment.</field>
-            <field name="sequence">860</field>
+            <field name="sequence">920</field>
         </record>
         <record id="text_collab_title" model="disha.site.text">
             <field name="key">collab.title</field>
@@ -782,7 +836,7 @@
             <field name="kind">line</field>
             <field name="value">Partners &amp; Collaborations</field>
             <field name="default_value">Partners &amp; Collaborations</field>
-            <field name="sequence">870</field>
+            <field name="sequence">930</field>
         </record>
         <record id="text_collab_intro" model="disha.site.text">
             <field name="key">collab.intro</field>
@@ -791,7 +845,7 @@
             <field name="kind">line</field>
             <field name="value">DISHA works with embassies, cultural bodies and community organisations.</field>
             <field name="default_value">DISHA works with embassies, cultural bodies and community organisations.</field>
-            <field name="sequence">880</field>
+            <field name="sequence">940</field>
         </record>
         <record id="text_collab_enquiry_title" model="disha.site.text">
             <field name="key">collab.enquiry.title</field>
@@ -800,7 +854,7 @@
             <field name="kind">line</field>
             <field name="value">Partnership enquiries</field>
             <field name="default_value">Partnership enquiries</field>
-            <field name="sequence">890</field>
+            <field name="sequence">950</field>
         </record>
         <record id="text_collab_enquiry_text" model="disha.site.text">
             <field name="key">collab.enquiry.text</field>
@@ -809,7 +863,7 @@
             <field name="kind">line</field>
             <field name="value">Tell us about your organisation and how you would like to collaborate.</field>
             <field name="default_value">Tell us about your organisation and how you would like to collaborate.</field>
-            <field name="sequence">900</field>
+            <field name="sequence">960</field>
         </record>
         <record id="text_collab_enquiry_button" model="disha.site.text">
             <field name="key">collab.enquiry.button</field>
@@ -818,7 +872,7 @@
             <field name="kind">line</field>
             <field name="value">Email</field>
             <field name="default_value">Email</field>
-            <field name="sequence">910</field>
+            <field name="sequence">970</field>
         </record>
         <record id="text_reports_title" model="disha.site.text">
             <field name="key">reports.title</field>
@@ -827,7 +881,7 @@
             <field name="kind">line</field>
             <field name="value">Programmes &amp; Reports</field>
             <field name="default_value">Programmes &amp; Reports</field>
-            <field name="sequence">920</field>
+            <field name="sequence">980</field>
         </record>
         <record id="text_reports_intro" model="disha.site.text">
             <field name="key">reports.intro</field>
@@ -836,7 +890,7 @@
             <field name="kind">line</field>
             <field name="value">A look at what DISHA volunteers and supporters have achieved together.</field>
             <field name="default_value">A look at what DISHA volunteers and supporters have achieved together.</field>
-            <field name="sequence">930</field>
+            <field name="sequence">990</field>
         </record>
         <record id="text_reports_download" model="disha.site.text">
             <field name="key">reports.download</field>
@@ -845,7 +899,7 @@
             <field name="kind">line</field>
             <field name="value">Download report</field>
             <field name="default_value">Download report</field>
-            <field name="sequence">940</field>
+            <field name="sequence">1000</field>
         </record>
         <record id="text_contact_title" model="disha.site.text">
             <field name="key">contact.title</field>
@@ -854,7 +908,7 @@
             <field name="kind">line</field>
             <field name="value">Contact Us</field>
             <field name="default_value">Contact Us</field>
-            <field name="sequence">950</field>
+            <field name="sequence">1010</field>
         </record>
         <record id="text_contact_intro" model="disha.site.text">
             <field name="key">contact.intro</field>
@@ -863,7 +917,7 @@
             <field name="kind">line</field>
             <field name="value">We'd love to hear from you.</field>
             <field name="default_value">We'd love to hear from you.</field>
-            <field name="sequence">960</field>
+            <field name="sequence">1020</field>
         </record>
         <record id="text_contact_email_label" model="disha.site.text">
             <field name="key">contact.email_label</field>
@@ -872,7 +926,7 @@
             <field name="kind">line</field>
             <field name="value">Email</field>
             <field name="default_value">Email</field>
-            <field name="sequence">970</field>
+            <field name="sequence">1030</field>
         </record>
         <record id="text_contact_address_label" model="disha.site.text">
             <field name="key">contact.address_label</field>
@@ -881,7 +935,7 @@
             <field name="kind">line</field>
             <field name="value">Address</field>
             <field name="default_value">Address</field>
-            <field name="sequence">980</field>
+            <field name="sequence">1040</field>
         </record>
         <record id="text_contact_hours_label" model="disha.site.text">
             <field name="key">contact.hours_label</field>
@@ -890,7 +944,7 @@
             <field name="kind">line</field>
             <field name="value">Office hours</field>
             <field name="default_value">Office hours</field>
-            <field name="sequence">990</field>
+            <field name="sequence">1050</field>
         </record>
         <record id="text_contact_cta" model="disha.site.text">
             <field name="key">contact.cta</field>
@@ -899,7 +953,7 @@
             <field name="kind">line</field>
             <field name="value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
             <field name="default_value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
-            <field name="sequence">1000</field>
+            <field name="sequence">1060</field>
         </record>
         <record id="text_join_eyebrow" model="disha.site.text">
             <field name="key">join.eyebrow</field>
@@ -908,7 +962,7 @@
             <field name="kind">line</field>
             <field name="value">Membership Application</field>
             <field name="default_value">Membership Application</field>
-            <field name="sequence">1010</field>
+            <field name="sequence">1070</field>
         </record>
         <record id="text_join_title" model="disha.site.text">
             <field name="key">join.title</field>
@@ -917,7 +971,7 @@
             <field name="kind">line</field>
             <field name="value">Apply for DISHA membership</field>
             <field name="default_value">Apply for DISHA membership</field>
-            <field name="sequence">1020</field>
+            <field name="sequence">1080</field>
         </record>
         <record id="text_join_intro" model="disha.site.text">
             <field name="key">join.intro</field>
@@ -926,7 +980,7 @@
             <field name="kind">text</field>
             <field name="value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
             <field name="default_value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
-            <field name="sequence">1030</field>
+            <field name="sequence">1090</field>
         </record>
         <record id="text_join_time" model="disha.site.text">
             <field name="key">join.time</field>
@@ -935,7 +989,7 @@
             <field name="kind">line</field>
             <field name="value">About 5 minutes</field>
             <field name="default_value">About 5 minutes</field>
-            <field name="sequence">1040</field>
+            <field name="sequence">1100</field>
         </record>
         <record id="text_join_sections" model="disha.site.text">
             <field name="key">join.sections</field>
@@ -944,7 +998,7 @@
             <field name="kind">line</field>
             <field name="value">4 short sections</field>
             <field name="default_value">4 short sections</field>
-            <field name="sequence">1050</field>
+            <field name="sequence">1110</field>
         </record>
         <record id="text_join_next_title" model="disha.site.text">
             <field name="key">join.next.title</field>
@@ -953,7 +1007,7 @@
             <field name="kind">line</field>
             <field name="value">What happens next</field>
             <field name="default_value">What happens next</field>
-            <field name="sequence">1060</field>
+            <field name="sequence">1120</field>
         </record>
         <record id="text_join_help_title" model="disha.site.text">
             <field name="key">join.help.title</field>
@@ -962,7 +1016,7 @@
             <field name="kind">line</field>
             <field name="value">Questions?</field>
             <field name="default_value">Questions?</field>
-            <field name="sequence">1070</field>
+            <field name="sequence">1130</field>
         </record>
         <record id="text_join_help_text" model="disha.site.text">
             <field name="key">join.help.text</field>
@@ -971,7 +1025,7 @@
             <field name="kind">text</field>
             <field name="value">Write to us and we will help you choose between General and Associate membership.</field>
             <field name="default_value">Write to us and we will help you choose between General and Associate membership.</field>
-            <field name="sequence">1080</field>
+            <field name="sequence">1140</field>
         </record>
         <record id="text_support_eyebrow" model="disha.site.text">
             <field name="key">support.eyebrow</field>
@@ -980,7 +1034,7 @@
             <field name="kind">line</field>
             <field name="value">DISHA Support</field>
             <field name="default_value">DISHA Support</field>
-            <field name="sequence">1090</field>
+            <field name="sequence">1150</field>
         </record>
         <record id="text_support_title" model="disha.site.text">
             <field name="key">support.title</field>
@@ -989,7 +1043,7 @@
             <field name="kind">line</field>
             <field name="value">Get help with visa, iqama and other issues</field>
             <field name="default_value">Get help with visa, iqama and other issues</field>
-            <field name="sequence">1100</field>
+            <field name="sequence">1160</field>
         </record>
         <record id="text_support_intro" model="disha.site.text">
             <field name="key">support.intro</field>
@@ -998,7 +1052,7 @@
             <field name="kind">text</field>
             <field name="value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
             <field name="default_value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
-            <field name="sequence">1110</field>
+            <field name="sequence">1170</field>
         </record>
         <record id="text_support_next_title" model="disha.site.text">
             <field name="key">support.next.title</field>
@@ -1007,7 +1061,7 @@
             <field name="kind">line</field>
             <field name="value">How it works</field>
             <field name="default_value">How it works</field>
-            <field name="sequence">1120</field>
+            <field name="sequence">1180</field>
         </record>
         <record id="text_support_track_title" model="disha.site.text">
             <field name="key">support.track.title</field>
@@ -1016,7 +1070,7 @@
             <field name="kind">line</field>
             <field name="value">Already have a token?</field>
             <field name="default_value">Already have a token?</field>
-            <field name="sequence">1130</field>
+            <field name="sequence">1190</field>
         </record>
         <record id="text_support_track_text" model="disha.site.text">
             <field name="key">support.track.text</field>
@@ -1025,7 +1079,7 @@
             <field name="kind">text</field>
             <field name="value">Check the status of your request and read replies from our team.</field>
             <field name="default_value">Check the status of your request and read replies from our team.</field>
-            <field name="sequence">1140</field>
+            <field name="sequence">1200</field>
         </record>
         <record id="text_support_track_button" model="disha.site.text">
             <field name="key">support.track.button</field>
@@ -1034,7 +1088,7 @@
             <field name="kind">line</field>
             <field name="value">Track my request</field>
             <field name="default_value">Track my request</field>
-            <field name="sequence">1150</field>
+            <field name="sequence">1210</field>
         </record>
         <record id="text_track_title" model="disha.site.text">
             <field name="key">track.title</field>
@@ -1043,7 +1097,7 @@
             <field name="kind">line</field>
             <field name="value">Track your support request</field>
             <field name="default_value">Track your support request</field>
-            <field name="sequence">1160</field>
+            <field name="sequence">1220</field>
         </record>
         <record id="text_track_intro" model="disha.site.text">
             <field name="key">track.intro</field>
@@ -1052,7 +1106,7 @@
             <field name="kind">text</field>
             <field name="value">Enter the token you received when you submitted your request.</field>
             <field name="default_value">Enter the token you received when you submitted your request.</field>
-            <field name="sequence">1170</field>
+            <field name="sequence">1230</field>
         </record>
         <record id="text_track_new" model="disha.site.text">
             <field name="key">track.new</field>
@@ -1061,7 +1115,7 @@
             <field name="kind">line</field>
             <field name="value">Need to raise a new request?</field>
             <field name="default_value">Need to raise a new request?</field>
-            <field name="sequence">1180</field>
+            <field name="sequence">1240</field>
         </record>
         <record id="text_privacy_title" model="disha.site.text">
             <field name="key">privacy.title</field>
@@ -1070,7 +1124,7 @@
             <field name="kind">line</field>
             <field name="value">Privacy Policy</field>
             <field name="default_value">Privacy Policy</field>
-            <field name="sequence">1190</field>
+            <field name="sequence">1250</field>
         </record>
         <record id="text_privacy_intro" model="disha.site.text">
             <field name="key">privacy.intro</field>
@@ -1079,7 +1133,7 @@
             <field name="kind">line</field>
             <field name="value">How DISHA handles membership and support information.</field>
             <field name="default_value">How DISHA handles membership and support information.</field>
-            <field name="sequence">1200</field>
+            <field name="sequence">1260</field>
         </record>
         <record id="text_privacy_body" model="disha.site.text">
             <field name="key">privacy.body</field>
@@ -1134,7 +1188,7 @@ You may ask to see, correct or delete your information, or withdraw your consent
 
 ## Contact
 Questions about this policy: {email}.</field>
-            <field name="sequence">1210</field>
+            <field name="sequence">1270</field>
         </record>
         <record id="text_terms_title" model="disha.site.text">
             <field name="key">terms.title</field>
@@ -1143,7 +1197,7 @@ Questions about this policy: {email}.</field>
             <field name="kind">line</field>
             <field name="value">Terms &amp; Conditions</field>
             <field name="default_value">Terms &amp; Conditions</field>
-            <field name="sequence">1220</field>
+            <field name="sequence">1280</field>
         </record>
         <record id="text_terms_intro" model="disha.site.text">
             <field name="key">terms.intro</field>
@@ -1152,7 +1206,7 @@ Questions about this policy: {email}.</field>
             <field name="kind">line</field>
             <field name="value">Terms for using this website and applying for membership.</field>
             <field name="default_value">Terms for using this website and applying for membership.</field>
-            <field name="sequence">1230</field>
+            <field name="sequence">1290</field>
         </record>
         <record id="text_terms_body" model="disha.site.text">
             <field name="key">terms.body</field>
@@ -1187,7 +1241,7 @@ We may update these terms from time to time. Continued use of the site means you
 
 ## Contact
 Questions: {email}.</field>
-            <field name="sequence">1240</field>
+            <field name="sequence">1300</field>
         </record>
         <record id="item_hero_checks_1" model="disha.site.item">
             <field name="collection">hero_checks</field>

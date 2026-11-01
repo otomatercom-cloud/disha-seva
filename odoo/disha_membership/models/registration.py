@@ -12,6 +12,15 @@ CATEGORIES = [("general", "General"), ("associate", "Associate")]
 GENDERS = [("male", "Male"), ("female", "Female"), ("other", "Other")]
 BLOOD_GROUPS = [(g, g) for g in ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")]
 
+# Provinces members choose from (12). Events target one of these (see disha_site_content / disha_event_notify).
+KSA_REGIONS = [
+    ("central", "Central Province"),
+    ("western", "Western Province"),
+    ("eastern", "Eastern Province"),
+    ("northern", "Northern Province"),
+    ("southern", "Southern Province"),
+]
+
 # field -> (max length, required)   Numbers refer to the DISHA paper form.
 TEXT_FIELDS = {
     "full_name": (120, True),             # 1
@@ -19,7 +28,6 @@ TEXT_FIELDS = {
     "qualification": (120, False),        # 9
     "occupation": (120, False),           # 10
     "organization": (120, False),         # 11
-    "ksa_region": (80, True),             # 12
     "ksa_city": (80, True),               # 13
     "iqama_number": (20, False),          # 14
     "passport_number": (20, True),        # 15
@@ -67,7 +75,7 @@ class DishaMembershipApplication(models.Model):
     qualification = fields.Char(string="Educational Qualification")
     occupation = fields.Char(string="Profession / Occupation")
     organization = fields.Char(string="Employer / Organization")
-    ksa_region = fields.Char(string="Province / Region in KSA", index=True)
+    ksa_region = fields.Selection(KSA_REGIONS, string="Province / Region in KSA", index=True)
     ksa_city = fields.Char(string="City / Area in KSA", index=True)
     iqama_number = fields.Char(string="Iqama Number", groups="disha_membership.group_disha_membership_manager")
     passport_number = fields.Char(string="Passport Number", groups="disha_membership.group_disha_membership_manager")
@@ -217,6 +225,16 @@ class DishaMembershipApplication(models.Model):
                 vals[fname] = text
             else:
                 errors[fname] = "Invalid choice."
+
+        region = self._clean_text(payload.get("ksa_region")).lower()
+        if not region:
+            errors["ksa_region"] = "This field is required."
+        else:
+            match = next((key for key, label in KSA_REGIONS if region in (key, label.lower())), None)
+            if match:
+                vals["ksa_region"] = match
+            else:
+                errors["ksa_region"] = "Invalid choice."
 
         dob = self._clean_text(payload.get("date_of_birth"))
         if not dob:

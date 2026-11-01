@@ -1,6 +1,7 @@
 import {
   CollabAndReports, ContactStrip, Hero, Impact, Intro, Marquee, OurMoments, Pillars, JoinCta,
 } from "@/components/sections/home";
+import { Events } from "@/components/sections/events";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <Intro />
       <Pillars />
       <Impact />
+      <Events />
       <OurMoments />
       <JoinCta />
       <CollabAndReports />

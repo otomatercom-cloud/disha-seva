@@ -17,7 +17,7 @@ async function fillRequired(user: ReturnType<typeof userEvent.setup>) {
   await type(/date of birth/i, "1992-04-12");
   await type(/mobile number/i, "+966501234567");
   await type(/email address/i, "asha@example.com");
-  await type(/province \/ region/i, "Central");
+  await user.selectOptions(screen.getByLabelText(/province \/ region/i), "central");
   await type(/city \/ area/i, "Riyadh");
   await type(/passport number/i, "P1234567");
   await type(/^state/i, "Kerala");

@@ -12,6 +12,7 @@
         "security/ir.model.access.csv",
         "data/seed.xml",
         "views/content_views.xml",
+        "views/event_views.xml",
         "views/menu.xml",
     ],
     "application": True,

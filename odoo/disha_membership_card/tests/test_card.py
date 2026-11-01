@@ -12,7 +12,7 @@ VALID = {
     "mobile": "+966 50 123 4567", "whatsapp": "+966501234567",
     "email": "asha.card@example.com", "blood_group": "O+",
     "qualification": "B.Sc Nursing", "occupation": "Nurse", "organization": "Riyadh Care Hospital",
-    "ksa_region": "Central", "ksa_city": "Riyadh", "iqama_number": "2412345678", "passport_number": "P1234567",
+    "ksa_region": "central", "ksa_city": "Riyadh", "iqama_number": "2412345678", "passport_number": "P1234567",
     "india_state": "Kerala", "india_district": "Thrissur", "india_village": "Irinjalakuda", "india_pin": "680121",
     "india_address": "Nair House, Irinjalakuda P.O.",
     "ksa_emergency_name": "Ravi Nair", "ksa_emergency_relationship": "Brother", "ksa_emergency_phone": "+966500000001",

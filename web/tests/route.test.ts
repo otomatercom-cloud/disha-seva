@@ -7,7 +7,7 @@ const TOKEN = "super-secret-token-value";
 const KEY = "0123456789abcdef-key";
 const body = {
   category: "general", full_name: "Asha Nair", gender: "female", date_of_birth: "1992-04-12", nationality: "Indian",
-  mobile: "+966501234567", email: "a@b.co", ksa_region: "Central", ksa_city: "Riyadh", passport_number: "P1234567",
+  mobile: "+966501234567", email: "a@b.co", ksa_region: "central", ksa_city: "Riyadh", passport_number: "P1234567",
   india_state: "Kerala", india_district: "Thrissur", india_village: "Irinjalakuda", india_pin: "680121",
   india_address: "Nair House", ksa_emergency_name: "Ravi", ksa_emergency_relationship: "Brother",
   ksa_emergency_phone: "+966500000001", india_emergency_name: "Lakshmi", india_emergency_relationship: "Mother",

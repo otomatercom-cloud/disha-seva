@@ -5,7 +5,16 @@ import { GALLERY } from "@/lib/gallery";
 import { images } from "@/lib/utils";
 
 export type Item = { title: string; text: string; icon: string; url: string; image: string; file: string };
+export type SiteEvent = {
+  title: string; date: string; endDate: string; time: string; location: string; details: string; image: string;
+  region: string; regionLabel: string;
+};
+type ApiEvent = {
+  title?: string; date?: string; end_date?: string; time?: string; location?: string; details?: string;
+  image?: string; region?: string; region_label?: string;
+};
 type ApiPayload = {
+  events?: ApiEvent[];
   texts?: Record<string, string>;
   images?: Record<string, string>;
   collections?: Record<string, Partial<Item>[]>;
@@ -17,6 +26,8 @@ export type Content = {
   /** Editable image URL; falls back to the legacy hot-linked image, or null. */
   img: (key: string) => string | null;
   items: (name: string) => Item[];
+  /** Events from Odoo: upcoming first (soonest first), then past (latest first). Empty if none / Odoo down. */
+  events: (today?: string) => SiteEvent[];
 };
 
 const FALLBACK_IMAGES: Record<string, string> = { "site.logo": images.logo, "home.intro.image": images.about };
@@ -53,6 +64,19 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
   return {
     t: (key) => data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || "",
     img: (key) => abs(data?.images?.[key]) || FALLBACK_IMAGES[key] || null,
+    events: (today = new Date().toISOString().slice(0, 10)) => {
+      const list = (data?.events ?? [])
+        .filter((e) => e.title && /^\d{4}-\d{2}-\d{2}$/.test(e.date ?? ""))
+        .map((e) => ({
+          title: e.title!, date: e.date!, endDate: e.end_date || "", time: e.time || "",
+          location: e.location || "", details: e.details || "", image: abs(e.image),
+          region: e.region || "all", regionLabel: e.region_label || "",
+        }));
+      const last = (e: SiteEvent) => e.endDate || e.date;
+      const up = list.filter((e) => last(e) >= today).sort((a, b) => a.date.localeCompare(b.date));
+      const past = list.filter((e) => last(e) < today).sort((a, b) => b.date.localeCompare(a.date));
+      return [...up, ...past];
+    },
     items: (name) => {
       const live = data?.collections?.[name];
       if (live && live.length) {

@@ -2,12 +2,12 @@ import base64
 import json
 import logging
 
-from odoo import http
+from odoo import fields, http
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
-MODELS = {"text": "disha.site.text", "item": "disha.site.item"}
-FIELDS = {"text": ("image",), "item": ("image", "file")}
+MODELS = {"text": "disha.site.text", "item": "disha.site.item", "event": "disha.site.event"}
+FIELDS = {"text": ("image",), "item": ("image", "file"), "event": ("image",)}
 
 
 def _json(payload, status=200, cache="public, max-age=15"):
@@ -41,8 +41,16 @@ class DishaSiteContent(http.Controller):
                 "image": _media_url("item", it, "image") if it.image else "",
                 "file": _media_url("item", it, "file") if it.file else "",
             })
+        region_label = dict(env["disha.site.event"]._fields["region"].selection)
+        events = [{
+            "title": ev.name, "date": fields.Date.to_string(ev.event_date),
+            "end_date": fields.Date.to_string(ev.end_date) if ev.end_date else "",
+            "time": ev.time_text or "", "location": ev.location or "", "details": ev.details or "",
+            "region": ev.region, "region_label": region_label.get(ev.region, ""),
+            "image": _media_url("event", ev, "image") if ev.image else "",
+        } for ev in env["disha.site.event"].sudo().search([("published", "=", True)], limit=200)]
         # An empty collection is sent as [] so the site can tell "emptied on purpose" from "Odoo down"
-        return _json({"texts": texts, "images": images, "collections": collections})
+        return _json({"texts": texts, "images": images, "collections": collections, "events": events})
 
     @http.route("/disha/site-media/<string:model>/<int:rec_id>/<string:field>", type="http",
                 auth="public", methods=["GET"], csrf=False, save_session=False)
@@ -50,7 +58,7 @@ class DishaSiteContent(http.Controller):
         if model not in MODELS or field not in FIELDS[model]:
             return request.not_found()
         rec = request.env[MODELS[model]].sudo().browse(rec_id).exists()
-        if not rec or (model == "item" and not rec.published) or not rec[field]:
+        if not rec or (model in ("item", "event") and not rec.published) or not rec[field]:
             return request.not_found()
         raw = base64.b64decode(rec[field])
         if field == "file":

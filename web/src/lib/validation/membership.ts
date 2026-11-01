@@ -2,6 +2,11 @@ import { z } from "zod";
 
 export const CATEGORIES = [["general", "General"], ["associate", "Associate"]] as const;
 export const GENDERS = [["male", "Male"], ["female", "Female"], ["other", "Other"]] as const;
+// Keep in sync with KSA_REGIONS in odoo/disha_membership (events are emailed to members by province).
+export const REGIONS = [
+  ["central", "Central Province"], ["western", "Western Province"], ["eastern", "Eastern Province"],
+  ["northern", "Northern Province"], ["southern", "Southern Province"],
+] as const;
 export const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((g) => [g, g] as const);
 const PHONE_RE = /^\+?[0-9][0-9\s\-()]{6,19}$/;
 const CTRL_RE = /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g;
@@ -54,7 +59,7 @@ export const membershipSchema = z.object({
   qualification: text(120),
   occupation: text(120),
   organization: text(120),
-  ksa_region: requiredText(80),
+  ksa_region: requiredChoice(REGIONS),
   ksa_city: requiredText(80),
   iqama_number: text(20),
   passport_number: requiredText(20),

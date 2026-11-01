@@ -9,7 +9,7 @@ VALID = {
     "mobile": "+966 50 123 4567", "whatsapp": "+966501234567",
     "email": "Asha@Example.com", "blood_group": "O+",
     "qualification": "B.Sc Nursing", "occupation": "Nurse", "organization": "Riyadh Care Hospital",
-    "ksa_region": "Central", "ksa_city": "Riyadh", "iqama_number": "2412345678", "passport_number": "P1234567",
+    "ksa_region": "central", "ksa_city": "Riyadh", "iqama_number": "2412345678", "passport_number": "P1234567",
     "india_state": "Kerala", "india_district": "Thrissur", "india_village": "Irinjalakuda", "india_pin": "680121",
     "india_address": "Nair House, Irinjalakuda P.O.",
     "ksa_emergency_name": "Ravi Nair", "ksa_emergency_relationship": "Brother", "ksa_emergency_phone": "+966500000001",
@@ -56,6 +56,14 @@ class TestRegistrationModel(TransactionCase):
         res = self.Reg.create_from_website(dict(VALID, india_pin="12345", category="vip", blood_group="Z+"))
         for f in ("india_pin", "category", "blood_group"):
             self.assertIn(f, res["errors"])
+
+    def test_region_is_a_fixed_province(self):
+        ok = self.Reg.create_from_website(dict(VALID, ksa_region="Eastern Province"))
+        self.assertTrue(ok["ok"])
+        self.assertEqual(self.Reg.search([("name", "=", ok["reference"])]).ksa_region, "eastern")
+        for bad in ("Mars", "", "centralx"):
+            res = self.Reg.create_from_website(dict(VALID, ksa_region=bad))
+            self.assertIn("ksa_region", res["errors"], bad)
 
     def test_approve_sets_office_fields(self):
         rec = self.Reg.search([("name", "=", self.Reg.create_from_website(dict(VALID))["reference"])])

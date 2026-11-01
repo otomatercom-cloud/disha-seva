@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_site_event_list" model="ir.ui.view">
+        <field name="name">disha.site.event.list</field>
+        <field name="model">disha.site.event</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="not is_upcoming">
+                <field name="event_date"/>
+                <field name="end_date" optional="hide"/>
+                <field name="name"/>
+                <field name="region"/>
+                <field name="location"/>
+                <field name="image" widget="image" options="{'size': [40, 40]}"/>
+                <field name="is_upcoming" optional="hide"/>
+                <field name="published" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_disha_site_event_form" model="ir.ui.view">
+        <field name="name">disha.site.event.form</field>
+        <field name="model">disha.site.event</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="e.g. Blood Donation Camp"/>
+                            <field name="event_date"/>
+                            <field name="end_date"/>
+                            <field name="time_text" placeholder="6:00 PM onwards"/>
+                            <field name="region"/>
+                            <field name="location" placeholder="Riyadh"/>
+                            <field name="published"/>
+                            <field name="is_upcoming" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" options="{'size': [260, 180]}"/>
+                        </group>
+                    </group>
+                    <group string="Details">
+                        <field name="details" nolabel="1" placeholder="What is happening, who can join, how to reach us..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_disha_site_event_kanban" model="ir.ui.view">
+        <field name="name">disha.site.event.kanban</field>
+        <field name="model">disha.site.event</field>
+        <field name="arch" type="xml">
+            <kanban default_order="event_date desc">
+                <templates>
+                    <t t-name="card">
+                        <field name="image" widget="image" options="{'size': [240, 140]}"/>
+                        <field name="name" class="fw-bold mt-2"/>
+                        <div><field name="event_date"/> <span t-if="record.location.value">· <field name="location"/></span></div>
+                        <field name="published" widget="boolean_toggle"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_disha_site_event_search" model="ir.ui.view">
+        <field name="name">disha.site.event.search</field>
+        <field name="model">disha.site.event</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/><field name="location"/>
+                <filter name="upcoming" string="Upcoming" domain="[('is_upcoming','=',True)]"/>
+                <filter name="past" string="Past" domain="[('is_upcoming','=',False)]"/>
+                <filter name="hidden" string="Hidden" domain="[('published','=',False)]"/>
+                <group><filter name="by_region" string="Province" context="{'group_by': 'region'}"/></group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_disha_site_event" model="ir.actions.act_window">
+        <field name="name">Events</field>
+        <field name="res_model">disha.site.event</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'search_default_upcoming': 1}</field>
+    </record>
+</odoo>

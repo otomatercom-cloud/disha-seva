@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_site_event_form_notify" model="ir.ui.view">
+        <field name="name">disha.site.event.form.notify</field>
+        <field name="model">disha.site.event</field>
+        <field name="inherit_id" ref="disha_site_content.view_disha_site_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_notify_members" type="object" string="Email Members" class="btn-primary"
+                            invisible="notified_on or not published or not id"
+                            groups="disha_membership.group_disha_membership_manager,disha_site_content.group_disha_site_manager"
+                            confirm="This sends the event email to every approved member in the selected province. Continue?"/>
+                    <button name="action_notify_members_again" type="object" string="Email again"
+                            invisible="not notified_on"
+                            groups="disha_membership.group_disha_membership_manager,disha_site_content.group_disha_site_manager"
+                            confirm="Members were already emailed. Send the event email once more?"/>
+                </header>
+            </xpath>
+            <xpath expr="//field[@name='region']" position="after">
+                <field name="recipient_count" invisible="not id"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group string="Email status" invisible="not notified_on">
+                    <field name="notified_on"/>
+                    <field name="notified_by_id"/>
+                    <field name="notified_count"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_disha_site_event_list_notify" model="ir.ui.view">
+        <field name="name">disha.site.event.list.notify</field>
+        <field name="model">disha.site.event</field>
+        <field name="inherit_id" ref="disha_site_content.view_disha_site_event_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='published']" position="before">
+                <field name="notified_on" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -9,7 +9,7 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SelectField, TextAreaField, TextField } from "@/components/ui/form-fields";
 import {
-  BLOOD_GROUPS, CATEGORIES, GENDERS, membershipSchema, type MembershipApplication,
+  BLOOD_GROUPS, CATEGORIES, GENDERS, REGIONS, membershipSchema, type MembershipApplication,
 } from "@/lib/validation/membership";
 import { PhotoField } from "@/components/ui/photo-field";
 import type { SubmitResult } from "@/types/membership";
@@ -149,7 +149,7 @@ export function MembershipForm() {
         <TextField label="Educational qualification" error={err("qualification")} {...register("qualification")} />
         <TextField label="Profession / occupation" error={err("occupation")} {...register("occupation")} />
         <TextField label="Employer / organization" error={err("organization")} {...register("organization")} />
-        <TextField label="Province / region in KSA" required placeholder="e.g. Central, Western, Eastern" error={err("ksa_region")} {...register("ksa_region")} />
+        <SelectField label="Province / region in KSA" required options={REGIONS} error={err("ksa_region")} {...register("ksa_region")} />
         <TextField label="City / area in KSA" required error={err("ksa_city")} {...register("ksa_city")} />
         <TextField label="Iqama number (if applicable)" error={err("iqama_number")} {...register("iqama_number")} />
         <TextField label="Passport number" required hint="Visible only to DISHA managers" error={err("passport_number")} {...register("passport_number")} />
