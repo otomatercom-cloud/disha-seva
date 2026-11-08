@@ -33,27 +33,46 @@ def _err(code, status):
     return _json({"ok": False, "error": code}, status)
 
 
-def _secret():
-    return (request.env["ir.config_parameter"].sudo().get_param("database.secret") or "").encode()
+REVOKE_PARAM = "disha_admin_api.revoked_before.%s"
 
 
-def _sign(payload: bytes):
-    return hmac.new(_secret(), payload, hashlib.sha256).hexdigest()
+def _secret(env):
+    return (env["ir.config_parameter"].sudo().get_param("database.secret") or "").encode()
 
 
-def make_token(uid, now=None):
-    body = base64.urlsafe_b64encode(json.dumps({"u": uid, "e": int((now or time.time()) + TOKEN_TTL)}).encode()).decode()
-    return f"{body}.{_sign(body.encode())}"
+def _sign(env, payload: bytes):
+    return hmac.new(_secret(env), payload, hashlib.sha256).hexdigest()
 
 
-def read_token(token, now=None):
-    """Return uid for a valid, unexpired token, else None."""
+def _pw_key(env, uid):
+    """Short fingerprint of the user's current password hash: a password change invalidates every issued token."""
+    env.flush_all()
+    env.cr.execute("SELECT password FROM res_users WHERE id = %s", (int(uid),))
+    row = env.cr.fetchone()
+    return hashlib.sha256((row[0] if row and row[0] else "").encode()).hexdigest()[:16]
+
+
+def make_token(env, uid, now=None):
+    now = now or time.time()
+    claims = {"u": int(uid), "i": round(now, 3), "e": int(now + TOKEN_TTL), "k": _pw_key(env, uid)}
+    body = base64.urlsafe_b64encode(json.dumps(claims).encode()).decode()
+    return f"{body}.{_sign(env, body.encode())}"
+
+
+def read_token(env, token, now=None):
+    """Return the uid for a valid, unexpired, unrevoked token whose password fingerprint still matches, else None."""
     try:
         body, sig = token.split(".", 1)
-        if not hmac.compare_digest(sig, _sign(body.encode())):
+        if not hmac.compare_digest(sig, _sign(env, body.encode())):
             return None
         data = json.loads(base64.urlsafe_b64decode(body.encode()))
-        return int(data["u"]) if data["e"] > (now or time.time()) else None
+        uid = int(data["u"])
+        if data["e"] <= (now or time.time()):
+            return None
+        revoked = float(env["ir.config_parameter"].sudo().get_param(REVOKE_PARAM % uid) or 0)
+        if float(data["i"]) <= revoked:
+            return None  # the user signed out after this token was issued
+        return uid if hmac.compare_digest(str(data["k"]), _pw_key(env, uid)) else None
     except (ValueError, KeyError, TypeError, binascii.Error):
         return None
 
@@ -81,7 +100,7 @@ class DishaAdminApi(http.Controller):
 
     def _admin_env(self):
         """Env of the logged-in admin user (ACLs apply) or None."""
-        uid = read_token(request.httprequest.headers.get("X-Admin-Token", ""))
+        uid = read_token(request.env, request.httprequest.headers.get("X-Admin-Token", ""))
         if not uid:
             return None
         user = request.env["res.users"].sudo().browse(uid).exists()
@@ -121,7 +140,18 @@ class DishaAdminApi(http.Controller):
         user = request.env["res.users"].sudo().browse(uid)
         if not uid or not user.has_group(GROUP):
             return _err("forbidden", 403)
-        return _json({"ok": True, "token": make_token(uid), "name": user.name, "expires_in": TOKEN_TTL})
+        return _json({"ok": True, "token": make_token(request.env, uid), "name": user.name, "expires_in": TOKEN_TTL})
+
+    @http.route("/api/disha/admin/logout", type="http", auth="public", methods=["POST"], csrf=False, save_session=False)
+    def logout(self, **kw):
+        """Revoke every token this user has been issued so far (a copied token stops working at once)."""
+        if not self._server_ok():
+            return _err("unauthorized", 401)
+        env = self._admin_env()
+        if not env:
+            return _json({"ok": True})  # already invalid: nothing to revoke
+        request.env["ir.config_parameter"].sudo().set_param(REVOKE_PARAM % env.uid, repr(time.time()))
+        return _json({"ok": True})
 
     @http.route("/api/disha/admin/me", type="http", auth="public", methods=["GET"], csrf=False, save_session=False)
     def me(self, **kw):

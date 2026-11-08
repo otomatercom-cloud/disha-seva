@@ -27,22 +27,36 @@ class TestAdminApi(HttpCase):
         return self.url_open(path, data=json.dumps(data), headers=h)
 
     def test_token_roundtrip_and_expiry(self):
-        t = make_token(self.admin.id)
-        self.assertEqual(read_token(t), self.admin.id)
-        self.assertIsNone(read_token(t + "x"))
-        self.assertIsNone(read_token(t, now=10 ** 12))
+        t = make_token(self.env, self.admin.id)
+        self.assertEqual(read_token(self.env, t), self.admin.id)
+        self.assertIsNone(read_token(self.env, t + "x"))
+        self.assertIsNone(read_token(self.env, t, now=10 ** 12))
+
+    def test_logout_revokes_the_token(self):
+        t = make_token(self.env, self.admin.id)
+        self.assertEqual(self._get("/api/disha/admin/texts", t).status_code, 200)
+        self.assertEqual(self._post("/api/disha/admin/logout", {}, t).status_code, 200)
+        self.assertEqual(self._get("/api/disha/admin/texts", t).status_code, 401)   # same token is dead
+        fresh = make_token(self.env, self.admin.id, now=__import__("time").time() + 5)
+        self.assertEqual(self._get("/api/disha/admin/texts", fresh).status_code, 200)  # a new sign-in works
+
+    def test_password_change_revokes_the_token(self):
+        t = make_token(self.env, self.admin.id)
+        self.assertEqual(read_token(self.env, t), self.admin.id)
+        self.admin.password = "A-new-Passw0rd!x"
+        self.assertIsNone(read_token(self.env, t))
 
     def test_requires_server_token_and_admin_token(self):
         self.assertEqual(self.url_open("/api/disha/admin/texts").status_code, 401)
         self.assertEqual(self._get("/api/disha/admin/texts").status_code, 401)
-        self.assertEqual(self._get("/api/disha/admin/texts", make_token(self.admin.id)).status_code, 200)
+        self.assertEqual(self._get("/api/disha/admin/texts", make_token(self.env, self.admin.id)).status_code, 200)
 
     def test_user_without_group_is_refused(self):
         u = self.env["res.users"].create({"name": "Plain", "login": "plain@x.test", "group_ids": [(6, 0, [self.env.ref("base.group_user").id])]})
-        self.assertEqual(self._get("/api/disha/admin/texts", make_token(u.id)).status_code, 401)
+        self.assertEqual(self._get("/api/disha/admin/texts", make_token(self.env, u.id)).status_code, 401)
 
     def test_edit_text_theme_validation_and_item_create(self):
-        tok = make_token(self.admin.id)
+        tok = make_token(self.env, self.admin.id)
         t = self.env["disha.site.text"].search([("key", "=", "home.hero.title_main")])
         r = self._post("/api/disha/admin/texts", {"op": "save", "id": t.id, "value": "Hello"}, tok)
         self.assertEqual(r.status_code, 200)
@@ -56,7 +70,7 @@ class TestAdminApi(HttpCase):
         self.assertTrue(self.env["disha.site.item"].search([("title", "=", "New service")]))
 
     def test_event_registrations_dashboard(self):
-        tok = make_token(self.admin.id)
+        tok = make_token(self.env, self.admin.id)
         ev = self.env["disha.site.event"].create({"name": "Camp", "event_date": "2099-01-01", "capacity": 1})
         self.env["disha.site.event.registration"].create(
             {"event_id": ev.id, "name": "Ann Lee", "phone": "0551234567", "email": "A@x.test", "region": "central", "place": "Riyadh"})

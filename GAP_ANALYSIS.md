@@ -38,7 +38,7 @@ No Critical finding is confirmed from code alone. **H-1 becomes Critical (site-w
 - The only test is `test_reject_has_no_card` (`odoo/disha_membership_card/tests/test_card.py:94-99`) which rejects a never-approved record. Rejecting an approved one leaves `member_id` active and the card (QR, token) valid. Reset button is visible on approved records (`views/registration_views.xml:41-42`, `invisible="state == 'new'"`).
 - Business rule missing: what happens to member status/card on reject, reset, resignation, expiry (scope §3 says "2 years" but no renewal/expiry job exists in the DISHA modules; `grep expire|renew` finds nothing in `disha_membership_card`). Expiry may live in `association_membership` (not in repo): **unverified**.
 
-### H-4 Admin session cannot be revoked
+### H-4 (FIXED: logout + password change revoke tokens) Admin session cannot be revoked
 - Token is stateless HMAC, 8 h (`odoo/disha_admin_api/controllers/main.py:44-58`). Logout only deletes the browser cookie (`web/src/app/api/admin/logout`); a copied token stays valid until expiry. Deactivating the user or removing the group is honoured (`_admin_env`, lines 82-90), but changing the password does not invalidate it, and `database.secret` rotation is the only global kill.
 - Mitigation: include a per-user nonce (e.g. password hash / `write_date` of login) in the signed payload; shorten TTL.
 
