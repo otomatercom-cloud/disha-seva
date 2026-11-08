@@ -1,6 +1,7 @@
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
 import { getContent, type SiteEvent } from "@/lib/content";
+import { EventRegister, type RegLabels } from "./event-register";
 import { Section } from "./page-hero";
 
 const fmt = (iso: string, opts: Intl.DateTimeFormatOptions) =>
@@ -11,7 +12,7 @@ export function dateLabel(e: Pick<SiteEvent, "date" | "endDate">) {
   return e.endDate && e.endDate !== e.date ? `${fmt(e.date, { day: "numeric", month: "short" })} – ${fmt(e.endDate, long)}` : fmt(e.date, long);
 }
 
-function EventCard({ e, upcoming, label }: { e: SiteEvent; upcoming: boolean; label: string }) {
+function EventCard({ e, upcoming, label, reg, fullLabel }: { e: SiteEvent; upcoming: boolean; label: string; reg: RegLabels; fullLabel: string }) {
   return (
     <li className="reveal lift flex min-w-0 flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_14px_40px_rgba(15,61,46,.12)]">
       <div className="relative aspect-[16/10] bg-navy-50">
@@ -41,6 +42,8 @@ function EventCard({ e, upcoming, label }: { e: SiteEvent; upcoming: boolean; la
           )}
         </ul>
         {e.details && <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-600">{e.details}</p>}
+        {upcoming && e.registration === "open" && e.id > 0 && <EventRegister eventId={e.id} eventTitle={e.title} labels={reg} />}
+        {upcoming && e.registration === "full" && <p className="mt-auto rounded-full bg-slate-100 px-4 py-2 text-center text-sm font-semibold text-slate-600">{fullLabel}</p>}
       </div>
     </li>
   );
@@ -50,6 +53,9 @@ export async function Events({ limit = 6 }: { limit?: number }) {
   const c = await getContent();
   const today = new Date().toISOString().slice(0, 10);
   const events = c.events(today).slice(0, limit);
+  const reg = Object.fromEntries(
+    ["button", "title", "intro", "name", "phone", "email", "region", "place", "submit", "success", "duplicate", "closed"].map((k) => [k, c.t(`events.reg.${k}`)]),
+  ) as RegLabels;
   return (
     <Section id="events">
       <div className="reveal mx-auto mb-12 max-w-2xl text-center">
@@ -61,7 +67,7 @@ export async function Events({ limit = 6 }: { limit?: number }) {
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {events.map((e) => {
             const upcoming = (e.endDate || e.date) >= today;
-            return <EventCard key={`${e.date}-${e.title}`} e={e} upcoming={upcoming} label={c.t(upcoming ? "home.events.upcoming" : "home.events.past")} />;
+            return <EventCard key={`${e.date}-${e.title}`} e={e} upcoming={upcoming} label={c.t(upcoming ? "home.events.upcoming" : "home.events.past")} reg={reg} fullLabel={c.t("events.reg.full")} />;
           })}
         </ul>
       ) : (

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ApplicationsEditor } from "./applications-editor";
 import { EventsEditor } from "./events-editor";
+import { RegistrationsEditor } from "./registrations-editor";
 import { ItemsEditor } from "./items-editor";
 import { TextsEditor } from "./texts-editor";
 
@@ -11,6 +12,7 @@ const TABS = [
   ["lists", "Lists & cards"],
   ["gallery", "Gallery"],
   ["events", "Events"],
+  ["registrations", "Event registrations"],
   ["menu", "Menu, logo & footer"],
   ["theme", "Colours"],
   ["applications", "Membership applications"],
@@ -45,6 +47,7 @@ export function AdminApp() {
         {tab === "lists" && <ItemsEditor mode="lists" />}
         {tab === "gallery" && <ItemsEditor mode="gallery" />}
         {tab === "events" && <EventsEditor />}
+        {tab === "registrations" && <RegistrationsEditor />}
         {tab === "menu" && <TextsEditor mode="menu" />}
         {tab === "theme" && <TextsEditor mode="theme" />}
         {tab === "applications" && <ApplicationsEditor />}

@@ -2,6 +2,9 @@ import base64
 import json
 import logging
 
+import hmac
+import re
+
 from odoo import fields, http
 from odoo.http import request
 
@@ -45,6 +48,7 @@ class DishaSiteContent(http.Controller):
             })
         region_label = dict(env["disha.site.event"]._fields["region"].selection)
         events = [{
+            "id": ev.id, "registration": ev._registration_state(),
             "title": ev.name, "date": fields.Date.to_string(ev.event_date),
             "end_date": fields.Date.to_string(ev.end_date) if ev.end_date else "",
             "time": ev.time_text or "", "location": ev.location or "", "details": ev.details or "",
@@ -74,3 +78,59 @@ class DishaSiteContent(http.Controller):
         return http.Response(raw, content_type=mime, headers=[
             ("Cache-Control", "public, max-age=3600"), ("X-Content-Type-Options", "nosniff"),
             ("Content-Security-Policy", "default-src 'none'; img-src 'self'; sandbox"), *extra])
+
+
+    # ---- public event registration (called by the Next.js server only, Bearer token)
+    @http.route("/api/disha/event-registration", type="http", auth="public", methods=["POST"],
+                csrf=False, save_session=False)
+    def event_registration(self, **kw):
+        env = request.env
+        configured = env["ir.config_parameter"].sudo().get_param("disha_membership.api_token")
+        header = request.httprequest.headers.get("Authorization", "")
+        supplied = header[7:] if header.startswith("Bearer ") else ""
+        if not configured or not hmac.compare_digest(supplied.encode(), configured.encode()):
+            return _json({"ok": False, "error": "unauthorized"}, 401, "no-store")
+        raw = request.httprequest.get_data(cache=True)
+        try:
+            d = json.loads(raw) if len(raw) < 8192 else None
+        except ValueError:
+            d = None
+        if not isinstance(d, dict):
+            return _json({"ok": False, "error": "invalid"}, 400, "no-store")
+
+        Reg = env["disha.site.event.registration"].sudo()
+        regions = dict(Reg._fields["region"].selection)
+        clean = lambda k, n: re.sub(r"[\x00-\x1f]", " ", str(d.get(k) or "")).strip()[:n]  # noqa: E731
+        region = clean("region", 40).lower()
+        region = region if region in regions else next((k for k, v in regions.items() if v.lower() == region), "")
+        vals = {"name": clean("name", 120), "phone": clean("phone", 20), "email": clean("email", 254).lower(),
+                "region": region, "place": clean("place", 120)}
+        fields_err = {}
+        if len(vals["name"]) < 2:
+            fields_err["name"] = "Enter your full name."
+        if not re.match(r"^\+?[0-9][0-9\s\-()]{6,19}$", vals["phone"]):
+            fields_err["phone"] = "Enter a valid phone number."
+        if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", vals["email"]):
+            fields_err["email"] = "Enter a valid email address."
+        if not vals["region"]:
+            fields_err["region"] = "Choose your province."
+        if not vals["place"]:
+            fields_err["place"] = "Enter your place."
+        if fields_err:
+            return _json({"ok": False, "error": "validation_error", "fields": fields_err}, 422, "no-store")
+        try:
+            event_id = int(d.get("event_id"))
+        except (TypeError, ValueError):
+            return _json({"ok": False, "error": "not_found"}, 404, "no-store")
+        # Lock the event row so two people cannot take the last seat together
+        env.cr.execute("SELECT id FROM disha_site_event WHERE id = %s FOR UPDATE", (event_id,))
+        event = env["disha.site.event"].sudo().browse(event_id).exists()
+        if not event or not event.published:
+            return _json({"ok": False, "error": "not_found"}, 404, "no-store")
+        state = event._registration_state()
+        if state != "open":
+            return _json({"ok": False, "error": state}, 409, "no-store")
+        if Reg.search_count([("event_id", "=", event.id), ("email", "=", vals["email"])]):
+            return _json({"ok": False, "error": "duplicate"}, 409, "no-store")
+        rec = Reg.create(dict(vals, event_id=event.id))
+        return _json({"ok": True, "reference": rec.reference}, 200, "no-store")

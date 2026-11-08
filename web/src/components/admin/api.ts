@@ -19,7 +19,9 @@ export async function api<T = Record<string, unknown>>(
 }
 
 export const errText = (r: ApiResult) =>
-  r.data.message || (r.data.error === "network" ? "Cannot reach the server." : "Could not save. Try again.");
+  r.data.message || (r.data.error === "network" ? "Cannot reach the server."
+    : r.data.error === "server" ? "Odoo error. If you just updated the code, run: odoo-bin -u disha_site_content,disha_admin_api and restart Odoo."
+    : `Could not complete this (${r.data.error || r.status}). Try again.`);
 
 const readB64 = (blob: Blob) =>
   new Promise<string>((resolve, reject) => {

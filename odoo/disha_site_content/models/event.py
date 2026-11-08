@@ -30,6 +30,42 @@ class IofSiteEvent(models.Model):
     image = fields.Image("Photo", max_width=2000, max_height=2000)
     published = fields.Boolean(default=True, help="Untick to hide it from the website")
     is_upcoming = fields.Boolean(compute="_compute_is_upcoming", search="_search_is_upcoming")
+    registration_open = fields.Boolean("Online registration", default=True,
+                                       help="Show a Register button on the website while the event is upcoming")
+    capacity = fields.Integer("Seats", default=0, help="0 = unlimited. When full, the website stops taking registrations.")
+    registration_ids = fields.One2many("disha.site.event.registration", "event_id")
+    registration_count = fields.Integer(compute="_compute_registration_count")
+
+    @api.depends("registration_ids")
+    def _compute_registration_count(self):
+        data = self.env["disha.site.event.registration"]._read_group(
+            [("event_id", "in", self.ids)], ["event_id"], ["__count"])
+        counts = {ev.id: n for ev, n in data}
+        for rec in self:
+            rec.registration_count = counts.get(rec.id, 0)
+
+    def _registration_state(self):
+        """'open' | 'full' | 'closed' as the website needs it."""
+        self.ensure_one()
+        if not self.published or not self.registration_open or not self.is_upcoming:
+            return "closed"
+        if self.capacity and self.registration_count >= self.capacity:
+            return "full"
+        return "open"
+
+    @api.constrains("capacity")
+    def _check_capacity(self):
+        for rec in self:
+            if rec.capacity < 0:
+                raise ValidationError(_("Seats cannot be negative."))
+
+    def action_view_registrations(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window", "name": _("Registrations: %s", self.name),
+            "res_model": "disha.site.event.registration", "view_mode": "list,pivot,form",
+            "domain": [("event_id", "=", self.id)], "context": {"default_event_id": self.id},
+        }
 
     @api.depends("event_date", "end_date")
     def _compute_is_upcoming(self):

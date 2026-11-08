@@ -1,7 +1,7 @@
 import "server-only";
 
 export const ADMIN_COOKIE = "disha_admin";
-export const ADMIN_RESOURCES = ["texts", "items", "events", "applications"] as const;
+export const ADMIN_RESOURCES = ["texts", "items", "events", "applications", "registrations"] as const;
 
 type Result = { status: number; data: Record<string, unknown> };
 

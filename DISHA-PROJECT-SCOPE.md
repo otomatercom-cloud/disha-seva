@@ -125,3 +125,9 @@ Gallery is year-wise with year + category filters (`year-gallery.tsx`); Odoo `di
 - All data stays in Odoo (`disha.site.*`, `disha.membership.application`), so Odoo UI and /admin edit the same records. After an admin save the public site is revalidated at once.
 - Public pages live in `src/app/(site)/` (header/footer layout); `/admin` has no public chrome.
 - After upgrading: `npm run content:export` (done), then `odoo -u disha_site_content,disha_admin_api`; add users to the new group. Odoo `request.session.authenticate(env, credential)` login path not yet exercised on a real Odoo 19 (no Odoo in the build sandbox): test login first.
+
+## 13. Event registrations
+- Each event has *Online registration* + *Seats* (0 = unlimited) in /admin → Events. Public "Register" button opens a form: name, phone, email, province, place (honeypot, same-origin check, rate limit). States: open / full / closed (past, unpublished or registration off).
+- Odoo model `disha.site.event.registration` (unique event+phone and event+email; event row locked `FOR UPDATE` while counting seats). Public endpoint `/api/disha/event-registration`; admin resource `registrations`.
+- /admin → *Event registrations*: totals, one card per event (count, seat bar, province split) → click for the list with search, province filter, attended tick, remove, CSV download (formula-injection safe).
+- Deploy: `odoo-bin -d demo -u disha_site_content,disha_admin_api --stop-after-init`, restart Odoo, then `npm ci && npm run build && pm2 restart disha-web`.

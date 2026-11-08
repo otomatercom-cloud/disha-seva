@@ -1,1 +1,1 @@
-from . import content, event
+from . import content, event, registration

@@ -67,7 +67,10 @@ async function odooRequest<T>(
       throw new OdooError("rejected", 422, fields);
     }
     if (res.status === 404) throw new OdooError("notfound", 404);
-    if (res.status === 409) throw new OdooError("conflict", 409);
+    if (res.status === 409) {
+      const code = (data as { error?: string } | null)?.error;
+      throw new OdooError("conflict", 409, code ? { _: code } : undefined);
+    }
     if (!res.ok || !data) throw new OdooError("server", res.status);
     return { status: res.status, data: data as T };
   } catch (err) {

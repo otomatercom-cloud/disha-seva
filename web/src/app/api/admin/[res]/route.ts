@@ -20,10 +20,11 @@ async function handle(req: NextRequest, { params }: Ctx, method: "GET" | "POST")
     try { body = JSON.parse(raw); } catch { return json(400, { ok: false, error: "invalid" }); }
   }
   const r = await adminFetch(method, `/api/disha/admin/${res}`, { body, token, query: req.nextUrl.searchParams.toString() });
-  const out = NextResponse.json(r.data, { status: r.status, headers: { "Cache-Control": "no-store" } });
+  // 424 instead of 5xx: Cloudflare would replace a 5xx body with its own HTML page and hide the reason.
+  const out = NextResponse.json(r.data, { status: r.status >= 500 ? 424 : r.status, headers: { "Cache-Control": "no-store" } });
   if (r.status === 401 && r.data.error === "session_expired") out.cookies.set(ADMIN_COOKIE, "", { httpOnly: true, path: "/", maxAge: 0 });
   // A successful edit: show it on the public site straight away instead of waiting for the 30 s refresh.
-  if (method === "POST" && r.status === 200 && res !== "applications") revalidatePath("/", "layout");
+  if (method === "POST" && r.status === 200 && res !== "applications" && res !== "registrations") revalidatePath("/", "layout");
   return out;
 }
 

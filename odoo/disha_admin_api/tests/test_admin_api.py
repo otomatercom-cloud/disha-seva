@@ -54,3 +54,14 @@ class TestAdminApi(HttpCase):
         r = self._post("/api/disha/admin/items", {"op": "create", "vals": {"collection": "services", "title": "New service"}}, tok)
         self.assertEqual(r.status_code, 200)
         self.assertTrue(self.env["disha.site.item"].search([("title", "=", "New service")]))
+
+    def test_event_registrations_dashboard(self):
+        tok = make_token(self.admin.id)
+        ev = self.env["disha.site.event"].create({"name": "Camp", "event_date": "2099-01-01", "capacity": 1})
+        self.env["disha.site.event.registration"].create(
+            {"event_id": ev.id, "name": "Ann Lee", "phone": "0551234567", "email": "A@x.test", "region": "central", "place": "Riyadh"})
+        r = json.loads(self._get("/api/disha/admin/registrations", tok).content)
+        row = next(e for e in r["events"] if e["id"] == ev.id)
+        self.assertEqual((row["total"], row["by_region"]), (1, {"central": 1}))
+        lst = json.loads(self._get(f"/api/disha/admin/registrations?event_id={ev.id}", tok).content)
+        self.assertEqual(lst["registrations"][0]["email"], "a@x.test")

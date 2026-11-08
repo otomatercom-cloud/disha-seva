@@ -125,3 +125,23 @@ class TestSiteEvents(HttpCase):
         with self.assertRaises(ValidationError):
             self.env["disha.site.item"].create(
                 {"collection": "gallery", "title": "Bad year", "image": _png(), "year": 1800})
+
+    def test_event_registration_api_and_limits(self):
+        self.env["ir.config_parameter"].sudo().set_param("disha_membership.api_token", "tok-123")
+        ev = self.env["disha.site.event"].create({"name": "Camp", "event_date": "2099-01-01", "capacity": 1})
+        hdr = {"Authorization": "Bearer tok-123", "Content-Type": "application/json"}
+        body = {"event_id": ev.id, "name": "Ann Lee", "phone": "+966 55 123 4567", "email": "Ann@X.test",
+                "region": "central", "place": "Riyadh"}
+        post = lambda b, h=hdr: self.url_open("/api/disha/event-registration", data=json.dumps(b), headers=h)  # noqa: E731
+        self.assertEqual(post(body, {"Content-Type": "application/json"}).status_code, 401)
+        self.assertEqual(post(dict(body, phone="abc")).status_code, 422)
+        ok = post(body)
+        self.assertEqual(ok.status_code, 200)
+        self.assertEqual(ev.registration_count, 1)
+        self.assertEqual(self.env["disha.site.event.registration"].search([("event_id", "=", ev.id)]).email, "ann@x.test")
+        self.assertEqual(post(dict(body, email="other@x.test")).status_code, 409)  # seats full
+        ev.capacity = 0
+        self.assertEqual(json.loads(post(body).content)["error"], "duplicate")
+        ev.registration_open = False
+        self.assertEqual(json.loads(post(dict(body, email="n@x.test")).content)["error"], "closed")
+

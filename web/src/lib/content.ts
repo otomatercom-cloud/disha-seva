@@ -8,10 +8,12 @@ export type Item = { title: string; text: string; icon: string; url: string; ima
 export type SiteEvent = {
   title: string; date: string; endDate: string; time: string; location: string; details: string; image: string;
   region: string; regionLabel: string;
+  /** Odoo event id (needed to register) and whether the Register button should show. */
+  id: number; registration: "open" | "full" | "closed";
 };
 type ApiEvent = {
   title?: string; date?: string; end_date?: string; time?: string; location?: string; details?: string;
-  image?: string; region?: string; region_label?: string;
+  image?: string; region?: string; region_label?: string; id?: number; registration?: string;
 };
 type ApiPayload = {
   events?: ApiEvent[];
@@ -71,6 +73,8 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
           title: e.title!, date: e.date!, endDate: e.end_date || "", time: e.time || "",
           location: e.location || "", details: e.details || "", image: abs(e.image),
           region: e.region || "all", regionLabel: e.region_label || "",
+          id: Number(e.id) || 0,
+          registration: (e.registration === "open" || e.registration === "full" ? e.registration : "closed") as SiteEvent["registration"],
         }));
       const last = (e: SiteEvent) => e.endDate || e.date;
       const up = list.filter((e) => last(e) >= today).sort((a, b) => a.date.localeCompare(b.date));

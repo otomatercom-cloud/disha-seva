@@ -4,6 +4,8 @@
               groups="disha_site_content.group_disha_site_editor"/>
     <menuitem id="menu_disha_site_events" name="Events" parent="menu_disha_site_root"
               action="action_disha_site_event" sequence="5"/>
+    <menuitem id="menu_disha_site_event_regs" name="Event Registrations" parent="menu_disha_site_root"
+              action="action_disha_site_event_reg" sequence="6"/>
     <menuitem id="menu_disha_site_gallery" name="Photo Gallery" parent="menu_disha_site_root"
               action="action_disha_site_gallery" sequence="10"/>
     <menuitem id="menu_disha_site_reports" name="Reports" parent="menu_disha_site_root"

@@ -20,7 +20,8 @@ MAX_BODY = 24 * 1024 * 1024  # base64 of an 8 MB image / 15 MB PDF fits
 HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 ITEM_VALS = ("title", "text", "icon", "year", "category", "sequence", "published")
-EVENT_VALS = ("name", "event_date", "end_date", "time_text", "region", "location", "details", "published")
+EVENT_VALS = ("name", "event_date", "end_date", "time_text", "region", "location", "details", "published",
+              "registration_open", "capacity")
 
 
 def _json(payload, status=200):
@@ -139,7 +140,7 @@ class DishaAdminApi(http.Controller):
         if not env:
             return _err("session_expired", 401)
         handler = {"texts": self._texts, "items": self._items, "events": self._events,
-                   "applications": self._applications}.get(res)
+                   "applications": self._applications, "registrations": self._registrations}.get(res)
         if not handler:
             return _err("not_found", 404)
         try:
@@ -239,7 +240,8 @@ class DishaAdminApi(http.Controller):
     def _event_dict(self, e):
         return {"id": e.id, "name": e.name, "event_date": str(e.event_date), "end_date": str(e.end_date or ""),
                 "time_text": e.time_text or "", "region": e.region, "location": e.location or "",
-                "details": e.details or "", "published": e.published, "image": self._media("event", e, "image")}
+                "details": e.details or "", "published": e.published, "image": self._media("event", e, "image"),
+                "registration_open": e.registration_open, "capacity": e.capacity, "registration_count": e.registration_count}
 
     def _events(self, env, method, kw):
         Event = env["disha.site.event"]
@@ -266,6 +268,44 @@ class DishaAdminApi(http.Controller):
             rec.write(vals)
         elif op == "delete":
             rec.unlink()
+        else:
+            raise UserError(_("Unknown action."))
+        return {"ok": True}
+
+    # ---- event registrations: per-event dashboard + list
+    def _registrations(self, env, method, kw):
+        Reg = env["disha.site.event.registration"]
+        Event = env["disha.site.event"]
+        if method == "GET":
+            regions = dict(Reg._fields["region"].selection)
+            if kw.get("event_id"):
+                ev = Event.browse(int(kw["event_id"])).exists()
+                if not ev:
+                    raise UserError(_("Unknown event."))
+                return {"ok": True, "event": {"id": ev.id, "name": ev.name, "date": str(ev.event_date)},
+                        "regions": list(regions.items()),
+                        "registrations": [{
+                            "id": r.id, "reference": r.reference, "name": r.name, "phone": r.phone, "email": r.email,
+                            "region": r.region, "place": r.place, "attended": r.attended,
+                            "registered": str(r.create_date or "")[:16],
+                        } for r in Reg.search([("event_id", "=", ev.id)], limit=5000)]}
+            groups = Reg._read_group([], ["event_id", "region"], ["__count"])
+            by_event = {}
+            for ev, region, n in groups:
+                by_event.setdefault(ev.id, {})[region] = n
+            return {"ok": True, "regions": list(regions.items()), "events": [{
+                "id": e.id, "name": e.name, "date": str(e.event_date), "upcoming": e.is_upcoming,
+                "published": e.published, "open": e.registration_open, "capacity": e.capacity,
+                "total": sum(by_event.get(e.id, {}).values()), "by_region": by_event.get(e.id, {}),
+            } for e in Event.search([], limit=500)]}
+        d = self._body()
+        rec = Reg.browse(int(d.get("id") or 0)).exists()
+        if not rec:
+            raise UserError(_("Unknown registration."))
+        if d.get("op") == "delete":
+            rec.unlink()
+        elif d.get("op") == "attended":
+            rec.write({"attended": bool(d.get("value"))})
         else:
             raise UserError(_("Unknown action."))
         return {"ok": True}

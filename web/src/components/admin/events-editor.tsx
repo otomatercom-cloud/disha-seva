@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { api, btnDanger, btnGhost, btnPrimary, errText, field, fileToB64 } from "./api";
 
-type Ev = { id: number; name: string; event_date: string; end_date: string; time_text: string; region: string; location: string; details: string; published: boolean; image: string };
+type Ev = { id: number; name: string; event_date: string; end_date: string; time_text: string; region: string; location: string; details: string; published: boolean; image: string; registration_open: boolean; capacity: number; registration_count: number };
 const today = () => new Date().toISOString().slice(0, 10);
 
 function EventCard({ e, regions, reload, flash }: { e: Ev; regions: [string, string][]; reload: () => void; flash: (m: string, bad?: boolean) => void }) {
@@ -27,6 +27,11 @@ function EventCard({ e, regions, reload, flash }: { e: Ev; regions: [string, str
         <label className={lab}>Time<input value={d.time_text} onChange={(x) => setD({ ...d, time_text: x.target.value })} placeholder="6:00 PM onwards" className={field + " mt-1"} /></label>
         <label className={lab}>Province<select value={d.region} onChange={(x) => setD({ ...d, region: x.target.value })} className={field + " mt-1"}>{regions.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></label>
       </div>
+      <div className="flex flex-wrap items-end gap-4 rounded-lg bg-navy-50 p-3">
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={d.registration_open} onChange={(x) => setD({ ...d, registration_open: x.target.checked })} /> Online registration</label>
+        {d.registration_open && <label className={lab}>Seats (0 = unlimited)<input type="number" min={0} value={d.capacity} onChange={(x) => setD({ ...d, capacity: Math.max(0, Number(x.target.value)) })} className={field + " mt-1 w-28"} /></label>}
+        <span className="ml-auto text-sm font-semibold text-navy-900">{e.registration_count} registered</span>
+      </div>
       <label className={lab}>Place<input value={d.location} onChange={(x) => setD({ ...d, location: x.target.value })} className={field + " mt-1"} /></label>
       <label className={lab}>Details<textarea rows={3} value={d.details} onChange={(x) => setD({ ...d, details: x.target.value })} className={field + " mt-1"} /></label>
       <div className="flex flex-wrap items-center gap-3">
@@ -38,7 +43,7 @@ function EventCard({ e, regions, reload, flash }: { e: Ev; regions: [string, str
         <label className="ml-auto flex items-center gap-2 text-sm"><input type="checkbox" checked={d.published} onChange={(x) => setD({ ...d, published: x.target.checked })} /> Published</label>
       </div>
       <div className="flex gap-2">
-        <button className={btnPrimary} disabled={!dirty || busy} onClick={() => run({ op: "update", vals: { name: d.name, event_date: d.event_date, end_date: d.end_date, time_text: d.time_text, region: d.region, location: d.location, details: d.details, published: d.published } }, "Saved")}>{busy ? "Saving…" : "Save"}</button>
+        <button className={btnPrimary} disabled={!dirty || busy} onClick={() => run({ op: "update", vals: { name: d.name, event_date: d.event_date, end_date: d.end_date, time_text: d.time_text, region: d.region, location: d.location, details: d.details, published: d.published, registration_open: d.registration_open, capacity: d.capacity } }, "Saved")}>{busy ? "Saving…" : "Save"}</button>
         <button className={btnDanger} disabled={busy} onClick={() => { if (confirm(`Delete "${e.name}"?`)) void run({ op: "delete" }, "Deleted"); }}>Delete</button>
       </div>
     </div>
