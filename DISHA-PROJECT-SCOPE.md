@@ -131,3 +131,4 @@ Gallery is year-wise with year + category filters (`year-gallery.tsx`); Odoo `di
 - Odoo model `disha.site.event.registration` (unique event+phone and event+email; event row locked `FOR UPDATE` while counting seats). Public endpoint `/api/disha/event-registration`; admin resource `registrations`.
 - /admin → *Event registrations*: totals, one card per event (count, seat bar, province split) → click for the list with search, province filter, attended tick, remove, CSV download (formula-injection safe).
 - Deploy: `odoo-bin -d demo -u disha_site_content,disha_admin_api --stop-after-init`, restart Odoo, then `npm ci && npm run build && pm2 restart disha-web`.
+- Links: public registration page `/events/<id>` (details + Register + copy-share link; event titles on cards link to it). Admin dashboard per event `/admin/events/<id>` (login required, bookmarkable); also linked from Events and Event registrations tabs. Registrant data is never public.

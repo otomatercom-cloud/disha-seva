@@ -83,3 +83,15 @@ describe("route", () => {
     expect((await POST(req({ ...good, phone: "x" }))).status).toBe(422);
   });
 });
+
+describe("share link", () => {
+  it("copies the registration URL", async () => {
+    const { CopyLink } = await import("@/components/admin/copy-link");
+    const w = vi.fn().mockResolvedValue(undefined);
+    const u = userEvent.setup();
+    Object.defineProperty(navigator, "clipboard", { value: { writeText: w }, configurable: true });
+    render(<CopyLink path="/events/7" label="Copy" />);
+    await u.click(screen.getByRole("button", { name: "Copy" }));
+    expect(w).toHaveBeenCalledWith(window.location.origin + "/events/7");
+  });
+});

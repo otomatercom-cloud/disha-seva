@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { CopyLink } from "./copy-link";
 import { api, btnDanger, btnGhost, errText, field } from "./api";
 
 type Summary = { id: number; name: string; date: string; upcoming: boolean; published: boolean; open: boolean; capacity: number; total: number; by_region: Record<string, number> };
@@ -47,6 +48,8 @@ function Detail({ eventId, regions, onBack }: { eventId: number; regions: Record
         <h2 className="text-xl">{name}</h2>
         <span className="rounded-full bg-navy-700 px-3 py-1 text-sm font-semibold text-white">{rows?.length ?? 0} registered</span>
         <span className="rounded-full bg-seva-50 px-3 py-1 text-sm font-semibold text-seva-700">{(rows ?? []).filter((r) => r.attended).length} attended</span>
+        <CopyLink path={`/events/${eventId}`} label="Copy registration link" />
+        <CopyLink path={`/admin/events/${eventId}`} label="Copy dashboard link" />
         <button className={btnGhost + " ml-auto"} onClick={download} disabled={!shown.length}>Download CSV ({shown.length})</button>
       </div>
       <div className="mb-4 flex flex-wrap gap-3">
@@ -75,6 +78,19 @@ function Detail({ eventId, regions, onBack }: { eventId: number; regions: Record
   );
 }
 
+/** Standalone dashboard for one event (used by /admin/events/[id]). */
+export function EventDashboard({ eventId }: { eventId: number }) {
+  const [regions, setRegions] = useState<Record<string, string> | null>(null);
+  useEffect(() => {
+    void (async () => {
+      const r = await api<{ regions: [string, string][] }>("registrations");
+      setRegions(r.ok ? Object.fromEntries(r.data.regions) : {});
+    })();
+  }, []);
+  if (!regions) return <p className="p-6 text-slate-500">Loading…</p>;
+  return <Detail eventId={eventId} regions={regions} onBack={() => { window.location.href = "/admin"; }} />;
+}
+
 export function RegistrationsEditor() {
   const [events, setEvents] = useState<Summary[] | null>(null);
   const [regions, setRegions] = useState<Record<string, string>>({});
@@ -99,7 +115,8 @@ export function RegistrationsEditor() {
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {events.map((e) => (
-          <button key={e.id} onClick={() => setOpen(e.id)} className="rounded-xl border border-slate-200 bg-white p-4 text-left transition hover:border-navy-700 hover:shadow-md">
+          <div key={e.id} className="flex flex-col rounded-xl border border-slate-200 bg-white p-4 transition hover:border-navy-700 hover:shadow-md">
+          <button onClick={() => setOpen(e.id)} className="text-left">
             <div className="flex items-start justify-between gap-2">
               <b className="text-navy-900">{e.name}</b>
               <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${e.upcoming ? "bg-seva-50 text-seva-700" : "bg-slate-100 text-slate-500"}`}>{e.upcoming ? "Upcoming" : "Past"}</span>
@@ -110,7 +127,11 @@ export function RegistrationsEditor() {
             <div className="mt-3 flex flex-wrap gap-1.5">
               {Object.entries(e.by_region).map(([k, n]) => <span key={k} className="rounded-full bg-navy-50 px-2.5 py-0.5 text-xs text-navy-900">{(regions[k] ?? k).replace(" Province", "")}: {n}</span>)}
             </div>
-          </button>))}
+          </button>
+          <div className="mt-3 flex flex-wrap gap-2 border-t border-slate-100 pt-3 text-sm">
+            <a className="font-semibold text-navy-700 underline" href={`/admin/events/${e.id}`}>Open dashboard</a>
+            <a className="text-slate-500 underline" href={`/events/${e.id}`} target="_blank" rel="noreferrer">Registration page</a>
+          </div></div>))}
       </div>
       {!events.length && <p className="text-slate-500">No events yet.</p>}
     </div>

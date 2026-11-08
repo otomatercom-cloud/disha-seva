@@ -1,5 +1,6 @@
 import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { getContent, type SiteEvent } from "@/lib/content";
 import { EventRegister, type RegLabels } from "./event-register";
 import { Section } from "./page-hero";
@@ -32,7 +33,7 @@ function EventCard({ e, upcoming, label, reg, fullLabel }: { e: SiteEvent; upcom
         </span>
       </div>
       <div className="flex flex-1 flex-col gap-3 p-6">
-        <h3 className="text-xl font-extrabold leading-snug text-navy-900">{e.title}</h3>
+        <h3 className="text-xl font-extrabold leading-snug text-navy-900">{e.id > 0 ? <Link href={`/events/${e.id}`} className="hover:text-navy-700">{e.title}</Link> : e.title}</h3>
         <ul className="flex flex-col gap-1.5 text-sm text-slate-600">
           <li className="flex items-center gap-2"><CalendarDays className="size-4 flex-none text-saffron-700" aria-hidden />{dateLabel(e)}</li>
           {e.time && <li className="flex items-center gap-2"><Clock className="size-4 flex-none text-saffron-700" aria-hidden />{e.time}</li>}
