@@ -64,6 +64,8 @@
                 <field name="collection"/>
                 <field name="title"/>
                 <field name="text" optional="show"/>
+                <field name="year" optional="hide"/>
+                <field name="category" optional="hide"/>
                 <field name="image" widget="image" options="{'size': [40, 40]}" optional="show"/>
                 <field name="published" widget="boolean_toggle"/>
             </list>
@@ -81,6 +83,8 @@
                             <field name="collection"/>
                             <field name="title"/>
                             <field name="text"/>
+                            <field name="year" invisible="collection != 'gallery'"/>
+                            <field name="category" invisible="collection != 'gallery'" placeholder="Yoga, Cultural, Blood Donation..."/>
                             <field name="icon" invisible="collection in ('gallery','services','goals','member_tags','hero_checks','faq','collab_cards','reports','steps','helps')"/>
                             <field name="sequence"/>
                             <field name="published"/>
@@ -133,6 +137,7 @@
                     <t t-name="card">
                         <field name="image" widget="image" options="{'size': [240, 160]}"/>
                         <field name="title" class="fw-bold mt-2"/>
+                        <div class="text-muted"><field name="year"/> · <field name="category"/></div>
                         <field name="published" widget="boolean_toggle"/>
                     </t>
                 </templates>

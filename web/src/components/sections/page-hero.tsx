@@ -2,10 +2,11 @@ import type { ReactNode } from "react";
 
 export function PageHero({ title, intro }: { title: string; intro?: string }) {
   return (
-    <section className="bg-gradient-to-b from-navy-50 to-white">
-      <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-20">
-        <h1 className="text-4xl sm:text-5xl">{title}</h1>
-        {intro && <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">{intro}</p>}
+    <section className="relative overflow-hidden bg-navy-950 text-white">
+      <div aria-hidden className="pointer-events-none absolute -bottom-52 -right-32 size-[420px] rounded-full border-[60px] border-saffron-500/10 anim-spin" />
+      <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-24">
+        <h1 className="anim-up text-4xl text-white sm:text-6xl">{title}</h1>
+        {intro && <p className="anim-up delay-2 mx-auto mt-5 max-w-2xl text-lg text-[#cfe3da]">{intro}</p>}
       </div>
     </section>
   );

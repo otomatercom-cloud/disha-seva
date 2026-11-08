@@ -27,7 +27,7 @@ const newKey = () => crypto.randomUUID();
 
 const CONFETTI = Array.from({ length: 18 }, (_, i) => ({
   left: `${4 + i * 5.3}%`,
-  color: ["#f26a0a", "#15803d", "#0c1b5e", "#ff9a5c", "#4ade80"][i % 5],
+  color: ["#f58b1f", "#1d6b52", "#0f3d2e", "#f58b1f", "#7ddba8"][i % 5],
   delay: `${((i * 0.37) % 3).toFixed(2)}s`,
 }));
 

@@ -3,9 +3,9 @@
 Inspect existing Nginx/Odoo configs first; add, never overwrite.
 
 ## 1. Odoo 19 addon
-1. Copy the four folders in `odoo/` (`disha_membership`, `disha_membership_card`, `disha_site_content`, `disha_support_ticket`) into a custom addons path listed in `odoo.conf`, next to your `association_membership` addon. `pip install qrcode` on the Odoo server.
+1. Copy the five folders in `odoo/` (`disha_membership`, `disha_membership_card`, `disha_site_content`, `disha_event_notify`, `disha_support_ticket`) into a custom addons path listed in `odoo.conf`, next to your `association_membership` addon. `pip install qrcode` on the Odoo server.
 2. Set `dbfilter = ^your_db$` in `odoo.conf` (the public API relies on it to pick the database) and serve Odoo over HTTPS.
-3. Install: `odoo-bin -c odoo.conf -d your_db -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_support_ticket --stop-after-init`. Upgrades: `-u <module>` with the service stopped (restart after Python changes).
+3. Install: `odoo-bin -c odoo.conf -d your_db -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --stop-after-init`. Upgrades: `-u <module>` with the service stopped (restart after Python changes).
 4. Read the token: Settings → Technical → System Parameters → `disha_membership.api_token` (generated at install). To rotate, edit the value and update `ODOO_API_TOKEN` in Next.js.
 5. Assign staff: Settings → Users → group *DISHA Membership Applications* (User = view/edit, Manager = approve/reject/delete/configure).
 6. Only the Next.js server needs to reach `/api/disha/`; consider restricting it in Nginx by IP (`allow x.x.x.x; deny all;`).
@@ -43,4 +43,11 @@ server { listen 80; server_name YOUR_DOMAIN www.YOUR_DOMAIN; return 301 https://
 - Logs: pm2/journald. Application logs hold failure classes only, never personal data or tokens.
 
 ## 5. Before go-live
-Upload real gallery photos in Odoo (Website Content > Photo Gallery); until then the 8 photos in `public/gallery` are shown. Set Outgoing Mail + Alias Domain in Odoo so the ID card email can be sent. Have DISHA review the Privacy Policy and Terms drafts; set real social links; point DNS.
+Upload real gallery photos in Odoo (Website Content > Photo Gallery); until then the 8 photos in `public/gallery` are shown. Set Outgoing Mail + Alias Domain in Odoo so the ID card email and the event emails can be sent (optional system parameters `disha_event_notify.site_url`, `disha_event_notify.contact`). Build the Next.js site with `.env.production` present (the root layout also refreshes content every 30 s as a safety net). Have DISHA review the Privacy Policy and Terms drafts; set real social links; point DNS.
+
+
+## Admin (/admin)
+1. Copy `odoo/disha_admin_api`, install it (`-i disha_admin_api`), then `-u disha_site_content`.
+2. In Odoo Settings > Users, add the staff to *Website Admin (Next.js /admin)*.
+3. Rebuild/restart Next.js. Open `https://YOUR_DOMAIN/admin` and sign in with the Odoo login.
+4. Nginx: allow request bodies up to 25 MB for `/api/admin/` (`client_max_body_size 25m;`) so photo and PDF uploads work.

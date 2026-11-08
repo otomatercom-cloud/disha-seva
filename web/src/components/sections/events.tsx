@@ -13,7 +13,7 @@ export function dateLabel(e: Pick<SiteEvent, "date" | "endDate">) {
 
 function EventCard({ e, upcoming, label }: { e: SiteEvent; upcoming: boolean; label: string }) {
   return (
-    <li className="reveal lift flex min-w-0 flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white">
+    <li className="reveal lift flex min-w-0 flex-col overflow-hidden rounded-[18px] bg-white shadow-[0_14px_40px_rgba(15,61,46,.12)]">
       <div className="relative aspect-[16/10] bg-navy-50">
         {e.image ? (
           <Image src={e.image} alt={e.title} fill sizes="(min-width:1024px) 380px, (min-width:640px) 50vw, 100vw" className="object-cover" />
@@ -22,11 +22,11 @@ function EventCard({ e, upcoming, label }: { e: SiteEvent; upcoming: boolean; la
             <CalendarDays className="size-12" aria-hidden />
           </div>
         )}
-        <span className="absolute left-4 top-4 flex flex-col items-center rounded-2xl bg-white px-3.5 py-2 leading-none shadow-lg">
-          <b className="text-2xl font-extrabold text-navy-900">{fmt(e.date, { day: "numeric" })}</b>
-          <span className="mt-1 text-[11px] font-bold uppercase tracking-wider text-saffron-700">{fmt(e.date, { month: "short" })}</span>
+        <span className="absolute left-4 top-4 flex flex-col items-center rounded-[14px] bg-saffron-500 px-4 py-2.5 leading-none text-white shadow-lg">
+          <b className="font-display text-3xl font-bold text-white">{fmt(e.date, { day: "numeric" })}</b>
+          <span className="mt-1 text-[11px] font-bold uppercase tracking-wider text-white">{fmt(e.date, { month: "short" })}</span>
         </span>
-        <span className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold ${upcoming ? "bg-emerald-700 text-white" : "bg-slate-800/80 text-white"}`}>
+        <span className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold ${upcoming ? "bg-navy-700 text-white" : "bg-slate-800/80 text-white"}`}>
           {label}
         </span>
       </div>

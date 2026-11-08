@@ -40,6 +40,8 @@ class DishaSiteContent(http.Controller):
                 "title": it.title or "", "text": it.text or "", "icon": it.icon or "",
                 "image": _media_url("item", it, "image") if it.image else "",
                 "file": _media_url("item", it, "file") if it.file else "",
+                "year": it.year if it.collection == "gallery" else 0,
+                "category": (it.category or "").strip() if it.collection == "gallery" else "",
             })
         region_label = dict(env["disha.site.event"]._fields["region"].selection)
         events = [{

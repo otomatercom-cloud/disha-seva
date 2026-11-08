@@ -4,7 +4,7 @@ import { COLLECTIONS, TEXTS } from "@/content/defaults";
 import { GALLERY } from "@/lib/gallery";
 import { images } from "@/lib/utils";
 
-export type Item = { title: string; text: string; icon: string; url: string; image: string; file: string };
+export type Item = { title: string; text: string; icon: string; url: string; image: string; file: string; year: number; category: string };
 export type SiteEvent = {
   title: string; date: string; endDate: string; time: string; location: string; details: string; image: string;
   region: string; regionLabel: string;
@@ -31,7 +31,7 @@ export type Content = {
 };
 
 const FALLBACK_IMAGES: Record<string, string> = { "site.logo": images.logo, "home.intro.image": images.about };
-const blank: Item = { title: "", text: "", icon: "", url: "", image: "", file: "" };
+const blank: Item = { title: "", text: "", icon: "", url: "", image: "", file: "", year: 0, category: "" };
 
 /** Public base for media URLs (what the visitor's browser/Next image optimiser can reach). */
 export function mediaBase() {
@@ -82,7 +82,7 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
       if (live && live.length) {
         return live.map((i) => ({ ...blank, ...i, image: abs(i.image), file: abs(i.file) }));
       }
-      if (name === "gallery") return GALLERY.map((g) => ({ ...blank, title: g.alt, image: g.src }));
+      if (name === "gallery") return GALLERY.map((g) => ({ ...blank, title: g.alt, image: g.src, year: g.year ?? 0, category: g.category ?? "" }));
       // Odoo reachable but list intentionally emptied: honour it; unreachable: defaults
       if (live) return [];
       return (COLLECTIONS[name]?.items ?? []).map((i) => ({ ...blank, ...i }));

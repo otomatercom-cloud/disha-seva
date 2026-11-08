@@ -65,7 +65,8 @@ class TestSiteContentHttp(HttpCase):
         t.value = "Edited headline"
         logo = self.env["disha.site.text"].search([("key", "=", "site.logo")])
         logo.image = _png()
-        shown = self.env["disha.site.item"].create({"collection": "gallery", "title": "Visible", "image": _png()})
+        shown = self.env["disha.site.item"].create(
+            {"collection": "gallery", "title": "Visible", "image": _png(), "year": 2023, "category": " Yoga "})
         hidden = self.env["disha.site.item"].create(
             {"collection": "gallery", "title": "Hidden", "image": _png(), "published": False})
         self.env.cr.flush()
@@ -76,6 +77,8 @@ class TestSiteContentHttp(HttpCase):
         self.assertIn("site.logo", data["images"])
         titles = [i["title"] for i in data["collections"]["gallery"]]
         self.assertIn("Visible", titles)
+        vis = next(i for i in data["collections"]["gallery"] if i["title"] == "Visible")
+        self.assertEqual((vis["year"], vis["category"]), (2023, "Yoga"))
         self.assertNotIn("Hidden", titles)
         self.assertEqual(len(data["collections"]["pillars"]), 4)
         # media
@@ -117,3 +120,8 @@ class TestSiteEvents(HttpCase):
         self.assertEqual(self.url_open(ev["image"]).status_code, 200)
         self.assertEqual(self.url_open(f"/disha/site-media/event/{hidden.id}/image").status_code, 404)
         self.assertEqual(self.url_open(f"/disha/site-media/event/{shown.id}/secret").status_code, 404)
+
+    def test_gallery_year_validated(self):
+        with self.assertRaises(ValidationError):
+            self.env["disha.site.item"].create(
+                {"collection": "gallery", "title": "Bad year", "image": _png(), "year": 1800})

@@ -1,22 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --color-navy-950: #070f3a;
-  --color-navy-900: #0c1b5e;
-  --color-navy-700: #27368f;
-  --color-navy-50: #eef0fb;
-  --color-saffron-700: #b84508; /* white text 5.3:1 */
-  --color-saffron-600: #d24e0a;
-  --color-saffron-50: #fff4ec;
-  --color-seva-700: #15803d;
-  --color-seva-50: #ecf8f0;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Outfit", "Poppins", ui-sans-serif, system-ui, sans-serif;
+  /* Green theme (DISHA site v2). Token names kept from v1 so every component re-themes. */
+  --color-navy-950: #0a2a1f;
+  --color-navy-900: #0f3d2e;
+  --color-navy-700: #1d6b52;
+  --color-navy-50: #eef6f2;
+  --color-saffron-700: #b45309; /* white text 5.0:1 */
+  --color-saffron-600: #c2680a;
+  --color-saffron-500: #f58b1f; /* brand accent: decorative / on dark */
+  --color-saffron-50: #fff4e6;
+  --color-seva-700: #1d6b52;
+  --color-seva-50: #e8f3ee;
 }
 
 html { scroll-behavior: smooth; }
 body { @apply bg-white text-slate-700 antialiased; font-family: var(--font-sans); }
 @layer base {
-  h1, h2, h3, h4 { @apply text-navy-900 font-bold tracking-tight; }
+  h1, h2, h3, h4 { @apply text-navy-900 font-bold tracking-tight; font-family: var(--font-display); }
 }
 :focus-visible { outline: 3px solid var(--color-saffron-600); outline-offset: 2px; }
 
@@ -30,7 +33,7 @@ body { @apply bg-white text-slate-700 antialiased; font-family: var(--font-sans)
 @keyframes fl { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes marq { to { transform: translateX(-50%); } }
-@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(210, 78, 10, .45); } 100% { box-shadow: 0 0 0 18px rgba(210, 78, 10, 0); } }
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(245, 139, 31, .5); } 100% { box-shadow: 0 0 0 18px rgba(245, 139, 31, 0); } }
 @keyframes draw { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
 @keyframes pop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
 @keyframes ring-out { 0% { transform: scale(.8); opacity: .7; } 100% { transform: scale(1.9); opacity: 0; } }
@@ -53,9 +56,9 @@ body { @apply bg-white text-slate-700 antialiased; font-family: var(--font-sans)
 .anim-bar { animation: bar-fill 1.6s cubic-bezier(.2, .7, .2, 1) .4s both; }
 .confetti { position: absolute; top: 0; width: 10px; height: 16px; border-radius: 3px; animation: fall 3.4s ease-in infinite; }
 .lift { transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s; }
-.lift:hover { transform: translateY(-8px); box-shadow: 0 28px 48px -24px rgba(12, 27, 94, .35); }
+.lift:hover { transform: translateY(-8px); box-shadow: 0 28px 48px -24px rgba(15, 61, 46, .35); }
 .btn-lift { transition: transform .25s, box-shadow .25s; }
-.btn-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(184, 69, 8, .55); }
+.btn-lift:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -8px rgba(180, 83, 9, .55); }
 @supports (animation-timeline: view()) {
   .reveal { animation: up linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
 }

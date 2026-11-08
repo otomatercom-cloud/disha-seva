@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/inter";
+import "@fontsource/outfit/500.css";
+import "@fontsource/outfit/600.css";
+import "@fontsource/outfit/700.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
 import "./globals.css";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
-import { NAV, SUPPORT_LINK } from "@/components/layout/site-nav";
 import { getContent } from "@/lib/content";
+import { themeCss } from "@/lib/theme";
 
 export async function generateMetadata(): Promise<Metadata> {
   const c = await getContent();
@@ -15,22 +18,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0c1b5e" };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#0f3d2e" };
+
+// Refresh Odoo-driven content every 30s even if the site was built without Odoo reachable (otherwise pages stay static forever).
+export const revalidate = 30;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const c = await getContent();
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-col">
-        <Header
-          nav={NAV.map((n) => ({ href: n.href, label: c.t(n.key) }))}
-          name={c.t("site.name")} tagline={c.t("site.tagline")}
-          logo={c.img("site.logo") ?? ""} joinLabel={c.t("site.join")}
-          support={{ href: SUPPORT_LINK.href, label: c.t(SUPPORT_LINK.key) }}
-        />
-        <main id="main" className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <head><style id="disha-theme" dangerouslySetInnerHTML={{ __html: themeCss((k) => c.t(k)) }} /></head>
+      <body className="flex min-h-screen flex-col">{children}</body>
     </html>
   );
 }

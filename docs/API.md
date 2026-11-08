@@ -4,7 +4,7 @@
 
 Headers: `Content-Type: application/json`, `Idempotency-Key: <16–64 chars [A-Za-z0-9_-]>` (the form generates one per attempt and reuses it on retry), `Origin` must match the site host.
 
-Body (strict allowlist, unknown keys ignored). Required*: `category* (general|associate), full_name*, gender* (male|female|other), date_of_birth* (YYYY-MM-DD), nationality*, mobile*, email*, ksa_region*, ksa_city*, passport_number*, india_state*, india_district*, india_village*, india_pin* (6 digits), india_address*, ksa_emergency_name*/_relationship*/_phone*, india_emergency_name*/_relationship*/_phone*, consent* (boolean true)`. Optional: `whatsapp, blood_group (A+..O-), qualification, occupation, organization, iqama_number, why_join, photo (JPEG data URL <=400KB), website (honeypot, must be empty)`. Field numbers follow DISHA's paper Membership Application Form.
+Body (strict allowlist, unknown keys ignored). Required*: `category* (general|associate), full_name*, gender* (male|female|other), date_of_birth* (YYYY-MM-DD), nationality*, mobile*, email*, ksa_region* (central|western|eastern|northern|southern), ksa_city*, passport_number*, india_state*, india_district*, india_village*, india_pin* (6 digits), india_address*, ksa_emergency_name*/_relationship*/_phone*, india_emergency_name*/_relationship*/_phone*, consent* (boolean true)`. Optional: `whatsapp, blood_group (A+..O-), qualification, occupation, organization, iqama_number, why_join, photo (JPEG data URL <=400KB), website (honeypot, must be empty)`. Field numbers follow DISHA's paper Membership Application Form.
 
 | Status | Body |
 |---|---|
@@ -35,3 +35,7 @@ Body (strict allowlist, unknown keys ignored). Required*: `category* (general|as
 `GET /api/disha/health` (same Bearer token) → `{"ok":true}`.
 
 Duplicate policy: only an identical `Idempotency-Key` is deduplicated. The same email/mobile in a *different* submission is accepted (families share phones); Odoo shows a "possible duplicate" banner on the record for staff.
+
+## Public content: `GET {ODOO_BASE_URL}/api/disha/site-content`
+
+No auth. JSON `{texts, images, collections, events}`. `events[]` = published events: `title, date (YYYY-MM-DD), end_date, time, location, details, region (all|central|western|eastern|northern|southern), region_label, image (URL or "")`. Photos/PDFs are served from `/disha/site-media/<model>/<id>/<field>` (only published records). Next.js caches this for `CONTENT_REVALIDATE_S` seconds.

@@ -9,8 +9,11 @@ import { cn } from "@/lib/utils";
 // First tile is featured; the rest repeat a pattern so the grid feels editorial, not uniform.
 const TILE = ["col-span-2 row-span-2", "", "", "row-span-2", "", "col-span-2"];
 
-export function PhotoGallery({ photos, limit }: { photos: GalleryPhoto[]; limit?: number }) {
-  const shown = limit ? photos.slice(0, limit) : photos;
+export function PhotoGallery({ photos, limit, showYears = false }: { photos: GalleryPhoto[]; limit?: number; showYears?: boolean }) {
+  const [year, setYear] = useState("all");
+  const years = [...new Set(photos.map((p) => p.year || 0).filter(Boolean))].sort((a, b) => b - a);
+  const filtered = showYears && year !== "all" ? photos.filter((p) => String(p.year) === year) : photos;
+  const shown = limit ? filtered.slice(0, limit) : filtered;
   const [open, setOpen] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const lastTrigger = useRef<HTMLElement | null>(null);
@@ -31,8 +34,21 @@ export function PhotoGallery({ photos, limit }: { photos: GalleryPhoto[]; limit?
 
   const current = open === null ? null : shown[open];
 
+  const pill = (on: boolean) =>
+    "rounded-full border-[1.5px] px-6 py-2 font-display text-[15px] font-semibold transition " +
+    (on ? "border-saffron-600 bg-saffron-600 text-white" : "border-slate-300 text-slate-700 hover:border-saffron-500");
   return (
     <>
+      {showYears && years.length > 0 && (
+        <div role="group" aria-label="Filter by year" className="mb-8 flex flex-wrap justify-center gap-2.5">
+          <button type="button" aria-pressed={year === "all"} className={pill(year === "all")} onClick={() => setYear("all")}>All years</button>
+          {years.map((y) => (
+            <button key={y} type="button" aria-pressed={year === String(y)} className={pill(year === String(y))} onClick={() => setYear(String(y))}>
+              {y}<small className="ml-1.5 opacity-70">{photos.filter((p) => p.year === y).length}</small>
+            </button>
+          ))}
+        </div>
+      )}
       <ul className="grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[200px] sm:gap-4 md:grid-cols-4">
         {shown.map((p, i) => (
           <li key={p.src} className={cn("reveal", TILE[i % TILE.length])}>
@@ -44,6 +60,11 @@ export function PhotoGallery({ photos, limit }: { photos: GalleryPhoto[]; limit?
             >
               <Image src={p.src} alt={p.alt} fill sizes="(min-width:768px) 25vw, 50vw"
                 className="object-cover transition duration-700 group-hover:scale-110" />
+              {(p.year || p.category) && (
+                <span className="absolute left-3 top-3 z-10 rounded-full bg-saffron-600 px-3 py-1 font-display text-xs font-bold tracking-wide text-white shadow">
+                  {[p.year || "", p.category].filter(Boolean).join(" · ")}
+                </span>
+              )}
               <span className="absolute inset-0 flex items-end justify-between bg-gradient-to-t from-navy-950/70 via-transparent to-transparent p-4 opacity-0 transition group-hover:opacity-100 group-focus-visible:opacity-100">
                 <span className="text-sm font-semibold text-white">{p.alt}</span>
                 <ZoomIn className="size-5 text-white" aria-hidden />

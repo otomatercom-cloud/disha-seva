@@ -78,6 +78,9 @@ class DishaSiteItem(models.Model):
     image = fields.Image(max_width=2000, max_height=2000, help="Gallery photo")
     file = fields.Binary(attachment=True, help="Optional PDF for reports")
     file_name = fields.Char()
+    year = fields.Integer(default=lambda self: fields.Date.today().year,
+                          help="Gallery only: the year the photo belongs to (groups the gallery year-wise)")
+    category = fields.Char(help="Gallery only: e.g. Yoga, Cultural, Blood Donation (used for the category filter)")
     sequence = fields.Integer(default=10)
     published = fields.Boolean(default=True)
 
@@ -95,6 +98,18 @@ class DishaSiteItem(models.Model):
                     raise ValidationError(_("File is larger than 15 MB."))
                 if raw[:5] != b"%PDF-":
                     raise ValidationError(_("Only PDF files can be attached."))
+
+    @api.constrains("year")
+    def _check_year(self):
+        for rec in self:
+            if rec.collection == "gallery" and not (1990 <= rec.year <= 2100):
+                raise ValidationError(_("Enter a valid 4-digit year for the gallery photo."))
+
+    @api.constrains("category")
+    def _check_category(self):
+        for rec in self:
+            if rec.category and len(rec.category) > 40:
+                raise ValidationError(_("Category is too long (max 40 characters)."))
 
     @api.constrains("collection", "image")
     def _check_gallery(self):

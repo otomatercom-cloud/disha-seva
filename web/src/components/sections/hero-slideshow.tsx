@@ -57,12 +57,12 @@ export function HeroSlideshow({ slides, full = false }: { slides: Slide[]; full?
         {slides[index]?.alt}
       </p>
       {count > 1 && (
-        <div className={full ? "absolute bottom-6 right-6 z-20 flex items-center gap-4" : "absolute inset-x-4 bottom-3 flex items-center justify-between"}>
+        <div className={full ? "absolute bottom-6 right-4 z-20 flex items-center gap-4 md:bottom-28 sm:right-8" : "absolute inset-x-4 bottom-3 flex items-center justify-between"}>
           <div className="flex gap-1.5">
             {slides.map((s, i) => (
               <button key={s.src} type="button" onClick={() => go(i)} aria-label={`Show photo ${i + 1}`} aria-current={i === index}
                 className="flex size-6 items-center justify-center">
-                <span className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-[#ffb27a]" : "w-2 bg-white/60"}`} />
+                <span className={`h-2 rounded-full transition-all ${i === index ? "w-6 bg-[#f58b1f]" : "w-2 bg-white/60"}`} />
               </button>
             ))}
           </div>
