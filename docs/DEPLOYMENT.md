@@ -14,7 +14,7 @@ Inspect existing Nginx/Odoo configs first; add, never overwrite.
 ```
 cd web && cp .env.example .env.production   # fill real values, never commit
 npm ci && npm run build
-pm2 start "npm start -- -p 3000" --name disha-web && pm2 save
+pm2 start "npm start -- -p 3000 -H 127.0.0.1" --name disha-web && pm2 save   # bind to localhost: only nginx may reach Next.js
 ```
 Health check: `GET /api/health`.
 
@@ -35,6 +35,9 @@ server {
 server { listen 80; server_name YOUR_DOMAIN www.YOUR_DOMAIN; return 301 https://$host$request_uri; }
 ```
 `X-Real-IP` is required for per-visitor rate limiting; `Host`/`X-Forwarded-Host` for the origin (CSRF) check. Also set `SITE_URL` in the env file.
+
+**Behind Cloudflare (required):** `$remote_addr` is then a Cloudflare IP, so every visitor would share one rate-limit bucket (the whole site could accept only 5 membership applications per 10 min and 8 failed admin logins would lock everyone out). Run `deploy/cloudflare-realip.sh --apply` on the server once (it trusts only Cloudflare's ranges and uses `CF-Connecting-IP`; never use `set_real_ip_from 0.0.0.0/0`). Next.js must listen on `127.0.0.1` only (`-H 127.0.0.1`), otherwise anyone reaching `IP:PORT` could send a fake `X-Real-IP`. Optionally allow ports 80/443 from Cloudflare ranges only.
+Check: `ss -ltnp | grep <port>` shows `127.0.0.1`, and `nginx -T | grep real_ip` lists the ranges.
 
 ## 4. Environments, backups, rollback
 - Separate `.env` and Odoo token per environment (dev/staging/production); staging uses its own Odoo database.
