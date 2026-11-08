@@ -42,6 +42,7 @@ Install order: `association_membership, disha_membership, disha_membership_card,
 - `ksa_region` is a Selection (keys `central, western, eastern, northern, southern`); the API also accepts the label text case-insensitively. Constant `KSA_REGIONS` (disha_membership) must stay in sync with `EVENT_REGIONS` (disha_site_content, adds `all`) and `REGIONS` in `web/src/lib/validation/membership.ts`; a test in disha_event_notify checks Odoo lists match.
 - `iqama_number` and `passport_number` fields use `groups="disha_membership.group_disha_membership_manager"`: only managers see them; never printed on the card or in the QR.
 - Strict allowlist in `_clean_payload`; idempotency by `Idempotency-Key` (same key replays, different submissions with the same email/mobile are accepted and flagged "possible duplicate" for staff).
+- Status flow is enforced in the model (`_require_state`): new → under_review/contacted → approved; reject only from new/under_review/contacted; reset only from under_review/contacted/rejected; **approved is final** (it already has a member + ID card: suspend/cancel the member in Membership instead). Odoo form and Next.js /admin show only the allowed buttons.
 - `action_approve` sets `approved_on`/`approved_by_id`; the card module's override creates the member (type `DISHA-GEN` General or `DISHA-ASC` Associate, fee 0, 2 years), issues the card and emails it (best effort).
 - Groups: *DISHA Membership Applications* User (view/edit) and Manager (approve/reject/delete/configure, sees ID numbers).
 

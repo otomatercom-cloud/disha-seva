@@ -27,13 +27,13 @@ No Critical finding is confirmed from code alone. **H-1 becomes Critical (site-w
 - Verify on server (read-only): `grep -rn "real_ip\|CF-Connecting" /etc/nginx/` and compare `X-Real-IP` seen by Next for two different clients.
 - Also: the Map is per-process; `pm2 -i max` (cluster) would multiply limits. Fine for one instance (documented in the file header).
 
-### H-2 Admin API can approve an application from any state; the Odoo-side review step is bypassed
+### H-2 (FIXED, see commit) Admin API can approve an application from any state; the Odoo-side review step is bypassed
 - Odoo form only shows Approve for `under_review/contacted` (`odoo/disha_membership/views/registration_views.xml:35-36`).
 - Model method has no state guard: `odoo/disha_membership/models/registration.py:147-149`.
 - Admin API only blocks "already approved": `odoo/disha_admin_api/controllers/main.py:333-334`. Next UI shows Approve for every state except approved (`web/src/components/admin/applications-editor.tsx:46`), so a `new` or `rejected` application can be approved (member + ID card + email) in one click.
 - Fix direction: guard in `action_approve` (allowed from `under_review`/`contacted`, optionally `rejected` with explicit reset), and mirror in the UI.
 
-### H-3 Reject / Reset after approval does not revoke the member or ID card
+### H-3 (FIXED: approved is final, reject/reset blocked) Reject / Reset after approval does not revoke the member or ID card
 - `action_reject` / `action_reset` only write `state` (`registration.py:151-155`); the card module overrides only `action_approve` (`odoo/disha_membership_card/models/registration.py:123-128`). `grep` for `action_reject` in the card module finds no override.
 - The only test is `test_reject_has_no_card` (`odoo/disha_membership_card/tests/test_card.py:94-99`) which rejects a never-approved record. Rejecting an approved one leaves `member_id` active and the card (QR, token) valid. Reset button is visible on approved records (`views/registration_views.xml:41-42`, `invisible="state == 'new'"`).
 - Business rule missing: what happens to member status/card on reject, reset, resignation, expiry (scope §3 says "2 years" but no renewal/expiry job exists in the DISHA modules; `grep expire|renew` finds nothing in `disha_membership_card`). Expiry may live in `association_membership` (not in repo): **unverified**.

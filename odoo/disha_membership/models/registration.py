@@ -2,6 +2,7 @@ import re
 from datetime import date
 
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 PHONE_RE = re.compile(r"^\+?[0-9][0-9\s\-()]{6,19}$")
@@ -138,20 +139,42 @@ class DishaMembershipApplication(models.Model):
         return super().create(vals_list)
 
     # ------------------------------------------------------------------ workflow
+    # Allowed moves (the Odoo form and the Next.js /admin both rely on these, so no screen can skip a step):
+    #   new -> under_review | rejected;  under_review <-> contacted;  under_review/contacted -> approved | rejected;
+    #   rejected -> new (reset).  An approved application is final: it already has a member and an ID card, so it
+    #   cannot be rejected or reset here (suspend or cancel the member in the Membership app instead).
+    def _require_state(self, allowed, message):
+        for rec in self:
+            if rec.state not in allowed:
+                raise UserError(message)
+
     def action_review(self):
+        self._require_state(("new", "contacted"), _("Only a new or contacted application can be moved to Under Review."))
         self.write({"state": "under_review"})
 
     def action_contact(self):
+        self._require_state(("new", "under_review"), _("Only a new or under-review application can be marked Contacted."))
         self.write({"state": "contacted"})
 
     def action_approve(self):
+        self._require_state(
+            ("under_review", "contacted"),
+            _("Review the application first (status Under Review or Contacted) before approving. "
+              "A rejected application must be reset and reviewed again."))
         self.write({"state": "approved", "approved_on": fields.Datetime.now(),
                     "approved_by_id": self.env.user.id})
 
     def action_reject(self):
+        self._require_state(
+            ("new", "under_review", "contacted"),
+            _("This application cannot be rejected. An approved application already has a member and ID card: "
+              "suspend or cancel the member in the Membership app instead."))
         self.write({"state": "rejected"})
 
     def action_reset(self):
+        self._require_state(
+            ("under_review", "contacted", "rejected"),
+            _("This application cannot be reset (a new one is already New; an approved one has a member and ID card)."))
         self.write({"state": "new"})
 
     # ------------------------------------------------------------------ website API

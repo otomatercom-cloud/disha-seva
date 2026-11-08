@@ -330,7 +330,5 @@ class DishaAdminApi(http.Controller):
                   "contact": "action_contact", "reset": "action_reset"}.get(d.get("op"))
         if not action:
             raise UserError(_("Unknown action."))
-        if d.get("op") == "approve" and rec.state == "approved":
-            raise UserError(_("Already approved."))
         getattr(rec, action)()
         return {"ok": True, "state": rec.state}

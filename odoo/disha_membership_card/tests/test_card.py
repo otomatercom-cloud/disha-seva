@@ -42,6 +42,7 @@ class TestMemberCard(TransactionCase):
     def test_approve_issues_card(self):
         rec = self._make(photo=_jpeg())
         self.assertTrue(rec.photo)
+        rec.action_review()
         rec.action_approve()
         self.assertEqual(rec.state, "approved")
         m = rec.member_id
@@ -54,6 +55,7 @@ class TestMemberCard(TransactionCase):
 
     def test_disha_number_series_and_stock_untouched(self):
         rec = self._make()
+        rec.action_review()
         rec.action_approve()
         self.assertTrue(rec.member_id.member_number.startswith("DISHA/"), rec.member_id.member_number)
         stock = self.env.ref("association_membership.report_membership_card_document")
@@ -75,21 +77,34 @@ class TestMemberCard(TransactionCase):
 
     def test_disha_member_prints_disha_report(self):
         rec = self._make()
+        rec.action_review()
         rec.action_approve()
         self.assertEqual(_report_name(rec.member_id.action_print_card()), "disha_membership_card.report_disha_card")
 
     def test_associate_gets_associate_type(self):
         rec = self._make(category="associate")
+        rec.action_review()
         rec.action_approve()
         self.assertEqual(rec.application_id.membership_type_id.code, "DISHA-ASC")
 
     def test_idempotent(self):
         rec = self._make()
+        rec.action_review()
         rec.action_approve()
         first = rec.member_id
         rec.action_issue_card()
         self.assertEqual(rec.member_id, first)
         self.assertEqual(self.env["association.member"].search_count([("id", "=", first.id)]), 1)
+
+    def test_approved_cannot_be_rejected_or_reset_so_card_stays_consistent(self):
+        rec = self._make()
+        rec.action_review()
+        rec.action_approve()
+        with self.assertRaises(UserError):
+            rec.action_reject()
+        with self.assertRaises(UserError):
+            rec.action_reset()
+        self.assertTrue(rec.member_id and rec.state == "approved")
 
     def test_reject_has_no_card(self):
         rec = self._make()
@@ -108,6 +123,7 @@ class TestMemberCard(TransactionCase):
 
     def test_pdf_renders(self):
         rec = self._make(photo=_jpeg())
+        rec.action_review()
         rec.action_approve()
         report = self.env.ref("disha_membership_card.action_report_disha_card")
         html = report._render_qweb_html(report.report_name, rec.member_id.ids)[0]
@@ -118,6 +134,7 @@ class TestMemberCard(TransactionCase):
         self.assertIn(self.env.ref("association_membership.group_membership_staff"), mgr.implied_ids)
         user = self.env["res.users"].create({"name": "MM", "login": "mem_mgr_t", "group_ids": [(6, 0, [mgr.id])]})
         rec = self._make()
+        rec.action_review()
         rec.action_approve()
         att = self.env["ir.attachment"].create({
             "name": "c.pdf", "res_model": "association.member", "res_id": rec.member_id.id,
@@ -126,6 +143,7 @@ class TestMemberCard(TransactionCase):
 
     def test_nationality_exact_match_and_card_assets(self):
         rec = self._make(photo=_jpeg())
+        rec.action_review()
         rec.action_approve()
         self.assertEqual(rec.member_id.nationality_id, self.env.ref("base.in"))
         self.assertTrue(rec.member_id._disha_card_qr_uri().startswith("data:image/png;base64,"))
@@ -138,5 +156,6 @@ class TestMemberCard(TransactionCase):
         act = self.env.ref("disha_membership_card.action_disha_approved_members")
         rec = self._make()
         self.assertNotIn(rec, self.env[act.res_model].search(eval(act.domain)))
+        rec.action_review()
         rec.action_approve()
         self.assertIn(rec, self.env[act.res_model].search(eval(act.domain)))

@@ -39,7 +39,7 @@
                             invisible="state in ('approved', 'rejected')"/>
                     <button name="action_reset" string="Reset to New" type="object"
                             groups="disha_membership.group_disha_membership_manager"
-                            invisible="state == 'new'"/>
+                            invisible="state in ('new', 'approved')"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="new,under_review,contacted,approved"/>
                 </header>

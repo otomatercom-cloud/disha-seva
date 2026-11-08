@@ -1,5 +1,6 @@
 import json
 
+from odoo.exceptions import UserError
 from odoo.exceptions import AccessError
 from odoo.tests import HttpCase, TransactionCase, tagged
 
@@ -67,9 +68,36 @@ class TestRegistrationModel(TransactionCase):
 
     def test_approve_sets_office_fields(self):
         rec = self.Reg.search([("name", "=", self.Reg.create_from_website(dict(VALID))["reference"])])
+        rec.action_review()
         rec.action_approve()
         self.assertTrue(rec.approved_on)
         self.assertEqual(rec.approved_by_id, self.env.user)
+
+    def test_status_flow_is_enforced(self):
+        rec = self.Reg.search([("name", "=", self.Reg.create_from_website(dict(VALID))["reference"])])
+        with self.assertRaises(UserError):      # cannot skip the review step
+            rec.action_approve()
+        rec.action_review()
+        rec.action_contact()
+        rec.action_approve()
+        self.assertEqual(rec.state, "approved")
+        for method in ("action_approve", "action_reject", "action_reset", "action_review", "action_contact"):
+            with self.assertRaises(UserError, msg=method):   # approved is final
+                getattr(rec, method)()
+        self.assertEqual(rec.state, "approved")
+
+    def test_rejected_needs_reset_and_review_before_approval(self):
+        rec = self.Reg.search([("name", "=", self.Reg.create_from_website(dict(VALID))["reference"])])
+        rec.action_reject()
+        with self.assertRaises(UserError):
+            rec.action_approve()
+        rec.action_reset()
+        self.assertEqual(rec.state, "new")
+        with self.assertRaises(UserError):
+            rec.action_reset()   # a new application has nothing to reset
+        rec.action_review()
+        rec.action_approve()
+        self.assertEqual(rec.state, "approved")
 
     def test_sensitive_ids_manager_only(self):
         staff = self.env["res.users"].create({
@@ -109,6 +137,7 @@ class TestRegistrationModel(TransactionCase):
         rec = self.Reg.search([("name", "=", self.Reg.create_from_website(dict(VALID))["reference"])])
         rec.action_review()
         self.assertEqual(rec.state, "under_review")
+        rec.action_review()
         rec.action_approve()
         self.assertEqual(rec.state, "approved")
         rec.action_reset()

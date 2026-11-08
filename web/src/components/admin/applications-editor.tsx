@@ -43,9 +43,11 @@ export function ApplicationsEditor() {
                 <td className="px-3 py-2">{a.email}<br />{a.mobile}</td>
                 <td className="px-3 py-2 capitalize">{a.state.replace("_", " ")}{a.member_number && <><br /><span className="text-xs text-slate-500">{a.member_number}</span></>}</td>
                 <td className="px-3 py-2"><div className="flex flex-wrap gap-1.5">
-                  {a.state !== "approved" && <button disabled={busy === a.id} className={btnPrimary} onClick={() => act(a, "approve")}>Approve</button>}
+                  {a.state === "new" && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "review")}>Start review</button>}
+                  {(a.state === "new" || a.state === "under_review") && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "contact")}>Mark contacted</button>}
+                  {(a.state === "under_review" || a.state === "contacted") && <button disabled={busy === a.id} className={btnPrimary} onClick={() => act(a, "approve")}>Approve</button>}
                   {a.state !== "approved" && a.state !== "rejected" && <button disabled={busy === a.id} className={btnDanger} onClick={() => act(a, "reject")}>Reject</button>}
-                  {a.state === "new" && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "review")}>Review</button>}
+                  {(a.state === "rejected" || a.state === "under_review" || a.state === "contacted") && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "reset")}>Reset to new</button>}
                 </div></td>
               </tr>))}</tbody>
           </table>
