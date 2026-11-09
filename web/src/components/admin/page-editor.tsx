@@ -133,6 +133,24 @@ export function PageEditor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [section, page]);
 
+  const scrollToEditor = () => window.setTimeout(() => document.getElementById("item-editor")?.scrollIntoView({ block: "start", behavior: "smooth" }), 150);
+  /** New card at the end of a list (optionally a copy of `base`), then opened for editing. */
+  async function addCard(collection: string, base?: Item) {
+    const last = Math.max(0, ...itemsRef.current.filter((i) => i.collection === collection).map((i) => i.sequence));
+    const vals = base ? { collection, title: base.title, text: base.text, icon: base.icon, sequence: last + 10 } : { collection, title: "New card", text: "", icon: "", sequence: last + 10 };
+    const r = await api<{ id: number }>("items", { body: { op: "create", vals } });
+    if (!r.ok) { flash(errText(r), true); return; }
+    await load(); setColl(collection); setActiveItem(r.data.id); window.setTimeout(reload, 700); scrollToEditor(); flash(base ? "Copied: edit the new card" : "Card added: fill it in");
+  }
+  async function moveCard(it: Item, dir: -1 | 1) {
+    const list = itemsRef.current.filter((i) => i.collection === it.collection).sort((a, b) => a.sequence - b.sequence || a.id - b.id);
+    const at = list.findIndex((i) => i.id === it.id), to = at + dir;
+    if (to < 0 || to >= list.length) return;
+    [list[at], list[to]] = [list[to], list[at]];
+    for (const [n, x] of list.entries()) if (x.sequence !== (n + 1) * 10) await api("items", { body: { id: x.id, op: "update", vals: { sequence: (n + 1) * 10 } } });
+    saved();
+  }
+
   const select = useCallback((key: string) => {
     const t = textsRef.current.find((x) => x.key === key); if (!t) return;
     if (t.page in PAGE_URLS) { setPage(t.page); setPinned(""); setSection(sectionOf(key)); }
@@ -199,6 +217,12 @@ export function PageEditor() {
           <div id="item-editor" className="rounded-xl ring-4 ring-saffron-500/60">
             <p className="flex items-center justify-between rounded-t-xl bg-saffron-50 px-4 py-2 text-xs font-semibold text-saffron-700">Editing card: {meta.collections.find(([k]) => k === editing.collection)?.[1]}
               <button className="underline" onClick={() => setActiveItem(0)}>Close</button></p>
+            <div className="flex flex-wrap gap-2 border-x border-slate-200 bg-white px-4 pt-3">
+              <button className={btnGhost} onClick={() => addCard(editing.collection)}>+ Add another card</button>
+              <button className={btnGhost} onClick={() => addCard(editing.collection, editing)}>Duplicate</button>
+              <button className={btnGhost} aria-label="Move card earlier" onClick={() => moveCard(editing, -1)}>↑</button>
+              <button className={btnGhost} aria-label="Move card later" onClick={() => moveCard(editing, 1)}>↓</button>
+            </div>
             <Card it={editing} meta={meta} onChange={saved} flash={flash} />
           </div>)}
         <div className="grid gap-3">
@@ -214,7 +238,7 @@ export function PageEditor() {
             <div className="flex flex-wrap gap-2">
               <select aria-label="List" value={coll} onChange={(e) => { setColl(e.target.value); setActiveItem(0); }} className={field + " max-w-[260px]"}>
                 {colls.map((k) => <option key={k} value={k}>{meta.collections.find(([c]) => c === k)?.[1] ?? k}</option>)}</select>
-              <button className={btnGhost} onClick={async () => { const r = await api("items", { body: { op: "create", vals: { collection: coll, title: "New item", sequence: 100 } } }); if (r.ok) saved(); else flash(errText(r), true); }}>+ Add</button>
+              <button className={btnGhost} onClick={() => addCard(coll)}>+ Add card</button>
             </div>
             <ul className="mt-2 grid gap-1">
               {collItems.map((i) => <li key={i.id}><button onClick={() => { setActiveItem(i.id); window.setTimeout(() => document.getElementById("item-editor")?.scrollIntoView({ block: "start", behavior: "smooth" }), 60); }}

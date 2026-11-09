@@ -58,5 +58,8 @@ describe("PageEditor", () => {
     expect(await screen.findByText("Cards & lists on this page")).toBeInTheDocument();
     await u.click(await screen.findByRole("button", { name: "232" }));
     expect(screen.getByText(/Editing card: About: key figures/)).toBeInTheDocument();
+    await u.click(screen.getByRole("button", { name: "+ Add another card" }));
+    const call = vi.mocked(fetch).mock.calls.find((c) => (c[1] as RequestInit | undefined)?.method === "POST");
+    expect(JSON.parse((call![1] as RequestInit).body as string)).toMatchObject({ op: "create", vals: { collection: "stats", title: "New card", sequence: 11 } });
   });
 });
