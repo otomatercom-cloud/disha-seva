@@ -6,6 +6,7 @@ import { api, btnDanger, btnGhost, btnPrimary, errText, field, fileToB64 } from 
 export type Item = { id: number; collection: string; title: string; text: string; icon: string; year: number; category: string; sequence: number; published: boolean; image: string; file: string; file_name: string };
 export type Meta = { collections: [string, string][]; icons: [string, string][] };
 const NO_ICON = ["gallery", "services", "goals", "member_tags", "hero_checks", "faq", "collab_cards", "reports", "steps", "helps"];
+const SLIDES = 6; // keep equal to the slice() in components/sections/home.tsx
 const THIS_YEAR = new Date().getFullYear();
 
 export function Card({ it, meta, onChange, flash }: { it: Item; meta: Meta; onChange: () => void; flash: (m: string, bad?: boolean) => void }) {
@@ -96,6 +97,12 @@ export function ItemsEditor({ mode }: { mode: "lists" | "gallery" }) {
     }
     setProgress(""); flash(`${ok} photo(s) uploaded. Edit the captions below.`); void load();
   }
+  async function moveSlide(it: Item, toSlideshow: boolean) {
+    const seqs = items.map((i) => i.sequence);
+    const sequence = toSlideshow ? Math.min(...seqs) - 10 : Math.max(...seqs) + 10;
+    const r = await api("items", { body: { id: it.id, op: "update", vals: { sequence } } });
+    if (r.ok) { flash(toSlideshow ? "Added to home slideshow" : "Removed from home slideshow"); void load(); } else flash(errText(r), true);
+  }
   async function add() {
     const r = await api("items", { body: { op: "create", vals: { collection: coll, title: "New item", sequence: 100 } } });
     if (r.ok) load(); else flash(errText(r), true);
@@ -121,7 +128,21 @@ export function ItemsEditor({ mode }: { mode: "lists" | "gallery" }) {
         </div>
       )}
       {msg && <p role="status" className={`fixed bottom-5 right-5 z-50 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-lg ${msg.bad ? "bg-red-600" : "bg-navy-700"}`}>{msg.m}</p>}
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{items.map((it) => <Card key={it.id} it={it} meta={meta} onChange={load} flash={flash} />)}</div>
+      {mode === "gallery" && <p className="mb-4 rounded-lg bg-saffron-700/10 px-4 py-3 text-sm text-slate-700">The first <b>{SLIDES}</b> photos below (marked <b>In home slideshow</b>) rotate in the Home page banner. Use <b>Add to slideshow</b> on any photo, or <b>Remove from slideshow</b> to take it out. All photos stay in the Gallery page.</p>}
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{items.map((it, idx) => {
+        const inShow = mode === "gallery" && idx < SLIDES && !!it.image;
+        return (
+          <div key={it.id}>
+            {mode === "gallery" && (
+              <div className="mb-1 flex items-center justify-between gap-2">
+                {inShow ? <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">In home slideshow</span> : <span className="text-xs text-slate-400">Gallery only</span>}
+                <button className={btnGhost} onClick={() => void moveSlide(it, !inShow)}>{inShow ? "Remove from slideshow" : "Add to slideshow"}</button>
+              </div>
+            )}
+            <Card it={it} meta={meta} onChange={load} flash={flash} />
+          </div>
+        );
+      })}</div>
       {!items.length && <p className="text-slate-500">Nothing here yet.</p>}
     </div>
   );

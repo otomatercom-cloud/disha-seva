@@ -12,7 +12,7 @@ const TABS = [
   ["pages", "Page editor"],
   ["content", "All texts (search)"],
   ["lists", "Lists & cards"],
-  ["gallery", "Gallery"],
+  ["gallery", "Gallery & home slideshow"],
   ["events", "Events"],
   ["registrations", "Event registrations"],
   ["menu", "Menu, logo & footer"],
