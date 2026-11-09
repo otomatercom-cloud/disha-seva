@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { api, btnGhost, errText, field } from "./api";
+import { api, btnDanger, btnGhost, errText, field } from "./api";
 import { Card, type Item, type Meta } from "./items-editor";
 import { Row, type Text } from "./texts-editor";
 
@@ -142,6 +142,12 @@ export function PageEditor() {
     if (!r.ok) { flash(errText(r), true); return; }
     await load(); setColl(collection); setActiveItem(r.data.id); window.setTimeout(reload, 700); scrollToEditor(); flash(base ? "Copied: edit the new card" : "Card added: fill it in");
   }
+  async function deleteCard(it: Item) {
+    if (!confirm(`Delete "${it.title || "this card"}"? This cannot be undone.`)) return;
+    const r = await api("items", { body: { id: it.id, op: "delete" } });
+    if (!r.ok) { flash(errText(r), true); return; }
+    setActiveItem(0); await load(); window.setTimeout(reload, 700); flash("Card deleted");
+  }
   async function moveCard(it: Item, dir: -1 | 1) {
     const list = itemsRef.current.filter((i) => i.collection === it.collection).sort((a, b) => a.sequence - b.sequence || a.id - b.id);
     const at = list.findIndex((i) => i.id === it.id), to = at + dir;
@@ -222,6 +228,7 @@ export function PageEditor() {
               <button className={btnGhost} onClick={() => addCard(editing.collection, editing)}>Duplicate</button>
               <button className={btnGhost} aria-label="Move card earlier" onClick={() => moveCard(editing, -1)}>↑</button>
               <button className={btnGhost} aria-label="Move card later" onClick={() => moveCard(editing, 1)}>↓</button>
+              <button className={btnDanger + " ml-auto"} onClick={() => deleteCard(editing)}>Delete card</button>
             </div>
             <Card it={editing} meta={meta} onChange={saved} flash={flash} />
           </div>)}

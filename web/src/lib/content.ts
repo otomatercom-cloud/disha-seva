@@ -92,6 +92,8 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
       if (live && live.length) {
         return live.map((i) => ({ ...blank, ...i, title: decode(i.title ?? ""), text: decode(i.text ?? ""), image: abs(i.image), file: abs(i.file) }));
       }
+      // Odoo reachable and the list was emptied on purpose: show nothing (no sample content)
+      if (live) return [];
       if (name === "gallery") return GALLERY.map((g) => ({ ...blank, title: g.alt, image: g.src, year: g.year ?? 0, category: g.category ?? "" }));
       // Odoo reachable but list intentionally emptied: honour it; unreachable: defaults
       if (live) return [];

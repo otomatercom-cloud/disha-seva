@@ -27,8 +27,9 @@ describe("buildContent", () => {
     expect(c.items("faq")).toEqual([]); // emptied on purpose
   });
 
-  it("falls back to legacy photos only when the live gallery is empty", () => {
-    expect(buildContent({ collections: { gallery: [] } }, "").items("gallery").length).toBeGreaterThan(0);
+  it("uses sample photos only when Odoo is unreachable; an emptied live gallery stays empty", () => {
+    expect(buildContent(null, "").items("gallery").length).toBeGreaterThan(0);
+    expect(buildContent({ collections: { gallery: [] } }, "").items("gallery")).toHaveLength(0);
     const live = buildContent({ collections: { gallery: [{ title: "A", image: "/m/1" }] } }, "https://o");
     expect(live.items("gallery")).toHaveLength(1);
   });
