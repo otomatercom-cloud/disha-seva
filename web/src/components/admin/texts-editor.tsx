@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api, btnDanger, btnGhost, btnPrimary, errText, field, fileToB64 } from "./api";
 
-type Text = { id: number; key: string; page: string; label: string; kind: "line" | "text" | "long" | "image"; value: string; default: string; changed: boolean; image: string };
+export type Text = { id: number; key: string; page: string; label: string; kind: "line" | "text" | "long" | "image"; value: string; default: string; changed: boolean; image: string };
 export type TextsMode = "content" | "menu" | "theme";
 const MENU = "Menu & footer";
 const SITE = "Site-wide";
 const THEME = "Theme & colours";
 
-function Row({ t, onSaved, flash }: { t: Text; onSaved: () => void; flash: (m: string, bad?: boolean) => void }) {
+export function Row({ t, onSaved, flash }: { t: Text; onSaved: () => void; flash: (m: string, bad?: boolean) => void }) {
   const [v, setV] = useState(t.value);
   const [busy, setBusy] = useState(false);
   useEffect(() => setV(t.value), [t.value]);

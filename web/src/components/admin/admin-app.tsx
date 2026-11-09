@@ -5,10 +5,12 @@ import { ApplicationsEditor } from "./applications-editor";
 import { EventsEditor } from "./events-editor";
 import { RegistrationsEditor } from "./registrations-editor";
 import { ItemsEditor } from "./items-editor";
+import { PageEditor } from "./page-editor";
 import { TextsEditor } from "./texts-editor";
 
 const TABS = [
-  ["content", "Page texts & images"],
+  ["pages", "Page editor"],
+  ["content", "All texts (search)"],
   ["lists", "Lists & cards"],
   ["gallery", "Gallery"],
   ["events", "Events"],
@@ -20,7 +22,7 @@ const TABS = [
 type Tab = (typeof TABS)[number][0];
 
 export function AdminApp() {
-  const [tab, setTab] = useState<Tab>("content");
+  const [tab, setTab] = useState<Tab>("pages");
   async function logout() {
     await fetch("/api/admin/logout", { method: "POST" });
     window.location.href = "/admin/login";
@@ -43,6 +45,7 @@ export function AdminApp() {
         </nav>
       </header>
       <main className="mx-auto max-w-7xl px-4 py-6">
+        {tab === "pages" && <PageEditor />}
         {tab === "content" && <TextsEditor mode="content" />}
         {tab === "lists" && <ItemsEditor mode="lists" />}
         {tab === "gallery" && <ItemsEditor mode="gallery" />}
