@@ -18,12 +18,12 @@ export const PAGE_COLLECTIONS: Record<string, string[]> = {
   Partners: ["collab_cards"], Reports: ["reports"], "Membership page": ["steps"], Support: ["support_steps"], Gallery: ["gallery"],
 };
 const SECTION_NAMES: Record<string, string> = {
-  main: "Page heading & intro", hero: "Hero (top banner)", intro: "Intro", impact: "Impact numbers", pillars: "Pillars",
+  main: "Page heading & intro", show: "Show / hide sections", article: "Article", hero: "Hero (top banner)", intro: "Intro", impact: "Impact numbers", pillars: "Pillars",
   events: "Events section", moments: "Photo moments", collab: "Collaborations", join: "Join / call to action", vision: "Vision",
   mission: "Mission", team: "Team", forums: "Forums", formation: "Formation", reg: "Event registration form", faq: "FAQ",
   enquiry: "Enquiry", help: "Help", gallery: "Gallery", track: "Track a request",
 };
-const sectionOf = (key: string) => { const p = key.split("."); return p.length >= 3 ? p[1] : "main"; };
+const sectionOf = (key: string) => { const p = key.split("."); if (p[1] === "article") return "article"; return p.length >= 3 ? p[1] : "main"; };
 const sectionLabel = (s: string) => SECTION_NAMES[s] ?? s.replace(/[_-]/g, " ").replace(/^./, (c) => c.toUpperCase());
 const norm = (s: string) => s.replace(/\s+/g, " ").trim();
 
@@ -41,7 +41,7 @@ export function markEditable(doc: Document, texts: Pick<Text, "key" | "kind" | "
   const images: [string, string][] = [];
   for (const t of texts) {
     if (t.kind === "image") { if (t.image) images.push([t.key, t.image.split("?")[0]]); continue; }
-    if (t.key.startsWith("theme.") || t.key.startsWith("navshow.")) continue;
+    if (t.key.startsWith("theme.") || t.key.startsWith("navshow.") || t.key.includes(".show.")) continue;
     add(t.value, ["ed", t.key]);
     if (t.kind === "long" || t.value.includes("\n")) for (const block of t.value.split(/\n{2,}/)) { add(plain(block), ["ed", t.key]); for (const line of plain(block).split("\n")) add(line, ["ed", t.key]); }
   }

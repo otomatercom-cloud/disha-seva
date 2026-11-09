@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { PageHero, Section } from "@/components/sections/page-hero";
+import { PageHero, Prose, Section } from "@/components/sections/page-hero";
 import { JoinButton } from "@/components/ui/button";
 import { Card, FeatureCard } from "@/components/ui/card";
 import { Icon } from "@/components/ui/icon";
+import { RichText } from "@/components/ui/rich-text";
 import { getContent } from "@/lib/content";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,12 +17,15 @@ export default async function AboutPage() {
   return (
     <>
       <PageHero title={c.t("about.title")} intro={c.t("about.intro")} />
+      {c.t("about.article") && c.show("about.show.article") && (
+        <Prose><RichText source={c.t("about.article")} email={c.t("site.email")} /></Prose>
+      )}
       <Section>
-        <Card>
+        {c.show("about.show.formation") && <Card>
           <h2 className="text-2xl">{c.t("about.formation.title")}</h2>
           <p className="mt-3 leading-relaxed text-slate-600">{c.t("about.formation.text")}</p>
-        </Card>
-        {stats.length > 0 && (
+        </Card>}
+        {c.show("about.show.stats") && stats.length > 0 && (
           <dl className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {stats.map((s) => (
               <div key={s.title} className="rounded-2xl bg-navy-900 p-6 text-center">
@@ -31,23 +35,23 @@ export default async function AboutPage() {
             ))}
           </dl>
         )}
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
+        {c.show("about.show.vision") && <div className="mt-6 grid gap-6 md:grid-cols-2">
           <Card><h2 className="text-2xl">{c.t("about.vision.title")}</h2>
             <p className="mt-3 text-slate-600">{c.t("about.vision.text")}</p></Card>
           <Card><h2 className="text-2xl">{c.t("about.mission.title")}</h2>
             <p className="mt-3 text-slate-600">{c.t("about.mission.text")}</p></Card>
-        </div>
-        <Card className="mt-6"><h2 className="text-2xl">{c.t("about.goals.title")}</h2>
+        </div>}
+        {c.show("about.show.goals") && <Card className="mt-6"><h2 className="text-2xl">{c.t("about.goals.title")}</h2>
           <ul className="mt-3 list-decimal space-y-1 pl-5 text-slate-600">
             {c.items("goals").map((g) => <li key={g.title}>{g.title}</li>)}
-          </ul></Card>
+          </ul></Card>}
       </Section>
-      <Section tone="tint" title={c.t("about.forums.title")} intro={c.t("about.forums.intro")}>
+      {c.show("about.show.forums") && <Section tone="tint" title={c.t("about.forums.title")} intro={c.t("about.forums.intro")}>
         <div className="grid gap-6 md:grid-cols-3">
           {c.items("forums").map((f) => <FeatureCard key={f.title} icon={<Icon name={f.icon} className={i} />} title={f.title}>{f.text}</FeatureCard>)}
         </div>
-      </Section>
-      {c.items("team").length > 0 && (
+      </Section>}
+      {c.show("about.show.team") && c.items("team").length > 0 && (
         <Section title={c.t("about.team.title")} intro={c.t("about.team.intro")}>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {c.items("team").map((m) => (
@@ -59,12 +63,12 @@ export default async function AboutPage() {
           </ul>
         </Section>
       )}
-      <Section tone="tint" title={c.t("about.support.title")}>
+      {c.show("about.show.support") && <Section tone="tint" title={c.t("about.support.title")}>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {c.items("support").map((f) => <FeatureCard key={f.title} icon={<Icon name={f.icon} className={i} />} title={f.title}>{f.text}</FeatureCard>)}
         </div>
         <div className="mt-10 text-center"><JoinButton label={c.t("site.join")} /></div>
-      </Section>
+      </Section>}
     </>
   );
 }

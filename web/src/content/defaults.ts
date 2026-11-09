@@ -150,6 +150,32 @@ export const TEXTS: Record<string, TextDef> = {
   // ---- About
   "about.title": ["About", "Page heading", "About DISHA"],
   "about.intro": ["About", "Page intro", "Dedicated team for Indo Saudi Holistic Alignment: a leading socio-cultural organisation in the Kingdom of Saudi Arabia.", "text"],
+  "about.article": ["About", "Main article (## heading, blank line = new paragraph)", `DISHA (Dedicated team for Indo Saudi Holistic Alignment) is a leading Socio-Cultural organization in the Kingdom of Saudi Arabia. It was formed with an aim to enhance holistic alignment between India and Kingdom of Saudi Arabia.
+
+DISHA was established on 23rd of June 2021. Padma Shree Nouf Al Marwaai, Founder of Arab Yoga Foundation and President of Saudi Yoga Committee inaugurated the launch of DISHA.
+
+DISHA is actively engaged in enhancing cultural exchange between India and Saudi Arabia. With the dynamic collaboration and guidance of Embassy of India and various Government bodies of KSA, DISHA has positioned itself in the trajectory towards the greater objective of Vision 2030 by nourishing cultural enrichment along with social service to create a loving global community.
+
+Established in the year 2021, DISHA at present has a Saudi National Committee, 3 Regional committees in Dammam, Riyadh and Jeddah along with 18 Area Committees and 212 working centers which coordinates the activities in Saudi Arabia. DISHA has 3145 active Indian community members from different parts of India throughout the Kingdom to execute the mission along with The Embassy of India to the Kingdom of Saudi Arabia, cultural projects of the Kingdom - SALAM, Saudi Yoga Committee, Saudi Ministry of Sports and Arab Yoga foundation.
+
+Saudi Arabia is catching global attention with its rapid growth and infrastructural changes under the leadership of Custodian of two holy mosques his excellency, King Salman Bin Abdulaziz Al Saud and crown prince His Excellency Mohmmed Bin Salman Al Saud. DISHA offers all possible cooperation to this great country in its vision and mission.`, "long"],
+  "about.show.formation": ["About", "Show section: Formation box (replaced by the article above) (yes / no)", "no"],
+  "about.show.stats": ["About", "Show section: Key figures (yes / no)", "yes"],
+  "about.show.vision": ["About", "Show section: Vision and mission (yes / no)", "yes"],
+  "about.show.goals": ["About", "Show section: Goals (yes / no)", "yes"],
+  "about.show.forums": ["About", "Show section: Committees (yes / no)", "yes"],
+  "about.show.team": ["About", "Show section: Office bearers (yes / no)", "yes"],
+  "about.show.support": ["About", "Show section: What members do (yes / no)", "yes"],
+  "home.show.hero": ["Home", "Show section: Hero banner (yes / no)", "yes"],
+  "home.show.marquee": ["Home", "Show section: Scrolling services strip (yes / no)", "yes"],
+  "home.show.intro": ["Home", "Show section: Intro (yes / no)", "yes"],
+  "home.show.pillars": ["Home", "Show section: Pillars (yes / no)", "yes"],
+  "home.show.impact": ["Home", "Show section: Impact (yes / no)", "yes"],
+  "home.show.events": ["Home", "Show section: Events (yes / no)", "yes"],
+  "home.show.moments": ["Home", "Show section: Photo moments (yes / no)", "yes"],
+  "home.show.join": ["Home", "Show section: Join call to action (yes / no)", "yes"],
+  "home.show.collab": ["Home", "Show section: Collaborations and reports (yes / no)", "yes"],
+  "home.show.contact": ["Home", "Show section: Contact strip (yes / no)", "yes"],
   "about.formation.title": ["About", "Formation heading", "Our formation"],
   "about.formation.text": ["About", "Formation text", "DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.", "text"],
   "about.vision.title": ["About", "Vision heading", "Our vision"],

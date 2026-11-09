@@ -25,6 +25,8 @@ type ApiPayload = {
 export type Content = {
   /** Editable text; falls back to the built-in default. */
   t: (key: string) => string;
+  /** Section switch ("... .show.x" texts): false only when staff typed "no". */
+  show: (key: string) => boolean;
   /** Editable image URL; falls back to the legacy hot-linked image, or null. */
   img: (key: string) => string | null;
   items: (name: string) => Item[];
@@ -65,6 +67,7 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
   const abs = (u?: string) => (u ? (/^https?:\/\//.test(u) ? u : media + u) : "");
   return {
     t: (key) => data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || "",
+    show: (key) => (data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || "yes").toLowerCase() !== "no",
     img: (key) => abs(data?.images?.[key]) || FALLBACK_IMAGES[key] || null,
     events: (today = new Date().toISOString().slice(0, 10)) => {
       const list = (data?.events ?? [])

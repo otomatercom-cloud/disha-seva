@@ -14,7 +14,7 @@ export function Row({ t, onSaved, flash }: { t: Text; onSaved: () => void; flash
   const [busy, setBusy] = useState(false);
   useEffect(() => setV(t.value), [t.value]);
   const dirty = v !== t.value;
-  const isToggle = t.key.startsWith("navshow.");
+  const isToggle = t.key.startsWith("navshow.") || t.key.includes(".show.");
   const isColor = t.key.startsWith("theme.");
 
   async function run(body: Record<string, unknown>, ok: string) {
