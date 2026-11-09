@@ -286,12 +286,26 @@ export async function ContactStrip() {
   const email = c.t("site.email");
   return (
     <Section tone="tint" title={c.t("home.contact.title")}>
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center">
-        <p className="flex items-center gap-2 text-slate-600"><MapPin className="size-4" aria-hidden /> {c.t("site.address")} · {c.t("site.hours")}</p>
-        <a href={`mailto:${email}`} className="inline-flex items-center gap-2 text-lg font-semibold text-navy-900 hover:underline">
-          <Mail className="size-5" aria-hidden /> {email}
-        </a>
-        <JoinButton className="mt-3" label={c.t("site.join")} />
+      <div className="mx-auto max-w-3xl">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm">
+            <span className="flex size-10 flex-none items-center justify-center rounded-full bg-saffron-700/10 text-saffron-700"><MapPin className="size-5" aria-hidden /></span>
+            <div className="min-w-0">
+              <p className="font-semibold text-navy-900">{c.t("site.address")}</p>
+              <p className="mt-0.5 text-sm text-slate-600">{c.t("site.hours")}</p>
+            </div>
+          </div>
+          <a href={`mailto:${email}`} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-5 text-left shadow-sm transition hover:shadow-md">
+            <span className="flex size-10 flex-none items-center justify-center rounded-full bg-saffron-700/10 text-saffron-700"><Mail className="size-5" aria-hidden /></span>
+            <div className="min-w-0">
+              <p className="break-all font-semibold text-navy-900">{email}</p>
+              <p className="mt-0.5 text-sm text-slate-600">Email us</p>
+            </div>
+          </a>
+        </div>
+        <div className="mt-6 flex justify-center">
+          <JoinButton label={c.t("site.join")} />
+        </div>
       </div>
     </Section>
   );
