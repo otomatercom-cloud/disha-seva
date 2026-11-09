@@ -8,6 +8,7 @@ import { VisionMission } from "./vision-mission";
 import { HeroSlideshow } from "./hero-slideshow";
 import { CountUp } from "./count-up";
 import { PhotoGallery } from "./photo-gallery";
+import { ReadMore } from "@/components/ui/read-more";
 import { Section } from "./page-hero";
 
 const Eyebrow = ({ children, tone = "saffron" }: { children: string; tone?: "saffron" | "green" | "light" }) => (
@@ -158,12 +159,12 @@ export async function Pillars() {
           <Eyebrow>{c.t("home.pillars.eyebrow")}</Eyebrow>
           <h2 className="mt-3.5 text-4xl font-extrabold leading-[1.12] tracking-tight sm:text-[44px]">{c.t("home.pillars.title")}</h2>
         </div>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((p) => (
             <article key={p.title} className="lift reveal group relative overflow-hidden rounded-[18px] border border-[#e6eee9] bg-white p-8 shadow-[0_6px_24px_rgba(15,61,46,.08)] before:absolute before:bottom-0 before:left-0 before:h-1 before:w-0 before:bg-saffron-500 before:transition-all before:duration-500 hover:before:w-full">
               <span className="flex size-[68px] items-center justify-center rounded-full bg-navy-700/10 text-navy-700 transition duration-500 group-hover:bg-navy-700 group-hover:text-white"><Icon name={p.icon} className="size-7" /></span>
               <h3 className="mt-6 text-xl font-bold">{p.title}</h3>
-              <p className="mt-2.5 text-[15px] leading-relaxed">{p.text}</p>
+              <ReadMore className="mt-2.5 text-[15px] leading-relaxed">{p.text}</ReadMore>
             </article>
           ))}
         </div>

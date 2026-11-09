@@ -35,6 +35,9 @@ export type Content = {
 };
 
 const FALLBACK_IMAGES: Record<string, string> = { "site.logo": images.logo, "home.intro.image": images.about };
+/** Text pasted from web pages sometimes carries HTML entities (&amp;); React would print them literally. */
+const decode = (s: string) => s.replace(/&amp;|&lt;|&gt;|&quot;|&#39;|&nbsp;/g, (m) => ({ "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&nbsp;": " " })[m] ?? m);
+
 const blank: Item = { title: "", text: "", icon: "", url: "", image: "", file: "", year: 0, category: "" };
 
 /** Public base for media URLs (what the visitor's browser/Next image optimiser can reach). */
@@ -66,7 +69,7 @@ async function load(): Promise<ApiPayload | null> {
 export function buildContent(data: ApiPayload | null, media = mediaBase()): Content {
   const abs = (u?: string) => (u ? (/^https?:\/\//.test(u) ? u : media + u) : "");
   return {
-    t: (key) => data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || "",
+    t: (key) => decode(data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || ""),
     show: (key) => (data?.texts?.[key]?.trim() || TEXTS[key]?.[2] || "yes").toLowerCase() !== "no",
     img: (key) => abs(data?.images?.[key]) || FALLBACK_IMAGES[key] || null,
     events: (today = new Date().toISOString().slice(0, 10)) => {
@@ -87,7 +90,7 @@ export function buildContent(data: ApiPayload | null, media = mediaBase()): Cont
     items: (name) => {
       const live = data?.collections?.[name];
       if (live && live.length) {
-        return live.map((i) => ({ ...blank, ...i, image: abs(i.image), file: abs(i.file) }));
+        return live.map((i) => ({ ...blank, ...i, title: decode(i.title ?? ""), text: decode(i.text ?? ""), image: abs(i.image), file: abs(i.file) }));
       }
       if (name === "gallery") return GALLERY.map((g) => ({ ...blank, title: g.alt, image: g.src, year: g.year ?? 0, category: g.category ?? "" }));
       // Odoo reachable but list intentionally emptied: honour it; unreachable: defaults

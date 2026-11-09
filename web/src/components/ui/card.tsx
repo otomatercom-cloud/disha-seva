@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { ReadMore } from "./read-more";
 
 export function Card({ className, ...props }: ComponentProps<"div">) {
   return (
@@ -19,7 +20,7 @@ export function FeatureCard({ icon, title, children }: { icon: ReactNode; title:
     <Card>
       <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-navy-50 text-navy-900">{icon}</div>
       <h3 className="text-lg">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600">{children}</p>
+      <ReadMore className="mt-2 text-sm leading-relaxed text-slate-600">{children}</ReadMore>
     </Card>
   );
 }
@@ -32,7 +33,7 @@ export function ImageCard({ src, alt, title, children }: { src: string; alt: str
       </div>
       <div className="p-6">
         <h3 className="text-lg">{title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">{children}</p>
+        <ReadMore className="mt-2 text-sm leading-relaxed text-slate-600">{children}</ReadMore>
       </div>
     </Card>
   );
