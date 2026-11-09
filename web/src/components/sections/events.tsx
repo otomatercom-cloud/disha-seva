@@ -53,7 +53,7 @@ function EventCard({ e, upcoming, label, reg, fullLabel }: { e: SiteEvent; upcom
 export async function Events({ limit = 6 }: { limit?: number }) {
   const c = await getContent();
   const today = new Date().toISOString().slice(0, 10);
-  const events = c.events(today).slice(0, limit);
+  const events = c.events(today).filter((e) => (e.endDate || e.date) >= today).slice(0, limit); // past events are hidden here (still reachable by their /events/<id> link)
   const reg = Object.fromEntries(
     ["button", "title", "intro", "name", "phone", "email", "region", "place", "submit", "success", "duplicate", "closed"].map((k) => [k, c.t(`events.reg.${k}`)]),
   ) as RegLabels;
