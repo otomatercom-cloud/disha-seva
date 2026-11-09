@@ -168,6 +168,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
   "about.show.support": ["About", "Show section: What members do (yes / no)", "yes"],
   "home.show.hero": ["Home", "Show section: Hero banner (yes / no)", "yes"],
   "home.show.marquee": ["Home", "Show section: Scrolling services strip (yes / no)", "yes"],
+  "home.show.vision": ["Home", "Show section: Vision and Mission cards (yes / no)", "yes"],
   "home.show.intro": ["Home", "Show section: Intro (yes / no)", "yes"],
   "home.show.pillars": ["Home", "Show section: Pillars (yes / no)", "yes"],
   "home.show.impact": ["Home", "Show section: Impact (yes / no)", "yes"],

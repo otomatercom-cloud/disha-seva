@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { JoinButton } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
+import { Compass, Target } from "lucide-react";
 import { getContent } from "@/lib/content";
-import { VisionMission } from "./vision-mission";
 import { HeroSlideshow } from "./hero-slideshow";
 import { CountUp } from "./count-up";
 import { PhotoGallery } from "./photo-gallery";
@@ -43,10 +43,6 @@ function FloatCard({ className, icon, tone, title, text }: {
 export async function Hero() {
   const c = await getContent();
   const cards = c.items("hero_cards");
-  const vm = [
-    { label: c.t("about.vision.title"), text: c.t("about.vision.text") },
-    { label: c.t("about.mission.title"), text: c.t("about.mission.text") },
-  ].filter((x) => x.text);
   const slides = c.items("gallery").filter((g) => g.image).slice(0, 6).map((g) => ({ src: g.image, alt: g.title }));
   const tones = ["bg-saffron-50 text-saffron-700", "bg-seva-50 text-seva-700", "bg-navy-50 text-navy-900"];
   return (
@@ -73,9 +69,6 @@ export async function Hero() {
               <li key={t.title} className="flex items-center gap-2"><Check className="size-[18px] text-green-400" aria-hidden />{t.title}</li>
             ))}
           </ul>
-        </div>
-        <div className="anim-up delay-3 flex min-w-0 flex-[0_1_400px] justify-end">
-          <VisionMission items={vm} />
         </div>
       </div>
       <ul className="absolute inset-x-0 bottom-0 z-10 hidden border-t border-white/20 bg-white/10 backdrop-blur-md md:block">
@@ -105,6 +98,29 @@ export async function Marquee() {
       </div>
       <ul className="sr-only">{SERVICES.map((s) => <li key={s}>{s}</li>)}</ul>
     </section>
+  );
+}
+
+export async function VisionMissionCards() {
+  const c = await getContent();
+  const items = [
+    { label: c.t("about.vision.title"), text: c.t("about.vision.text"), Ic: Target },
+    { label: c.t("about.mission.title"), text: c.t("about.mission.text"), Ic: Compass },
+  ].filter((x) => x.text);
+  if (!items.length) return null;
+  return (
+    <Section tone="tint">
+      <ul className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+        {items.map(({ label, text, Ic }) => (
+          <li key={label} className="reveal lift rounded-[22px] border border-slate-200 bg-white p-7 shadow-[0_14px_40px_rgba(15,61,46,.10)]">
+            <span className="flex items-center gap-3 text-[13px] font-bold uppercase tracking-[1.5px] text-saffron-700">
+              <span className="flex size-10 items-center justify-center rounded-full bg-saffron-700/10"><Ic className="size-5" aria-hidden /></span>{label}
+            </span>
+            <p className="mt-4 text-lg leading-relaxed text-slate-700">{text}</p>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }
 

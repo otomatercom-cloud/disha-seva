@@ -1,5 +1,5 @@
 import {
-  CollabAndReports, ContactStrip, Hero, Impact, Intro, Marquee, OurMoments, Pillars, JoinCta,
+  CollabAndReports, ContactStrip, Hero, Impact, Intro, Marquee, OurMoments, VisionMissionCards, Pillars, JoinCta,
 } from "@/components/sections/home";
 import { Events } from "@/components/sections/events";
 import { getContent } from "@/lib/content";
@@ -11,6 +11,7 @@ export default async function HomePage() {
     <>
       {on("hero") && <Hero />}
       {on("marquee") && <Marquee />}
+      {on("vision") && <VisionMissionCards />}
       {on("intro") && <Intro />}
       {on("pillars") && <Pillars />}
       {on("impact") && <Impact />}

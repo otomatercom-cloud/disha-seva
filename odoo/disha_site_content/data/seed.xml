@@ -971,6 +971,15 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="default_value">yes</field>
             <field name="sequence">1060</field>
         </record>
+        <record id="text_home_show_vision" model="disha.site.text">
+            <field name="key">home.show.vision</field>
+            <field name="page">Home</field>
+            <field name="label">Show section: Vision and Mission cards (yes / no)</field>
+            <field name="kind">line</field>
+            <field name="value">yes</field>
+            <field name="default_value">yes</field>
+            <field name="sequence">1070</field>
+        </record>
         <record id="text_home_show_intro" model="disha.site.text">
             <field name="key">home.show.intro</field>
             <field name="page">Home</field>
@@ -978,7 +987,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1070</field>
+            <field name="sequence">1080</field>
         </record>
         <record id="text_home_show_pillars" model="disha.site.text">
             <field name="key">home.show.pillars</field>
@@ -987,7 +996,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1080</field>
+            <field name="sequence">1090</field>
         </record>
         <record id="text_home_show_impact" model="disha.site.text">
             <field name="key">home.show.impact</field>
@@ -996,7 +1005,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1090</field>
+            <field name="sequence">1100</field>
         </record>
         <record id="text_home_show_events" model="disha.site.text">
             <field name="key">home.show.events</field>
@@ -1005,7 +1014,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1100</field>
+            <field name="sequence">1110</field>
         </record>
         <record id="text_home_show_moments" model="disha.site.text">
             <field name="key">home.show.moments</field>
@@ -1014,7 +1023,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1110</field>
+            <field name="sequence">1120</field>
         </record>
         <record id="text_home_show_join" model="disha.site.text">
             <field name="key">home.show.join</field>
@@ -1023,7 +1032,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1120</field>
+            <field name="sequence">1130</field>
         </record>
         <record id="text_home_show_collab" model="disha.site.text">
             <field name="key">home.show.collab</field>
@@ -1032,7 +1041,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1130</field>
+            <field name="sequence">1140</field>
         </record>
         <record id="text_home_show_contact" model="disha.site.text">
             <field name="key">home.show.contact</field>
@@ -1041,7 +1050,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">yes</field>
             <field name="default_value">yes</field>
-            <field name="sequence">1140</field>
+            <field name="sequence">1150</field>
         </record>
         <record id="text_about_formation_title" model="disha.site.text">
             <field name="key">about.formation.title</field>
@@ -1050,7 +1059,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Our formation</field>
             <field name="default_value">Our formation</field>
-            <field name="sequence">1150</field>
+            <field name="sequence">1160</field>
         </record>
         <record id="text_about_formation_text" model="disha.site.text">
             <field name="key">about.formation.text</field>
@@ -1059,7 +1068,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
             <field name="default_value">DISHA was formed to enhance holistic alignment between India and Saudi Arabia. It was officially inaugurated on 23 June 2021, with Padma Shri Awardee Smt. Nouf Al Marwaai, founder of the Arab Yoga Foundation and President of the Saudi Yoga Committee, launching the organisation. Shri Y. Sabir, Deputy Consul General of India, Jeddah, attended as Chief Guest. DISHA's Regional Committees were announced on 27 October 2021 at its first National Conference.</field>
-            <field name="sequence">1160</field>
+            <field name="sequence">1170</field>
         </record>
         <record id="text_about_vision_title" model="disha.site.text">
             <field name="key">about.vision.title</field>
@@ -1068,7 +1077,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Our vision</field>
             <field name="default_value">Our vision</field>
-            <field name="sequence">1170</field>
+            <field name="sequence">1180</field>
         </record>
         <record id="text_about_vision_text" model="disha.site.text">
             <field name="key">about.vision.text</field>
@@ -1077,7 +1086,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">Be part of cultural enrichment combined with social service to create a loving community.</field>
             <field name="default_value">Be part of cultural enrichment combined with social service to create a loving community.</field>
-            <field name="sequence">1180</field>
+            <field name="sequence">1190</field>
         </record>
         <record id="text_about_mission_title" model="disha.site.text">
             <field name="key">about.mission.title</field>
@@ -1086,7 +1095,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Our mission</field>
             <field name="default_value">Our mission</field>
-            <field name="sequence">1190</field>
+            <field name="sequence">1200</field>
         </record>
         <record id="text_about_mission_text" model="disha.site.text">
             <field name="key">about.mission.text</field>
@@ -1095,7 +1104,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
             <field name="default_value">To work for cultural enrichment along with social services for citizens and residents of Saudi Arabia by facilitating social, cultural, art, language, academic exchanges and trade between Saudi Arabia and India.</field>
-            <field name="sequence">1200</field>
+            <field name="sequence">1210</field>
         </record>
         <record id="text_about_goals_title" model="disha.site.text">
             <field name="key">about.goals.title</field>
@@ -1104,7 +1113,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">What we focus on</field>
             <field name="default_value">What we focus on</field>
-            <field name="sequence">1210</field>
+            <field name="sequence">1220</field>
         </record>
         <record id="text_about_forums_title" model="disha.site.text">
             <field name="key">about.forums.title</field>
@@ -1113,7 +1122,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Our structure</field>
             <field name="default_value">Our structure</field>
-            <field name="sequence">1220</field>
+            <field name="sequence">1230</field>
         </record>
         <record id="text_about_forums_intro" model="disha.site.text">
             <field name="key">about.forums.intro</field>
@@ -1122,7 +1131,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
             <field name="default_value">A National Committee for KSA, three Provincial Committees and unit councils in twelve cities.</field>
-            <field name="sequence">1230</field>
+            <field name="sequence">1240</field>
         </record>
         <record id="text_about_team_title" model="disha.site.text">
             <field name="key">about.team.title</field>
@@ -1131,7 +1140,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Key office bearers</field>
             <field name="default_value">Key office bearers</field>
-            <field name="sequence">1240</field>
+            <field name="sequence">1250</field>
         </record>
         <record id="text_about_team_intro" model="disha.site.text">
             <field name="key">about.team.intro</field>
@@ -1140,7 +1149,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">The National Committee and advisors guiding DISHA.</field>
             <field name="default_value">The National Committee and advisors guiding DISHA.</field>
-            <field name="sequence">1250</field>
+            <field name="sequence">1260</field>
         </record>
         <record id="text_about_support_title" model="disha.site.text">
             <field name="key">about.support.title</field>
@@ -1149,7 +1158,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">What our members do</field>
             <field name="default_value">What our members do</field>
-            <field name="sequence">1260</field>
+            <field name="sequence">1270</field>
         </record>
         <record id="text_indians_title" model="disha.site.text">
             <field name="key">indians.title</field>
@@ -1158,7 +1167,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Indians in KSA</field>
             <field name="default_value">Indians in KSA</field>
-            <field name="sequence">1270</field>
+            <field name="sequence">1280</field>
         </record>
         <record id="text_indians_intro" model="disha.site.text">
             <field name="key">indians.intro</field>
@@ -1167,7 +1176,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Information and support for Indian residents across Saudi Arabia.</field>
             <field name="default_value">Information and support for Indian residents across Saudi Arabia.</field>
-            <field name="sequence">1280</field>
+            <field name="sequence">1290</field>
         </record>
         <record id="text_indians_helps_title" model="disha.site.text">
             <field name="key">indians.helps.title</field>
@@ -1176,7 +1185,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">How DISHA helps</field>
             <field name="default_value">How DISHA helps</field>
-            <field name="sequence">1290</field>
+            <field name="sequence">1300</field>
         </record>
         <record id="text_indians_faq_title" model="disha.site.text">
             <field name="key">indians.faq.title</field>
@@ -1185,7 +1194,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Frequently asked questions</field>
             <field name="default_value">Frequently asked questions</field>
-            <field name="sequence">1300</field>
+            <field name="sequence">1310</field>
         </record>
         <record id="text_indians_faq_note" model="disha.site.text">
             <field name="key">indians.faq.note</field>
@@ -1194,7 +1203,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
             <field name="default_value">This is general guidance. Always confirm requirements on the official Indian Embassy or Saudi government websites.</field>
-            <field name="sequence">1310</field>
+            <field name="sequence">1320</field>
         </record>
         <record id="text_seva_title" model="disha.site.text">
             <field name="key">seva.title</field>
@@ -1203,7 +1212,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Our Activities</field>
             <field name="default_value">Our Activities</field>
-            <field name="sequence">1320</field>
+            <field name="sequence">1330</field>
         </record>
         <record id="text_seva_intro" model="disha.site.text">
             <field name="key">seva.intro</field>
@@ -1212,7 +1221,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
             <field name="default_value">Cultural enrichment and community service: what DISHA and its unit councils do across Saudi Arabia.</field>
-            <field name="sequence">1330</field>
+            <field name="sequence">1340</field>
         </record>
         <record id="text_seva_gallery_title" model="disha.site.text">
             <field name="key">seva.gallery.title</field>
@@ -1221,7 +1230,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Gallery</field>
             <field name="default_value">Gallery</field>
-            <field name="sequence">1340</field>
+            <field name="sequence">1350</field>
         </record>
         <record id="text_seva_gallery_intro" model="disha.site.text">
             <field name="key">seva.gallery.intro</field>
@@ -1230,7 +1239,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Snapshots of DISHA programmes across the Kingdom.</field>
             <field name="default_value">Snapshots of DISHA programmes across the Kingdom.</field>
-            <field name="sequence">1350</field>
+            <field name="sequence">1360</field>
         </record>
         <record id="text_seva_gallery_link" model="disha.site.text">
             <field name="key">seva.gallery.link</field>
@@ -1239,7 +1248,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">View full gallery</field>
             <field name="default_value">View full gallery</field>
-            <field name="sequence">1360</field>
+            <field name="sequence">1370</field>
         </record>
         <record id="text_gallery_title" model="disha.site.text">
             <field name="key">gallery.title</field>
@@ -1248,7 +1257,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Photo Gallery</field>
             <field name="default_value">Photo Gallery</field>
-            <field name="sequence">1370</field>
+            <field name="sequence">1380</field>
         </record>
         <record id="text_gallery_intro" model="disha.site.text">
             <field name="key">gallery.intro</field>
@@ -1257,7 +1266,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
             <field name="default_value">Snapshots of yoga meets, cultural programmes and community service across Saudi Arabia.</field>
-            <field name="sequence">1380</field>
+            <field name="sequence">1390</field>
         </record>
         <record id="text_gallery_cta" model="disha.site.text">
             <field name="key">gallery.cta</field>
@@ -1266,7 +1275,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Be part of the next moment.</field>
             <field name="default_value">Be part of the next moment.</field>
-            <field name="sequence">1390</field>
+            <field name="sequence">1400</field>
         </record>
         <record id="text_collab_title" model="disha.site.text">
             <field name="key">collab.title</field>
@@ -1275,7 +1284,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Partners &amp; Collaborations</field>
             <field name="default_value">Partners &amp; Collaborations</field>
-            <field name="sequence">1400</field>
+            <field name="sequence">1410</field>
         </record>
         <record id="text_collab_intro" model="disha.site.text">
             <field name="key">collab.intro</field>
@@ -1284,7 +1293,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">DISHA works with embassies, cultural bodies and community organisations.</field>
             <field name="default_value">DISHA works with embassies, cultural bodies and community organisations.</field>
-            <field name="sequence">1410</field>
+            <field name="sequence">1420</field>
         </record>
         <record id="text_collab_enquiry_title" model="disha.site.text">
             <field name="key">collab.enquiry.title</field>
@@ -1293,7 +1302,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Partnership enquiries</field>
             <field name="default_value">Partnership enquiries</field>
-            <field name="sequence">1420</field>
+            <field name="sequence">1430</field>
         </record>
         <record id="text_collab_enquiry_text" model="disha.site.text">
             <field name="key">collab.enquiry.text</field>
@@ -1302,7 +1311,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Tell us about your organisation and how you would like to collaborate.</field>
             <field name="default_value">Tell us about your organisation and how you would like to collaborate.</field>
-            <field name="sequence">1430</field>
+            <field name="sequence">1440</field>
         </record>
         <record id="text_collab_enquiry_button" model="disha.site.text">
             <field name="key">collab.enquiry.button</field>
@@ -1311,7 +1320,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Email</field>
             <field name="default_value">Email</field>
-            <field name="sequence">1440</field>
+            <field name="sequence">1450</field>
         </record>
         <record id="text_reports_title" model="disha.site.text">
             <field name="key">reports.title</field>
@@ -1320,7 +1329,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Programmes &amp; Reports</field>
             <field name="default_value">Programmes &amp; Reports</field>
-            <field name="sequence">1450</field>
+            <field name="sequence">1460</field>
         </record>
         <record id="text_reports_intro" model="disha.site.text">
             <field name="key">reports.intro</field>
@@ -1329,7 +1338,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">A look at what DISHA volunteers and supporters have achieved together.</field>
             <field name="default_value">A look at what DISHA volunteers and supporters have achieved together.</field>
-            <field name="sequence">1460</field>
+            <field name="sequence">1470</field>
         </record>
         <record id="text_reports_download" model="disha.site.text">
             <field name="key">reports.download</field>
@@ -1338,7 +1347,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Download report</field>
             <field name="default_value">Download report</field>
-            <field name="sequence">1470</field>
+            <field name="sequence">1480</field>
         </record>
         <record id="text_contact_title" model="disha.site.text">
             <field name="key">contact.title</field>
@@ -1347,7 +1356,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Contact Us</field>
             <field name="default_value">Contact Us</field>
-            <field name="sequence">1480</field>
+            <field name="sequence">1490</field>
         </record>
         <record id="text_contact_intro" model="disha.site.text">
             <field name="key">contact.intro</field>
@@ -1356,7 +1365,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">We'd love to hear from you.</field>
             <field name="default_value">We'd love to hear from you.</field>
-            <field name="sequence">1490</field>
+            <field name="sequence">1500</field>
         </record>
         <record id="text_contact_email_label" model="disha.site.text">
             <field name="key">contact.email_label</field>
@@ -1365,7 +1374,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Email</field>
             <field name="default_value">Email</field>
-            <field name="sequence">1500</field>
+            <field name="sequence">1510</field>
         </record>
         <record id="text_contact_address_label" model="disha.site.text">
             <field name="key">contact.address_label</field>
@@ -1374,7 +1383,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Address</field>
             <field name="default_value">Address</field>
-            <field name="sequence">1510</field>
+            <field name="sequence">1520</field>
         </record>
         <record id="text_contact_hours_label" model="disha.site.text">
             <field name="key">contact.hours_label</field>
@@ -1383,7 +1392,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Office hours</field>
             <field name="default_value">Office hours</field>
-            <field name="sequence">1520</field>
+            <field name="sequence">1530</field>
         </record>
         <record id="text_contact_cta" model="disha.site.text">
             <field name="key">contact.cta</field>
@@ -1392,7 +1401,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
             <field name="default_value">Want to help? Join DISHA and support the Indo-Saudi community.</field>
-            <field name="sequence">1530</field>
+            <field name="sequence">1540</field>
         </record>
         <record id="text_join_eyebrow" model="disha.site.text">
             <field name="key">join.eyebrow</field>
@@ -1401,7 +1410,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Membership Application</field>
             <field name="default_value">Membership Application</field>
-            <field name="sequence">1540</field>
+            <field name="sequence">1550</field>
         </record>
         <record id="text_join_title" model="disha.site.text">
             <field name="key">join.title</field>
@@ -1410,7 +1419,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Apply for DISHA membership</field>
             <field name="default_value">Apply for DISHA membership</field>
-            <field name="sequence">1550</field>
+            <field name="sequence">1560</field>
         </record>
         <record id="text_join_intro" model="disha.site.text">
             <field name="key">join.intro</field>
@@ -1419,7 +1428,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
             <field name="default_value">For Indian nationals residing in the Kingdom of Saudi Arabia. Fill in the same details as the DISHA paper form; your digital ID card is emailed once approved.</field>
-            <field name="sequence">1560</field>
+            <field name="sequence">1570</field>
         </record>
         <record id="text_join_time" model="disha.site.text">
             <field name="key">join.time</field>
@@ -1428,7 +1437,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">About 5 minutes</field>
             <field name="default_value">About 5 minutes</field>
-            <field name="sequence">1570</field>
+            <field name="sequence">1580</field>
         </record>
         <record id="text_join_sections" model="disha.site.text">
             <field name="key">join.sections</field>
@@ -1437,7 +1446,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">4 short sections</field>
             <field name="default_value">4 short sections</field>
-            <field name="sequence">1580</field>
+            <field name="sequence">1590</field>
         </record>
         <record id="text_join_next_title" model="disha.site.text">
             <field name="key">join.next.title</field>
@@ -1446,7 +1455,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">What happens next</field>
             <field name="default_value">What happens next</field>
-            <field name="sequence">1590</field>
+            <field name="sequence">1600</field>
         </record>
         <record id="text_join_help_title" model="disha.site.text">
             <field name="key">join.help.title</field>
@@ -1455,7 +1464,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Questions?</field>
             <field name="default_value">Questions?</field>
-            <field name="sequence">1600</field>
+            <field name="sequence">1610</field>
         </record>
         <record id="text_join_help_text" model="disha.site.text">
             <field name="key">join.help.text</field>
@@ -1464,7 +1473,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">Write to us and we will help you choose between General and Associate membership.</field>
             <field name="default_value">Write to us and we will help you choose between General and Associate membership.</field>
-            <field name="sequence">1610</field>
+            <field name="sequence">1620</field>
         </record>
         <record id="text_support_eyebrow" model="disha.site.text">
             <field name="key">support.eyebrow</field>
@@ -1473,7 +1482,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">DISHA Support</field>
             <field name="default_value">DISHA Support</field>
-            <field name="sequence">1620</field>
+            <field name="sequence">1630</field>
         </record>
         <record id="text_support_title" model="disha.site.text">
             <field name="key">support.title</field>
@@ -1482,7 +1491,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Get help with visa, iqama and other issues</field>
             <field name="default_value">Get help with visa, iqama and other issues</field>
-            <field name="sequence">1630</field>
+            <field name="sequence">1640</field>
         </record>
         <record id="text_support_intro" model="disha.site.text">
             <field name="key">support.intro</field>
@@ -1491,7 +1500,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
             <field name="default_value">Tell us what you need. You will get a private tracking token to follow your request and talk to our team.</field>
-            <field name="sequence">1640</field>
+            <field name="sequence">1650</field>
         </record>
         <record id="text_support_next_title" model="disha.site.text">
             <field name="key">support.next.title</field>
@@ -1500,7 +1509,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">How it works</field>
             <field name="default_value">How it works</field>
-            <field name="sequence">1650</field>
+            <field name="sequence">1660</field>
         </record>
         <record id="text_support_track_title" model="disha.site.text">
             <field name="key">support.track.title</field>
@@ -1509,7 +1518,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Already have a token?</field>
             <field name="default_value">Already have a token?</field>
-            <field name="sequence">1660</field>
+            <field name="sequence">1670</field>
         </record>
         <record id="text_support_track_text" model="disha.site.text">
             <field name="key">support.track.text</field>
@@ -1518,7 +1527,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">Check the status of your request and read replies from our team.</field>
             <field name="default_value">Check the status of your request and read replies from our team.</field>
-            <field name="sequence">1670</field>
+            <field name="sequence">1680</field>
         </record>
         <record id="text_support_track_button" model="disha.site.text">
             <field name="key">support.track.button</field>
@@ -1527,7 +1536,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Track my request</field>
             <field name="default_value">Track my request</field>
-            <field name="sequence">1680</field>
+            <field name="sequence">1690</field>
         </record>
         <record id="text_track_title" model="disha.site.text">
             <field name="key">track.title</field>
@@ -1536,7 +1545,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Track your support request</field>
             <field name="default_value">Track your support request</field>
-            <field name="sequence">1690</field>
+            <field name="sequence">1700</field>
         </record>
         <record id="text_track_intro" model="disha.site.text">
             <field name="key">track.intro</field>
@@ -1545,7 +1554,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">text</field>
             <field name="value">Enter the token you received when you submitted your request.</field>
             <field name="default_value">Enter the token you received when you submitted your request.</field>
-            <field name="sequence">1700</field>
+            <field name="sequence">1710</field>
         </record>
         <record id="text_track_new" model="disha.site.text">
             <field name="key">track.new</field>
@@ -1554,7 +1563,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Need to raise a new request?</field>
             <field name="default_value">Need to raise a new request?</field>
-            <field name="sequence">1710</field>
+            <field name="sequence">1720</field>
         </record>
         <record id="text_privacy_title" model="disha.site.text">
             <field name="key">privacy.title</field>
@@ -1563,7 +1572,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">Privacy Policy</field>
             <field name="default_value">Privacy Policy</field>
-            <field name="sequence">1720</field>
+            <field name="sequence">1730</field>
         </record>
         <record id="text_privacy_intro" model="disha.site.text">
             <field name="key">privacy.intro</field>
@@ -1572,7 +1581,7 @@ Saudi Arabia is catching global attention with its rapid growth and infrastructu
             <field name="kind">line</field>
             <field name="value">How DISHA handles membership and support information.</field>
             <field name="default_value">How DISHA handles membership and support information.</field>
-            <field name="sequence">1730</field>
+            <field name="sequence">1740</field>
         </record>
         <record id="text_privacy_body" model="disha.site.text">
             <field name="key">privacy.body</field>
@@ -1627,7 +1636,7 @@ You may ask to see, correct or delete your information, or withdraw your consent
 
 ## Contact
 Questions about this policy: {email}.</field>
-            <field name="sequence">1740</field>
+            <field name="sequence">1750</field>
         </record>
         <record id="text_terms_title" model="disha.site.text">
             <field name="key">terms.title</field>
@@ -1636,7 +1645,7 @@ Questions about this policy: {email}.</field>
             <field name="kind">line</field>
             <field name="value">Terms &amp; Conditions</field>
             <field name="default_value">Terms &amp; Conditions</field>
-            <field name="sequence">1750</field>
+            <field name="sequence">1760</field>
         </record>
         <record id="text_terms_intro" model="disha.site.text">
             <field name="key">terms.intro</field>
@@ -1645,7 +1654,7 @@ Questions about this policy: {email}.</field>
             <field name="kind">line</field>
             <field name="value">Terms for using this website and applying for membership.</field>
             <field name="default_value">Terms for using this website and applying for membership.</field>
-            <field name="sequence">1760</field>
+            <field name="sequence">1770</field>
         </record>
         <record id="text_terms_body" model="disha.site.text">
             <field name="key">terms.body</field>
@@ -1680,7 +1689,7 @@ We may update these terms from time to time. Continued use of the site means you
 
 ## Contact
 Questions: {email}.</field>
-            <field name="sequence">1770</field>
+            <field name="sequence">1780</field>
         </record>
         <record id="item_hero_checks_1" model="disha.site.item">
             <field name="collection">hero_checks</field>
