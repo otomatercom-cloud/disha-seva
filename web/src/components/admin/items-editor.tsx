@@ -3,12 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { api, btnDanger, btnGhost, btnPrimary, errText, field, fileToB64 } from "./api";
 
-type Item = { id: number; collection: string; title: string; text: string; icon: string; year: number; category: string; sequence: number; published: boolean; image: string; file: string; file_name: string };
-type Meta = { collections: [string, string][]; icons: [string, string][] };
+export type Item = { id: number; collection: string; title: string; text: string; icon: string; year: number; category: string; sequence: number; published: boolean; image: string; file: string; file_name: string };
+export type Meta = { collections: [string, string][]; icons: [string, string][] };
 const NO_ICON = ["gallery", "services", "goals", "member_tags", "hero_checks", "faq", "collab_cards", "reports", "steps", "helps"];
 const THIS_YEAR = new Date().getFullYear();
 
-function Card({ it, meta, onChange, flash }: { it: Item; meta: Meta; onChange: () => void; flash: (m: string, bad?: boolean) => void }) {
+export function Card({ it, meta, onChange, flash }: { it: Item; meta: Meta; onChange: () => void; flash: (m: string, bad?: boolean) => void }) {
   const [d, setD] = useState(it);
   const [busy, setBusy] = useState(false);
   useEffect(() => setD(it), [it]);
