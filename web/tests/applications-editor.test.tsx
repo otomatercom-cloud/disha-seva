@@ -12,7 +12,7 @@ describe("applications workflow buttons", () => {
     render(<ApplicationsEditor />);
     await waitFor(() => expect(screen.getByText("Person 1")).toBeInTheDocument());
     const row = (n: number) => screen.getByText(`Person ${n}`).closest("tr") as HTMLElement;
-    const labels = (n: number) => Array.from(row(n).querySelectorAll("button")).map((b) => b.textContent);
+    const labels = (n: number) => Array.from(row(n).querySelectorAll("button")).map((b) => b.textContent).filter((t) => t !== "View");
     expect(labels(1)).toEqual(["Start review", "Mark contacted", "Reject"]);              // no Approve straight from New
     expect(labels(2)).toEqual(["Mark contacted", "Approve", "Reject", "Reset to new"]);
     expect(labels(3)).toEqual(["Approve", "Reject", "Reset to new"]);

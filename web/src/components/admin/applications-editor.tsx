@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { MemberDetail } from "./member-detail";
 import { api, btnDanger, btnGhost, btnPrimary, errText, field } from "./api";
 
-type App = { id: number; name: string; full_name: string; category: string; state: string; region: string; city: string; email: string; mobile: string; applied: string; duplicates: number; member_number: string };
+type App = { id: number; name: string; full_name: string; category: string; state: string; region: string; city: string; email: string; mobile: string; applied: string; duplicates: number; member_number: string; needs_member?: boolean };
 const STATES = ["", "new", "under_review", "contacted", "approved", "rejected"];
 
 export function ApplicationsEditor() {
@@ -11,6 +12,7 @@ export function ApplicationsEditor() {
   const [state, setState] = useState("new");
   const [msg, setMsg] = useState<{ m: string; bad: boolean } | null>(null);
   const [busy, setBusy] = useState(0);
+  const [view, setView] = useState(0);
   const load = useCallback(async () => {
     const r = await api<{ applications: App[] }>("applications", { query: state ? { state } : {} });
     if (r.ok) setApps(r.data.applications); else setMsg({ m: errText(r), bad: true });
@@ -43,6 +45,8 @@ export function ApplicationsEditor() {
                 <td className="px-3 py-2">{a.email}<br />{a.mobile}</td>
                 <td className="px-3 py-2 capitalize">{a.state.replace("_", " ")}{a.member_number && <><br /><span className="text-xs text-slate-500">{a.member_number}</span></>}</td>
                 <td className="px-3 py-2"><div className="flex flex-wrap gap-1.5">
+                  <button className={btnGhost} onClick={() => setView(a.id)}>View</button>
+                  {a.needs_member && <button disabled={busy === a.id} className={btnPrimary} onClick={() => act(a, "issue_card")}>Create member &amp; ID card</button>}
                   {a.state === "new" && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "review")}>Start review</button>}
                   {(a.state === "new" || a.state === "under_review") && <button disabled={busy === a.id} className={btnGhost} onClick={() => act(a, "contact")}>Mark contacted</button>}
                   {(a.state === "under_review" || a.state === "contacted") && <button disabled={busy === a.id} className={btnPrimary} onClick={() => act(a, "approve")}>Approve</button>}
@@ -53,7 +57,8 @@ export function ApplicationsEditor() {
           </table>
           {!apps.length && <p className="p-6 text-slate-500">No applications.</p>}
         </div>)}
-      <p className="mt-3 text-xs text-slate-500">Passport and Iqama numbers are only visible inside Odoo.</p>
+      {view > 0 && <MemberDetail appId={view} onClose={() => setView(0)} />}
+      <p className="mt-3 text-xs text-slate-500">Passport and Iqama numbers are shown masked in View; open Odoo for the full values.</p>
     </div>
   );
 }

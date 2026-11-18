@@ -50,4 +50,18 @@ describe("members editor", () => {
       expect(JSON.parse(String((post![1] as RequestInit).body))).toMatchObject({ id: 7, op: "update_contact", email: "new@x.test", region: "central" });
     });
   });
+  it("opens the detail panel with masked ID numbers", async () => {
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (u) => String(u).includes("app_id=")
+      ? ok({ ok: true, application: { id: 3, name: "DISHA-MEM-00003", state: "approved", category: "General", photo: "", applied: "2026-11-01 10:00", approved: "2026-11-02 09:00", approved_by: "Admin", duplicates: 0, source: "Website",
+          member: { id: 7, number: "DISHA/2026/00007", status: "active" }, membership: { expiry_date: "2028-11-01" },
+          sections: [{ title: "Personal", rows: [["Full name", "Asha Nair"]] }, { title: "Contact & KSA", rows: [["Passport no.", "\u2022\u2022\u2022\u2022\u2022678"]] }] } })
+      : ok({ ok: true, total: 1, members: [member] }));
+    render(<MembersEditor />);
+    await waitFor(() => expect(screen.getByText("Asha Nair")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("View"));
+    await waitFor(() => expect(screen.getByRole("dialog", { name: "Member details" })).toBeInTheDocument());
+    expect(screen.getByText("Passport no.")).toBeInTheDocument();
+    expect(screen.getByText(/678/)).toBeInTheDocument();
+    expect(screen.getAllByText("DISHA/2026/00007").length).toBeGreaterThan(1);
+  });
 });

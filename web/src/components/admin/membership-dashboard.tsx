@@ -5,7 +5,7 @@ import { api, errText } from "./api";
 
 type Dash = {
   applications: Record<string, number>;
-  members: { total: number; by_status: Record<string, number>; expiring_30: number; expiring_60: number; expired: number };
+  members: { total: number; by_status: Record<string, number>; expiring_30: number; expiring_60: number; expired: number; approved_without_member?: number };
   regions: { key: string; label: string; applications: number; members: number }[];
   categories: Record<string, { applications: number; members: number }>;
   monthly: { month: string; applied: number; approved: number }[];
@@ -51,6 +51,11 @@ export function MembershipDashboard() {
   const maxM = Math.max(1, ...d.monthly.flatMap((x) => [x.applied, x.approved]));
   return (
     <div className="space-y-8">
+      {(m.approved_without_member ?? 0) > 0 && (
+        <p role="status" className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+          <b>{m.approved_without_member}</b> approved application(s) have no member record or ID card yet. Open <b>Membership applications</b> → status Approved → <b>Create member &amp; ID card</b>.
+        </p>
+      )}
       <section aria-label="Members">
         <h2 className="mb-3 text-lg font-bold text-navy-900">Members</h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-6">

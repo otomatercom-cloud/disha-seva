@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { REGIONS } from "@/lib/validation/membership";
+import { MemberDetail } from "./member-detail";
 import { api, btnGhost, btnPrimary, errText, field } from "./api";
 
 type Member = { id: number; application_id: number; number: string; name: string; category: string; status: string; region: string; city: string; mobile: string; email: string; approved: string; expiry: string };
@@ -15,6 +16,7 @@ export function MembersEditor() {
   const [f, setF] = useState({ status: "", region: "", category: "", expiring: "" });
   const [page, setPage] = useState(0);
   const [edit, setEdit] = useState<Member | null>(null);
+  const [view, setView] = useState<Member | null>(null);
   const [msg, setMsg] = useState<{ m: string; bad: boolean } | null>(null);
   const flash = (m: string, bad = false) => { setMsg({ m, bad }); window.setTimeout(() => setMsg(null), 4000); };
 
@@ -70,6 +72,7 @@ export function MembersEditor() {
                 <td className="px-3 py-2"><span className={`rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${tone(m.status)}`}>{m.status || "-"}</span></td>
                 <td className="px-3 py-2">{m.expiry || "-"}</td>
                 <td className="px-3 py-2"><div className="flex flex-wrap gap-1.5">
+                  <button className={btnGhost} onClick={() => setView(m)}>View</button>
                   <button className={btnGhost} onClick={() => setEdit(m)}>Edit contact</button>
                   <button className={btnGhost} onClick={() => confirm(`Email the ID card to ${m.email || "this member"}?`) && act(m, { op: "email_card" }, "ID card emailed")}>Resend card</button>
                 </div></td>
@@ -82,6 +85,12 @@ export function MembersEditor() {
         <button className={btnGhost} disabled={page === 0} onClick={() => setPage(page - 1)}>Previous</button>
         <button className={btnGhost} disabled={(page + 1) * PAGE >= total} onClick={() => setPage(page + 1)}>Next</button>
       </div>
+      {view && (
+        <MemberDetail appId={view.application_id} onClose={() => setView(null)}>
+          <button className={btnGhost} onClick={() => { setEdit(view); setView(null); }}>Edit contact</button>
+          <button className={btnGhost} onClick={() => confirm(`Email the ID card to ${view.email || "this member"}?`) && act(view, { op: "email_card" }, "ID card emailed")}>Resend card</button>
+        </MemberDetail>
+      )}
       {edit && <EditContact m={edit} onClose={() => setEdit(null)} onSave={(v) => act(edit, { op: "update_contact", ...v }, "Contact updated")} />}
     </div>
   );

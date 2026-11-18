@@ -352,15 +352,18 @@ class DishaAdminApi(http.Controller):
                 "region": a.ksa_region or "", "city": a.ksa_city or "", "email": a.email or "", "mobile": a.mobile or "",
                 "applied": str(a.registration_date or ""), "duplicates": a.duplicate_count,
                 "member_number": a.member_number if "member_number" in a._fields else "",
+                "needs_member": a.state == "approved" and "member_id" in a._fields and not a.member_id,
             } for a in recs]}
         d = self._body()
         rec = App.browse(int(d.get("id") or 0)).exists()
         if not rec:
             raise UserError(_("Unknown application."))
         action = {"approve": "action_approve", "reject": "action_reject", "review": "action_review",
-                  "contact": "action_contact", "reset": "action_reset"}.get(d.get("op"))
+                  "contact": "action_contact", "reset": "action_reset", "issue_card": "action_issue_card"}.get(d.get("op"))
         if not action:
             raise UserError(_("Unknown action."))
+        if not hasattr(rec, action):
+            raise UserError(_("This action needs the DISHA membership card module."))
         getattr(rec, action)()
         return {"ok": True, "state": rec.state}
 
@@ -396,6 +399,7 @@ class DishaAdminApi(http.Controller):
                 y, m = y - 1, m + 12
             months[f"{y:04d}-{m:02d}"] = {"applied": 0, "approved": 0}
         member_status, exp30, exp60, expired = {}, 0, 0, 0
+        pending_card = 0
         for a in apps:
             by_state[a.state] = by_state.get(a.state, 0) + 1
             if a.ksa_region in region:
@@ -408,6 +412,8 @@ class DishaAdminApi(http.Controller):
             k = str(a.approved_on or "")[:7]
             if k in months:
                 months[k]["approved"] += 1
+            if a.state == "approved" and "member_id" in a._fields and not a.member_id:
+                pending_card += 1
             mem = a.member_id.sudo() if "member_id" in a._fields and a.member_id else None
             if mem:
                 st = self._member_status(mem)
@@ -426,7 +432,8 @@ class DishaAdminApi(http.Controller):
                         exp60 += 1
         return {"ok": True, "applications": by_state | {"total": sum(by_state.values())},
                 "members": {"total": sum(member_status.values()), "by_status": member_status,
-                            "expiring_30": exp30, "expiring_60": exp60, "expired": expired},
+                            "expiring_30": exp30, "expiring_60": exp60, "expired": expired,
+                            "approved_without_member": pending_card},
                 "regions": [{"key": k, "label": regions[k], **v} for k, v in region.items()],
                 "categories": category,
                 "monthly": [{"month": k, **v} for k, v in months.items()]}
@@ -442,6 +449,8 @@ class DishaAdminApi(http.Controller):
     def _members(self, env, method, kw):
         from datetime import date, timedelta
         apps = self._disha_apps_with_member(env)
+        if method == "GET" and kw.get("app_id"):
+            return self._application_detail(env, int(kw["app_id"]))
         if method == "GET":
             q = (kw.get("q") or "").strip().lower()
             today = date.today()
@@ -503,3 +512,44 @@ class DishaAdminApi(http.Controller):
         else:
             raise UserError(_("Unknown action."))
         return {"ok": True}
+
+    @staticmethod
+    def _mask(value):
+        value = (value or "").strip()
+        return ("\u2022" * max(len(value) - 3, 0) + value[-3:]) if value else ""
+
+    def _application_detail(self, env, app_id):
+        """Everything a reviewer needs to verify an application or member (read-only). Passport/Iqama are masked."""
+        app = env["disha.membership.application"].browse(app_id).exists()
+        if not app:
+            raise UserError(_("Unknown application."))
+        sel = lambda f: dict(app._fields[f].selection).get(app[f], app[f] or "")  # noqa: E731
+        photo = ""
+        if "photo" in app._fields and app.photo:
+            photo = "data:image/jpeg;base64," + (app.photo.decode() if isinstance(app.photo, bytes) else app.photo)
+        mem = app.member_id.sudo() if "member_id" in app._fields and app.member_id else None
+        cur = mem.current_membership_id if mem else None
+        membership = None
+        if cur:
+            membership = {k: str(cur[k] or "") for k in ("name", "start_date", "expiry_date", "state", "status") if k in cur._fields}
+        sections = [
+            ("Personal", [("Full name", app.full_name), ("Gender", sel("gender")), ("Date of birth", app.date_of_birth),
+                          ("Nationality", app.nationality), ("Blood group", sel("blood_group")),
+                          ("Qualification", app.qualification), ("Occupation", app.occupation), ("Employer", app.organization)]),
+            ("Contact & KSA", [("Mobile", app.mobile), ("WhatsApp", app.whatsapp), ("Email", app.email),
+                               ("Province", sel("ksa_region")), ("City / area", app.ksa_city),
+                               ("Iqama no.", self._mask(app.iqama_number)), ("Passport no.", self._mask(app.passport_number))]),
+            ("Address in India", [("State", app.india_state), ("District", app.india_district), ("Village / town", app.india_village),
+                                  ("PIN", app.india_pin), ("Address", app.india_address)]),
+            ("Emergency contacts", [("KSA contact", " / ".join(x for x in (app.ksa_emergency_name, app.ksa_emergency_relationship, app.ksa_emergency_phone) if x)),
+                                    ("India contact", " / ".join(x for x in (app.india_emergency_name, app.india_emergency_relationship, app.india_emergency_phone) if x))]),
+            ("Declaration", [("Why join", app.why_join), ("Consent given", "Yes" if app.consent_given else "No"), ("Consent time", app.consent_date)]),
+        ]
+        return {"ok": True, "application": {
+            "id": app.id, "name": app.name, "state": app.state, "category": sel("category"), "photo": photo,
+            "applied": str(app.registration_date or "")[:16], "approved": str(app.approved_on or "")[:16],
+            "approved_by": app.approved_by_id.name or "", "duplicates": app.duplicate_count, "source": sel("source"),
+            "member": {"id": mem.id, "number": mem.member_number or "", "status": self._member_status(mem)} if mem else None,
+            "membership": membership,
+            "sections": [{"title": t, "rows": [[k, str(v or "")] for k, v in rows]} for t, rows in sections],
+        }}
