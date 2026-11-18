@@ -135,3 +135,9 @@ Gallery is year-wise with year + category filters (`year-gallery.tsx`); Odoo `di
 - Links: public registration page `/events/<id>` (details + Register + copy-share link; event titles on cards link to it). Admin dashboard per event `/admin/events/<id>` (login required, bookmarkable); also linked from Events and Event registrations tabs. Registrant data is never public.
 - Admin sessions: token = signed claims (user, issued-at, expiry 8 h, password fingerprint). It stops working when the user signs out (`/api/disha/admin/logout` stores a revoke time), changes password, is deactivated or loses the group. `make_token/read_token` need an `env` (no `request` dependency).
 - Admin **Page editor** (default tab): pick a page, pick a section (grouped from the text keys: hero, intro, impact…), edit its fields, and see the real page in a live preview (desktop/tablet/mobile). Clicking any text or picture in the preview selects its field; choosing a section scrolls the preview to it. Preview is a same-origin iframe, so `X-Frame-Options` is `SAMEORIGIN` (not DENY). The flat search editor stays as "All texts (search)". Hero cards/tick-list/slideshow photos remain in Lists & cards / Gallery.
+
+## Membership dashboard & member management (/admin)
+- Tabs *Membership dashboard* and *Members*. API: `GET /api/disha/admin/dashboard`, `GET|POST /api/disha/admin/members` (disha_admin_api; now depends on disha_membership_card).
+- Only members linked from DISHA applications (`disha.membership.application.member_id`) are listed or changed; IOF members in the shared `association.member` table are never exposed.
+- Counts are computed in Python (never search on non-stored computed fields such as `card_status`).
+- Member ops built: list/search/filter/CSV, resend ID card (`action_email_card`), edit contact (application + partner email/phone). Suspend / reactivate / cancel / renew: PENDING the stock `association_membership` method names (stock source not in this repo).

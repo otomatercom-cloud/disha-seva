@@ -4,6 +4,8 @@ import { useState } from "react";
 import { ApplicationsEditor } from "./applications-editor";
 import { EventsEditor } from "./events-editor";
 import { RegistrationsEditor } from "./registrations-editor";
+import { MembershipDashboard } from "./membership-dashboard";
+import { MembersEditor } from "./members-editor";
 import { ItemsEditor } from "./items-editor";
 import { PageEditor } from "./page-editor";
 import { TextsEditor } from "./texts-editor";
@@ -17,6 +19,8 @@ const TABS = [
   ["registrations", "Event registrations"],
   ["menu", "Menu, logo & footer"],
   ["theme", "Colours"],
+  ["dashboard", "Membership dashboard"],
+  ["members", "Members"],
   ["applications", "Membership applications"],
 ] as const;
 type Tab = (typeof TABS)[number][0];
@@ -53,6 +57,8 @@ export function AdminApp() {
         {tab === "registrations" && <RegistrationsEditor />}
         {tab === "menu" && <TextsEditor mode="menu" />}
         {tab === "theme" && <TextsEditor mode="theme" />}
+        {tab === "dashboard" && <MembershipDashboard />}
+        {tab === "members" && <MembersEditor />}
         {tab === "applications" && <ApplicationsEditor />}
       </main>
     </div>

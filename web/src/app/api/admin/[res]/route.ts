@@ -24,7 +24,7 @@ async function handle(req: NextRequest, { params }: Ctx, method: "GET" | "POST")
   const out = NextResponse.json(r.data, { status: r.status >= 500 ? 424 : r.status, headers: { "Cache-Control": "no-store" } });
   if (r.status === 401 && r.data.error === "session_expired") out.cookies.set(ADMIN_COOKIE, "", { httpOnly: true, path: "/", maxAge: 0 });
   // A successful edit: show it on the public site straight away instead of waiting for the 30 s refresh.
-  if (method === "POST" && r.status === 200 && res !== "applications" && res !== "registrations") revalidatePath("/", "layout");
+  if (method === "POST" && r.status === 200 && !["applications", "registrations", "members", "dashboard"].includes(res)) revalidatePath("/", "layout");
   return out;
 }
 

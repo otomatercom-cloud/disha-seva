@@ -79,3 +79,17 @@ class TestAdminApi(HttpCase):
         self.assertEqual((row["total"], row["by_region"]), (1, {"central": 1}))
         lst = json.loads(self._get(f"/api/disha/admin/registrations?event_id={ev.id}", tok).content)
         self.assertEqual(lst["registrations"][0]["email"], "a@x.test")
+
+    def test_dashboard_and_members_endpoints(self):
+        t = make_token(self.env, self.admin.id)
+        d = json.loads(self._get("/api/disha/admin/dashboard", t).content)
+        self.assertTrue(d["ok"])
+        self.assertEqual(len(d["monthly"]), 12)
+        self.assertEqual({r["key"] for r in d["regions"]}, {"central", "western", "eastern", "northern", "southern"})
+        for k in ("new", "under_review", "contacted", "approved", "rejected", "total"):
+            self.assertIn(k, d["applications"])
+        m = json.loads(self._get("/api/disha/admin/members?q=zzz-none&limit=5", t).content)
+        self.assertTrue(m["ok"])
+        self.assertEqual(m["members"], [])
+        self.assertEqual(self._post("/api/disha/admin/members", {"id": 999999, "op": "email_card"}, t).status_code, 422)
+        self.assertEqual(self._get("/api/disha/admin/dashboard").status_code, 401)
