@@ -5,7 +5,7 @@ Inspect existing Nginx/Odoo configs first; add, never overwrite.
 ## 1. Odoo 19 addon
 1. Copy the five folders in `odoo/` (`disha_membership`, `disha_membership_card`, `disha_site_content`, `disha_event_notify`, `disha_support_ticket`) into a custom addons path listed in `odoo.conf`, next to your `association_membership` addon. `pip install qrcode` on the Odoo server.
 2. Set `dbfilter = ^your_db$` in `odoo.conf` (the public API relies on it to pick the database) and serve Odoo over HTTPS.
-3. Install: `odoo-bin -c odoo.conf -d your_db -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --stop-after-init`. Upgrades: `-u <module>` with the service stopped (restart after Python changes).
+3. Install: `odoo-bin -c odoo.conf -d your_db -i disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --stop-after-init`. Upgrades: `-u <module>` with the service stopped (restart after Python changes).
 4. Read the token: Settings → Technical → System Parameters → `disha_membership.api_token` (generated at install). To rotate, edit the value and update `ODOO_API_TOKEN` in Next.js.
 5. Assign staff: Settings → Users → group *DISHA Membership Applications* (User = view/edit, Manager = approve/reject/delete/configure).
 6. Only the Next.js server needs to reach `/api/disha/`; consider restricting it in Nginx by IP (`allow x.x.x.x; deny all;`).

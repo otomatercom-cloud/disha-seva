@@ -351,8 +351,8 @@ class DishaAdminApi(http.Controller):
                 "id": a.id, "name": a.name, "full_name": a.full_name, "category": a.category, "state": a.state,
                 "region": a.ksa_region or "", "city": a.ksa_city or "", "email": a.email or "", "mobile": a.mobile or "",
                 "applied": str(a.registration_date or ""), "duplicates": a.duplicate_count,
-                "member_number": a.member_number if "member_number" in a._fields else "",
-                "needs_member": a.state == "approved" and "member_id" in a._fields and not a.member_id,
+                "member_number": (a.member_number or "") if "member_number" in a._fields else "",
+                "needs_member": a.state == "approved" and "disha_member_id" in a._fields and not a.disha_member_id,
             } for a in recs]}
         d = self._body()
         rec = App.browse(int(d.get("id") or 0)).exists()
@@ -367,28 +367,24 @@ class DishaAdminApi(http.Controller):
         getattr(rec, action)()
         return {"ok": True, "state": rec.state}
 
-    # ---- membership dashboard + member management. Only members created from DISHA applications are exposed
-    # (IOF members share the same association.member table and are never listed or touched here).
-    def _disha_apps_with_member(self, env):
-        App = env["disha.membership.application"]
-        if "member_id" not in App._fields:  # disha_membership_card not installed: no members to manage
-            return App.browse()
-        return App.search([("member_id", "!=", False)], limit=20000)
+    # ---- membership dashboard + member management (DISHA members only: model disha.member, standalone)
+    def _has_members(self, env):
+        return "disha.member" in env
 
-    def _member_status(self, member):
-        return member.status or ""
-
-    def _expiry(self, member):
-        m = member.current_membership_id
-        return m.expiry_date if m and "expiry_date" in m._fields else False
+    def _member_row(self, mem):
+        app = mem.application_id
+        return {"id": mem.id, "application_id": app.id, "number": mem.member_number or "", "name": mem.name,
+                "category": mem.category, "status": mem.card_status or "", "region": mem.ksa_region or "",
+                "city": mem.ksa_city or "", "mobile": mem.mobile or "", "email": mem.email or "",
+                "approved": str(app.approved_on or "")[:10], "expiry": str(mem.expiry_date or "")}
 
     def _dashboard(self, env, method, kw):
         from datetime import date, timedelta
         if method != "GET":
             raise UserError(_("Unknown action."))
-        regions = dict(env["disha.membership.application"]._fields["ksa_region"].selection)
+        App = env["disha.membership.application"]
+        regions = dict(App._fields["ksa_region"].selection)
         today = date.today()
-        apps = env["disha.membership.application"].search([], limit=50000)
         by_state = {k: 0 for k in ("new", "under_review", "contacted", "approved", "rejected")}
         region = {k: {"applications": 0, "members": 0} for k in regions}
         category = {"general": {"applications": 0, "members": 0}, "associate": {"applications": 0, "members": 0}}
@@ -398,9 +394,9 @@ class DishaAdminApi(http.Controller):
             while m <= 0:
                 y, m = y - 1, m + 12
             months[f"{y:04d}-{m:02d}"] = {"applied": 0, "approved": 0}
-        member_status, exp30, exp60, expired = {}, 0, 0, 0
         pending_card = 0
-        for a in apps:
+        has_members = self._has_members(env)
+        for a in App.search([], limit=50000):
             by_state[a.state] = by_state.get(a.state, 0) + 1
             if a.ksa_region in region:
                 region[a.ksa_region]["applications"] += 1
@@ -412,24 +408,24 @@ class DishaAdminApi(http.Controller):
             k = str(a.approved_on or "")[:7]
             if k in months:
                 months[k]["approved"] += 1
-            if a.state == "approved" and "member_id" in a._fields and not a.member_id:
+            if has_members and a.state == "approved" and not a.disha_member_id:
                 pending_card += 1
-            mem = a.member_id.sudo() if "member_id" in a._fields and a.member_id else None
-            if mem:
-                st = self._member_status(mem)
+        member_status, exp30, exp60, expired = {}, 0, 0, 0
+        if has_members:
+            for mem in env["disha.member"].search([], limit=50000):
+                st = mem.card_status
                 member_status[st] = member_status.get(st, 0) + 1
-                if a.ksa_region in region:
-                    region[a.ksa_region]["members"] += 1
-                if a.category in category:
-                    category[a.category]["members"] += 1
-                exp = self._expiry(mem)
-                if exp:
-                    if exp < today:
-                        expired += 1
-                    elif exp <= today + timedelta(days=30):
+                if mem.ksa_region in region:
+                    region[mem.ksa_region]["members"] += 1
+                if mem.category in category:
+                    category[mem.category]["members"] += 1
+                exp = mem.expiry_date
+                if st == "active" and exp:
+                    if exp <= today + timedelta(days=30):
                         exp30 += 1
-                    if today <= exp <= today + timedelta(days=60):
+                    if exp <= today + timedelta(days=60):
                         exp60 += 1
+            expired = member_status.get("expired", 0)
         return {"ok": True, "applications": by_state | {"total": sum(by_state.values())},
                 "members": {"total": sum(member_status.values()), "by_status": member_status,
                             "expiring_30": exp30, "expiring_60": exp60, "expired": expired,
@@ -438,25 +434,21 @@ class DishaAdminApi(http.Controller):
                 "categories": category,
                 "monthly": [{"month": k, **v} for k, v in months.items()]}
 
-    def _member_row(self, app):
-        mem = app.member_id.sudo()
-        exp = self._expiry(mem)
-        return {"id": mem.id, "application_id": app.id, "number": mem.member_number or "", "name": app.full_name,
-                "category": app.category, "status": self._member_status(mem), "region": app.ksa_region or "",
-                "city": app.ksa_city or "", "mobile": app.mobile or "", "email": app.email or "",
-                "approved": str(app.approved_on or "")[:10], "expiry": str(exp or "")}
-
     def _members(self, env, method, kw):
         from datetime import date, timedelta
-        apps = self._disha_apps_with_member(env)
         if method == "GET" and kw.get("app_id"):
             return self._application_detail(env, int(kw["app_id"]))
+        if not self._has_members(env):
+            if method == "GET":
+                return {"ok": True, "total": 0, "members": []}
+            raise UserError(_("The DISHA membership card module is not installed."))
+        Member = env["disha.member"]
         if method == "GET":
             q = (kw.get("q") or "").strip().lower()
             today = date.today()
             rows = []
-            for a in apps:
-                r = self._member_row(a)
+            for mem in Member.search([], limit=20000):
+                r = self._member_row(mem)
                 if kw.get("status") and r["status"] != kw["status"]:
                     continue
                 if kw.get("region") and r["region"] != kw["region"]:
@@ -464,7 +456,7 @@ class DishaAdminApi(http.Controller):
                 if kw.get("category") and r["category"] != kw["category"]:
                     continue
                 if kw.get("expiring") == "30":
-                    if not r["expiry"] or not (today <= date.fromisoformat(r["expiry"]) <= today + timedelta(days=30)):
+                    if r["status"] != "active" or not r["expiry"] or not (today <= date.fromisoformat(r["expiry"]) <= today + timedelta(days=30)):
                         continue
                 if q and q not in " ".join((r["name"], r["number"], r["mobile"], r["email"])).lower():
                     continue
@@ -474,14 +466,24 @@ class DishaAdminApi(http.Controller):
             offset = max(int(kw.get("offset") or 0), 0)
             return {"ok": True, "total": len(rows), "members": rows[offset:offset + limit]}
         d = self._body()
-        app = apps.filtered(lambda a: a.member_id.id == int(d.get("id") or 0))
-        if not app:
+        mem = Member.browse(int(d.get("id") or 0)).exists()
+        if not mem:
             raise UserError(_("Unknown member."))
-        app = app[0]
-        mem = app.member_id.sudo()
         op = d.get("op")
         if op == "email_card":
             mem.action_email_card()
+        elif op == "renew":
+            try:
+                years = int(d.get("years"))
+            except (TypeError, ValueError):
+                raise ValidationError(_("Choose how many years to renew."))
+            mem.action_renew(years, str(d.get("note") or "")[:120])
+        elif op == "suspend":
+            mem.action_suspend()
+        elif op == "reactivate":
+            mem.action_reactivate()
+        elif op == "cancel":
+            mem.action_cancel()
         elif op == "update_contact":
             from odoo.addons.disha_membership.models.registration import EMAIL_RE
             vals = {}
@@ -494,20 +496,14 @@ class DishaAdminApi(http.Controller):
                     raise ValidationError(_("Enter a valid email address."))
                 vals["email"] = email
             if "region" in d:
-                if d["region"] not in dict(app._fields["ksa_region"].selection):
+                if d["region"] not in dict(mem._fields["ksa_region"].selection):
                     raise ValidationError(_("Unknown province."))
                 vals["ksa_region"] = d["region"]
-            if vals.get("mobile") is not None and "mobile" in vals and len(vals["mobile"]) < 7:
+            if "mobile" in vals and len(vals["mobile"]) < 7:
                 raise ValidationError(_("Enter a valid mobile number."))
-            app.sudo().write(vals)
-            partner = mem.partner_id.sudo()
-            pv = {}
-            if "email" in vals:
-                pv["email"] = vals["email"]
-            if "mobile" in vals:
-                pv["mobile" if "mobile" in partner._fields else "phone"] = vals["mobile"]
-            if pv and partner:
-                partner.write(pv)
+            mem.write({k: v for k, v in vals.items() if k != "whatsapp"})
+            app = mem.application_id
+            app.write(vals)
             app.message_post(body=_("Contact details updated from the website admin by %s.", env.user.name))
         else:
             raise UserError(_("Unknown action."))
@@ -527,11 +523,10 @@ class DishaAdminApi(http.Controller):
         photo = ""
         if "photo" in app._fields and app.photo:
             photo = "data:image/jpeg;base64," + (app.photo.decode() if isinstance(app.photo, bytes) else app.photo)
-        mem = app.member_id.sudo() if "member_id" in app._fields and app.member_id else None
-        cur = mem.current_membership_id if mem else None
+        mem = app.disha_member_id if "disha_member_id" in app._fields and app.disha_member_id else None
         membership = None
-        if cur:
-            membership = {k: str(cur[k] or "") for k in ("name", "start_date", "expiry_date", "state", "status") if k in cur._fields}
+        if mem:
+            membership = {"status": mem.card_status, "member_since": str(mem.start_date or ""), "valid_until": str(mem.expiry_date or "")}
         sections = [
             ("Personal", [("Full name", app.full_name), ("Gender", sel("gender")), ("Date of birth", app.date_of_birth),
                           ("Nationality", app.nationality), ("Blood group", sel("blood_group")),
@@ -549,7 +544,9 @@ class DishaAdminApi(http.Controller):
             "id": app.id, "name": app.name, "state": app.state, "category": sel("category"), "photo": photo,
             "applied": str(app.registration_date or "")[:16], "approved": str(app.approved_on or "")[:16],
             "approved_by": app.approved_by_id.name or "", "duplicates": app.duplicate_count, "source": sel("source"),
-            "member": {"id": mem.id, "number": mem.member_number or "", "status": self._member_status(mem)} if mem else None,
+            "member": {"id": mem.id, "number": mem.member_number or "", "status": mem.card_status} if mem else None,
             "membership": membership,
+            "terms": [{"kind": t.kind, "start": str(t.start_date), "end": str(t.end_date), "note": t.note or "", "by": t.user_id.name or ""}
+                      for t in mem.term_ids] if mem else [],
             "sections": [{"title": t, "rows": [[k, str(v or "")] for k, v in rows]} for t, rows in sections],
         }}

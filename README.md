@@ -12,7 +12,7 @@ logo, colours and the 22-field paper **Membership Application Form** (General / 
 - `odoo/disha_support_ticket`: support tickets (visa, iqama, passport, labour, medical, legal, emergency) with priority/SLA and a private tracking token.
 - `docs`: API contract, deployment.
 
-Depends on the `association_membership` addon (install untouched). Tests: `cd web && npm test`; Odoo: `odoo-bin -d <new db> -i association_membership,disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --test-enable --stop-after-init`.
+Standalone: no IOF or association_membership dependency. Tests: `cd web && npm test`; Odoo: `odoo-bin -d <new db> -i disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --test-enable --stop-after-init`.
 
 ## Membership form (matches the paper form)
 1 Personal information (category, name as in passport, gender, DOB, nationality, mobile, WhatsApp, email, blood group,

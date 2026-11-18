@@ -64,4 +64,23 @@ describe("members editor", () => {
     expect(screen.getByText(/678/)).toBeInTheDocument();
     expect(screen.getAllByText("DISHA/2026/00007").length).toBeGreaterThan(1);
   });
+  it("renews and suspends from the detail panel", async () => {
+    const f = vi.spyOn(globalThis, "fetch").mockImplementation(async (u) => String(u).includes("app_id=")
+      ? ok({ ok: true, application: { id: 3, name: "A3", state: "approved", category: "General", photo: "", applied: "", approved: "", approved_by: "", duplicates: 0, source: "Website",
+          member: { id: 7, number: "DISHA/2026/00007", status: "active" }, membership: null, terms: [{ kind: "new", start: "2026-11-01", end: "2028-10-31", note: "", by: "Admin" }], sections: [{ title: "Personal", rows: [["Full name", "Asha Nair"]] }] } })
+      : ok({ ok: true, total: 1, members: [member] }));
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    render(<MembersEditor />);
+    await waitFor(() => expect(screen.getByText("Asha Nair")).toBeInTheDocument());
+    fireEvent.click(screen.getByText("View"));
+    await waitFor(() => expect(screen.getByText("Subscription history")).toBeInTheDocument());
+    fireEvent.change(screen.getByLabelText("Renew for"), { target: { value: "2" } });
+    fireEvent.click(screen.getByText("Renew"));
+    fireEvent.click(screen.getByText("Suspend"));
+    await waitFor(() => {
+      const bodies = f.mock.calls.filter(([, o]) => (o as RequestInit | undefined)?.method === "POST").map(([, o]) => JSON.parse(String((o as RequestInit).body)));
+      expect(bodies).toContainEqual({ id: 7, op: "renew", years: 2 });
+      expect(bodies).toContainEqual({ id: 7, op: "suspend" });
+    });
+  });
 });

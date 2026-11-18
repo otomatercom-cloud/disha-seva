@@ -26,13 +26,13 @@ Pages: Home, About, Indians in KSA, Seva Activities (activities), Gallery, Colla
 | Module | Depends | Purpose |
 |---|---|---|
 | `disha_membership` | base, mail | Model `disha.membership.application` (applications), API controller, approval workflow, groups, sequence `DISHA-MEM-00001` |
-| `disha_membership_card` | disha_membership, **association_membership** (user's own addon, install untouched) | On approval creates an `association.member`, ID card PDF (86×54 mm, two-sided, QR), email, portal link |
+| `disha_membership_card` | disha_membership, mail (**standalone, no IOF / association_membership**) | Model `disha.member` + `disha.member.term` (subscription history), approve creates the member, renew / suspend / reactivate / cancel, ID card PDF (86×54 mm, two-sided, QR), email, public verify page `/disha/verify/<token>` |
 | `disha_site_content` | base | All website content editable in Odoo (menu *DISHA Website*): texts, lists/cards, gallery, reports, logo, hero photo, **Events** (`disha.site.event`); public `GET /api/disha/site-content` |
 | `disha_event_notify` | disha_site_content, disha_membership, mail | **Email Members** button on an event: sends to approved members of the event's province (or all) |
 | `disha_admin_api` | disha_site_content, disha_membership | Back-end of the Next.js `/admin`: login with Odoo users (group *Website Admin (Next.js /admin)*), edit texts/lists/gallery/events/theme, approve applications |
 | `disha_support_ticket` | base, mail | Support tickets with category/urgency → priority, SLA, private tracking token |
 
-Install order: `association_membership, disha_membership, disha_membership_card, disha_site_content, disha_admin_api, disha_event_notify, disha_support_ticket`.
+Install order: `disha_membership, disha_membership_card, disha_site_content, disha_admin_api, disha_event_notify, disha_support_ticket`.
 
 ## 3. Key behaviour and rules
 
@@ -47,8 +47,8 @@ Install order: `association_membership, disha_membership, disha_membership_card,
 - Groups: *DISHA Membership Applications* User (view/edit) and Manager (approve/reject/delete/configure, sees ID numbers).
 
 **ID card / numbering (shared-DB safe)**
-- DISHA member numbers use own sequence `disha.association.member`, prefix `DISHA/%(year)s/`, padding 5. IOF members keep the stock `ASM/` series.
-- DISHA has its own report `report_disha_card`, paperformat `paperformat_disha_card`, template; it never edits the stock `association_membership` card template (IOF and DISHA run in ONE Odoo DB; a second xpath-replace of `ms_card` breaks installs).
+- DISHA member numbers use own sequence `disha.association.member`, prefix `DISHA/%(year)s/`, padding 5.
+- DISHA has its own report `report_disha_card`, paperformat `paperformat_disha_card`, template;  a second xpath-replace of `ms_card` breaks installs).
 - `action_print_card` / `action_email_card` are overridden: DISHA members → DISHA report, others → `super()`. Portal PDF link patched for DISHA types.
 - wkhtmltopdf: no flex/grid, absolute positioning, zoom wrapper parameter `disha_membership_card.zoom` (default 1.27); QR is a data URI (`pip install qrcode`).
 - Parameters: `disha_membership_card.org_name`, `.contact`, `.zoom`.
@@ -74,7 +74,7 @@ Install order: `association_membership, disha_membership, disha_membership_card,
 - Next → Odoo: `POST /api/disha/membership-application` (Bearer), `GET /api/disha/health`, support-ticket routes, public `GET /api/disha/site-content`.
 
 ## 6. Deployment (details in `docs/DEPLOYMENT.md`)
-1. Copy the five `odoo/disha_*` folders next to `association_membership`; `pip install qrcode`.
+1. Copy the five `odoo/disha_*` folders; `pip install qrcode`.
 2. `-i` the modules above (or `-u` for upgrades); read token in Settings > Technical > System Parameters.
 3. Assign staff groups; set Outgoing Mail Server + Alias Domain.
 4. Next.js: `cd web && cp .env.example .env.production` (fill), `npm ci && npm run build && pm2 start "npm start -- -p 3000" --name disha-web`; Nginx reverse proxy with `X-Real-IP`, `Host`, `X-Forwarded-Host`; HTTPS via certbot.
@@ -86,6 +86,7 @@ Install order: `association_membership, disha_membership, disha_membership_card,
   `python3 odoo-bin --addons-path=addons,/path/disha-seva/odoo,/path/am-src -d d_dev -i disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --test-tags /disha_membership,/disha_membership_card,/disha_site_content,/disha_event_notify --stop-after-init --db_host=localhost --db_user=odoo --db_password=odoo --without-demo=all` → last result 43 tests, 0 failures. Also verified IOF + DISHA modules installed together in one DB (89 tests, 0 failures).
 
 ## 8. Odoo 19 rules learned (avoid repeating)
+- If an installed addon's folder is missing from `addons_path`, Odoo skips it and every module depending on it (log: "some depends are not loaded ... skipped"); the Apps card shows "Upgrading" and views that reference its fields fail in the browser with `"model"."field" field is undefined`. Check `/etc/<odoo>.conf` addons_path and `select name,state from ir_module_module`. DISHA must not depend on another organisation's addon.
 - A new `depends` on a module that is not installed in the target DB makes Odoo skip the addon: its routes vanish (`/api/disha/admin/*` 404, web shows "Odoo has no admin API"). Keep optional integrations out of `depends`; check `field in Model._fields` instead.
 - `assertRaises` takes one exception class, not a tuple. `fields.Image` raises UserError on non-image data before constraints.
 - `res.partner` has no `mobile`; use `phone`.
@@ -139,6 +140,7 @@ Gallery is year-wise with year + category filters (`year-gallery.tsx`); Odoo `di
 
 ## Membership dashboard & member management (/admin)
 - Tabs *Membership dashboard* and *Members*. API: `GET /api/disha/admin/dashboard`, `GET|POST /api/disha/admin/members` (disha_admin_api; now depends on disha_membership_card).
-- Only members linked from DISHA applications (`disha.membership.application.member_id`) are listed or changed; IOF members in the shared `association.member` table are never exposed.
+- Only members linked from DISHA applications (`disha.membership.application.member_id`) are listed or changed; (IOF is not involved).
 - Counts are computed in Python (never search on non-stored computed fields such as `card_status`).
-- Member ops built: list/search/filter/CSV, resend ID card (`action_email_card`), edit contact (application + partner email/phone). Suspend / reactivate / cancel / renew: PENDING the stock `association_membership` method names (stock source not in this repo).
+- Member ops: list/search/filter/CSV, View panel (all application fields, masked ID numbers, subscription history), renew 1-5 years, suspend, reactivate, cancel, resend ID card, edit contact.
+- DISHA members now live in `disha.member` (own table, own sequence `disha.association.member` / `DISHA/<year>/00001`); `association_membership` is NOT used. Validity default 2 years (`disha_membership_card.validity_years`); verify links use `web.base.url` or `disha_membership_card.verify_base_url`.

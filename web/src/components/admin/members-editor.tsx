@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { REGIONS } from "@/lib/validation/membership";
 import { MemberDetail } from "./member-detail";
-import { api, btnGhost, btnPrimary, errText, field } from "./api";
+import { api, btnDanger, btnGhost, btnPrimary, errText, field } from "./api";
 
 type Member = { id: number; application_id: number; number: string; name: string; category: string; status: string; region: string; city: string; mobile: string; email: string; approved: string; expiry: string };
 const STATUSES = ["active", "suspended", "expired", "cancelled"];
@@ -17,6 +17,8 @@ export function MembersEditor() {
   const [page, setPage] = useState(0);
   const [edit, setEdit] = useState<Member | null>(null);
   const [view, setView] = useState<Member | null>(null);
+  const [tick, setTick] = useState(0);
+  const [years, setYears] = useState("1");
   const [msg, setMsg] = useState<{ m: string; bad: boolean } | null>(null);
   const flash = (m: string, bad = false) => { setMsg({ m, bad }); window.setTimeout(() => setMsg(null), 4000); };
 
@@ -25,14 +27,14 @@ export function MembersEditor() {
     if (q.trim()) query.q = q.trim();
     for (const [k, v] of Object.entries(f)) if (v) query[k] = v;
     const r = await api<{ members: Member[]; total: number }>("members", { query });
-    if (r.ok) { setRows(r.data.members); setTotal(r.data.total); } else flash(errText(r), true);
+    if (r.ok) { setRows(r.data.members); setTotal(r.data.total); setView((v) => (v ? r.data.members.find((x) => x.id === v.id) ?? v : v)); } else flash(errText(r), true);
   }, [q, f, page]);
   useEffect(() => { const t = window.setTimeout(() => void load(), 250); return () => window.clearTimeout(t); }, [load]);
 
   async function act(m: Member, body: Record<string, unknown>, ok: string) {
     const r = await api("members", { body: { id: m.id, ...body } });
     flash(r.ok ? ok : errText(r), !r.ok);
-    if (r.ok) { setEdit(null); void load(); }
+    if (r.ok) { setEdit(null); setTick((n) => n + 1); void load(); }
   }
   function exportCsv() {
     if (!rows) return;
@@ -86,9 +88,17 @@ export function MembersEditor() {
         <button className={btnGhost} disabled={(page + 1) * PAGE >= total} onClick={() => setPage(page + 1)}>Next</button>
       </div>
       {view && (
-        <MemberDetail appId={view.application_id} onClose={() => setView(null)}>
+        <MemberDetail appId={view.application_id} refresh={tick} onClose={() => setView(null)}>
+          <div className="flex w-full flex-wrap items-center gap-2">
+            <select aria-label="Renew for" value={years} onChange={(e) => setYears(e.target.value)} className={field + " max-w-[8rem]"}>
+              {["1", "2", "3", "5"].map((y) => <option key={y} value={y}>{y} year{y === "1" ? "" : "s"}</option>)}</select>
+            <button className={btnPrimary} disabled={view.status === "cancelled"} onClick={() => act(view, { op: "renew", years: Number(years) }, `Renewed for ${years} year(s)`)}>Renew</button>
+            {view.status === "active" && <button className={btnGhost} onClick={() => confirm(`Suspend ${view.name}?`) && act(view, { op: "suspend" }, "Member suspended")}>Suspend</button>}
+            {(view.status === "suspended" || view.status === "cancelled") && <button className={btnGhost} onClick={() => act(view, { op: "reactivate" }, "Member reactivated")}>Reactivate</button>}
+            {view.status !== "cancelled" && <button className={btnDanger} onClick={() => confirm(`Cancel the membership of ${view.name}? The ID card stops being valid.`) && act(view, { op: "cancel" }, "Membership cancelled")}>Cancel membership</button>}
+          </div>
           <button className={btnGhost} onClick={() => { setEdit(view); setView(null); }}>Edit contact</button>
-          <button className={btnGhost} onClick={() => confirm(`Email the ID card to ${view.email || "this member"}?`) && act(view, { op: "email_card" }, "ID card emailed")}>Resend card</button>
+          <button className={btnGhost} disabled={view.status === "cancelled"} onClick={() => confirm(`Email the ID card to ${view.email || "this member"}?`) && act(view, { op: "email_card" }, "ID card emailed")}>Resend card</button>
         </MemberDetail>
       )}
       {edit && <EditContact m={edit} onClose={() => setEdit(null)} onSave={(v) => act(edit, { op: "update_contact", ...v }, "Contact updated")} />}

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_disha_member_user,disha.member user,model_disha_member,disha_membership.group_disha_membership_user,1,0,0,0
+access_disha_member_manager,disha.member manager,model_disha_member,disha_membership.group_disha_membership_manager,1,1,1,1
+access_disha_member_term_user,disha.member.term user,model_disha_member_term,disha_membership.group_disha_membership_user,1,0,0,0
+access_disha_member_term_manager,disha.member.term manager,model_disha_member_term,disha_membership.group_disha_membership_manager,1,1,1,1

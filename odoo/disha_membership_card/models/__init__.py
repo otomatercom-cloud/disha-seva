@@ -1,1 +1,1 @@
-from . import registration, member
+from . import member, registration

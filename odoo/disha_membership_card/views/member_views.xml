@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_disha_member_list" model="ir.ui.view">
+        <field name="name">disha.member.list</field>
+        <field name="model">disha.member</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="card_status == 'cancelled'">
+                <field name="photo" widget="image" options="{'size': [32, 40]}"/>
+                <field name="member_number"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="ksa_region"/>
+                <field name="ksa_city" optional="show"/>
+                <field name="mobile"/>
+                <field name="email" optional="show"/>
+                <field name="expiry_date"/>
+                <field name="card_status" widget="badge" decoration-success="card_status == 'active'"
+                       decoration-warning="card_status == 'suspended'"
+                       decoration-danger="card_status in ('expired', 'cancelled')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_disha_member_form" model="ir.ui.view">
+        <field name="name">disha.member.form</field>
+        <field name="model">disha.member</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_renew_1" string="Renew 1 year" type="object" class="btn-primary"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'cancelled'"/>
+                    <button name="action_renew_2" string="Renew 2 years" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'cancelled'"/>
+                    <button name="action_suspend" string="Suspend" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status != 'active'"/>
+                    <button name="action_reactivate" string="Reactivate" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'active'"/>
+                    <button name="action_cancel" string="Cancel membership" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'cancelled'"
+                            confirm="Cancel this membership? The ID card will stop being valid."/>
+                    <button name="action_print_card" string="Print ID Card" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'cancelled'"/>
+                    <button name="action_email_card" string="Email ID Card" type="object"
+                            groups="disha_membership.group_disha_membership_manager" invisible="status == 'cancelled'"/>
+                    <field name="status" widget="statusbar" statusbar_visible="active,suspended,cancelled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Full name"/></h1>
+                        <h3><field name="member_number"/></h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="photo" widget="image" options="{'size': [90, 120]}"/>
+                            <field name="category"/>
+                            <field name="card_status"/>
+                            <field name="start_date"/>
+                            <field name="expiry_date"/>
+                        </group>
+                        <group>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="nationality"/>
+                            <field name="ksa_region"/>
+                            <field name="ksa_city"/>
+                            <field name="application_id" readonly="1"/>
+                            <field name="card_verify_url" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Subscription history">
+                            <field name="term_ids" readonly="1">
+                                <list>
+                                    <field name="kind"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="note"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_disha_member_search" model="ir.ui.view">
+        <field name="name">disha.member.search</field>
+        <field name="model">disha.member</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="member_number"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <filter name="f_active" string="Active" domain="[('status', '=', 'active')]"/>
+                <filter name="f_suspended" string="Suspended" domain="[('status', '=', 'suspended')]"/>
+                <filter name="f_cancelled" string="Cancelled" domain="[('status', '=', 'cancelled')]"/>
+                <filter name="f_expired" string="Expired" domain="[('status', '=', 'active'), ('expiry_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="f_exp30" string="Expiring in 30 days"
+                        domain="[('status', '=', 'active'), ('expiry_date', '&gt;=', context_today().strftime('%Y-%m-%d')), ('expiry_date', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter name="g_region" string="Province" context="{'group_by': 'ksa_region'}"/>
+                    <filter name="g_category" string="Category" context="{'group_by': 'category'}"/>
+                    <filter name="g_status" string="Status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_disha_members" model="ir.actions.act_window">
+        <field name="name">Members</field>
+        <field name="res_model">disha.member</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_disha_member_search"/>
+    </record>
+</odoo>

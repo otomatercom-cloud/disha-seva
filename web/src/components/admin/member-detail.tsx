@@ -7,11 +7,12 @@ type Detail = {
   id: number; name: string; state: string; category: string; photo: string; applied: string; approved: string; approved_by: string; duplicates: number; source: string;
   member: { id: number; number: string; status: string } | null;
   membership: Record<string, string> | null;
+  terms?: { kind: string; start: string; end: string; note: string; by: string }[];
   sections: { title: string; rows: [string, string][] }[];
 };
 
 /** Read-only review panel (like the Odoo form): photo, status, every field of the application, masked ID numbers. */
-export function MemberDetail({ appId, onClose, children }: { appId: number; onClose: () => void; children?: React.ReactNode }) {
+export function MemberDetail({ appId, onClose, children, refresh = 0 }: { appId: number; onClose: () => void; children?: React.ReactNode; refresh?: number }) {
   const [d, setD] = useState<Detail | null>(null);
   const [err, setErr] = useState("");
   useEffect(() => {
@@ -24,7 +25,7 @@ export function MemberDetail({ appId, onClose, children }: { appId: number; onCl
     const esc = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", esc);
     return () => { live = false; window.removeEventListener("keydown", esc); };
-  }, [appId, onClose]);
+  }, [appId, onClose, refresh]);
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/40" onClick={onClose}>
       <aside role="dialog" aria-modal="true" aria-label="Member details" onClick={(e) => e.stopPropagation()}
@@ -59,6 +60,15 @@ export function MemberDetail({ appId, onClose, children }: { appId: number; onCl
                 <dl className="grid grid-cols-[8rem_1fr] gap-y-1">
                   {Object.entries(d.membership).map(([k, v]) => <div key={k} className="contents"><dt className="capitalize text-slate-500">{k.replace("_", " ")}</dt><dd>{v || "-"}</dd></div>)}
                 </dl>
+              </section>
+            )}
+            {d.terms && d.terms.length > 0 && (
+              <section>
+                <h3 className="mb-2 border-b pb-1 text-sm font-bold uppercase tracking-wide text-slate-500">Subscription history</h3>
+                <table className="w-full text-sm">
+                  <thead className="text-left text-xs uppercase text-slate-400"><tr><th className="py-1">Type</th><th>From</th><th>To</th><th>By</th></tr></thead>
+                  <tbody>{d.terms.map((t, i) => <tr key={i} className="border-t border-slate-100"><td className="py-1 capitalize">{t.kind}</td><td>{t.start}</td><td>{t.end}</td><td>{t.by || "-"}</td></tr>)}</tbody>
+                </table>
               </section>
             )}
             {d.sections.map((s) => (

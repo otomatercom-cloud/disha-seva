@@ -43,19 +43,19 @@
                 <!-- details -->
                 <div style="position:absolute; top:16.5mm; left:29mm; right:5mm;">
                     <div style="font-size:11.5px; font-weight:bold; line-height:1.15; color:#0c1b5e;" t-esc="member.name"/>
-                    <div style="margin-top:1mm;"><span style="display:inline-block; background:#f26a0a; color:#ffffff; font-size:5.4px; font-weight:bold; letter-spacing:1px; padding:0.6mm 2mm; text-transform:uppercase;"><t t-esc="(('Associate' if member.membership_type_id.code == 'DISHA-ASC' else 'Member'))"/></span></div>
+                    <div style="margin-top:1mm;"><span style="display:inline-block; background:#f26a0a; color:#ffffff; font-size:5.4px; font-weight:bold; letter-spacing:1px; padding:0.6mm 2mm; text-transform:uppercase;"><t t-esc="('Associate' if member.category == 'associate' else 'Member')"/></span></div>
                     <div style="margin-top:2.4mm; font-size:5.2px; letter-spacing:0.8px; color:#6b7a90; text-transform:uppercase;">Member ID</div>
                     <div style="font-size:8.4px; font-weight:bold; letter-spacing:0.6px;" t-esc="member.member_number"/>
                     <div style="margin-top:1.6mm; font-size:5.2px; letter-spacing:0.8px; color:#6b7a90; text-transform:uppercase;">Area / Nationality</div>
                     <div style="font-size:7px; font-weight:bold;">
-                        <t t-esc="member.ksa_area or member.city or '-'"/><t t-if="member.nationality_id"> &#183; <t t-esc="member.nationality_id.name"/></t>
+                        <t t-esc="member.ksa_city or '-'"/><t t-if="member.nationality"> &#183; <t t-esc="member.nationality"/></t>
                     </div>
                 </div>
 
                 <!-- footer -->
                 <div style="position:absolute; left:0; right:0; bottom:0; height:6.5mm; background:#f1f4f9; border-top:0.2mm solid #d8e0ec;"/>
                 <div style="position:absolute; left:5mm; bottom:2.1mm; font-size:5.4px; color:#44546a; letter-spacing:0.3px;">
-                    Valid thru <b t-esc="member.current_membership_id.expiry_date.strftime('%d %b %Y') if member.current_membership_id.expiry_date else '-'"/>
+                    Valid thru <b t-esc="member.expiry_date.strftime('%d %b %Y') if member.expiry_date else '-'"/>
                 </div>
                 <div style="position:absolute; right:5mm; bottom:2.1mm; font-size:5.4px; color:#44546a;" t-esc="info['contact']"/>
             </div>
@@ -98,7 +98,7 @@
 
     <record id="action_report_disha_card" model="ir.actions.report">
         <field name="name">DISHA Membership Card</field>
-        <field name="model">association.member</field>
+        <field name="model">disha.member</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">disha_membership_card.report_disha_card</field>
         <field name="report_file">disha_membership_card.report_disha_card</field>
@@ -106,10 +106,4 @@
         <field name="paperformat_id" ref="paperformat_disha_card"/>
     </record>
 
-    <!-- Portal "Download as PDF" for DISHA members must use the DISHA card; everyone else keeps the stock link. -->
-    <template id="portal_disha_card_link" inherit_id="association_membership.portal_my_membership_card">
-        <xpath expr="//a[contains(@t-attf-href, 'report_membership_card')]" position="attributes">
-            <attribute name="t-attf-href">/report/pdf/#{'disha_membership_card.report_disha_card' if member.membership_type_id.code in ('DISHA-GEN', 'DISHA-ASC') else 'association_membership.report_membership_card'}/#{member.id}</attribute>
-        </xpath>
-    </template>
 </odoo>
