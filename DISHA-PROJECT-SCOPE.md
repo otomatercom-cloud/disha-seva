@@ -86,6 +86,7 @@ Install order: `association_membership, disha_membership, disha_membership_card,
   `python3 odoo-bin --addons-path=addons,/path/disha-seva/odoo,/path/am-src -d d_dev -i disha_membership,disha_membership_card,disha_site_content,disha_event_notify,disha_support_ticket --test-tags /disha_membership,/disha_membership_card,/disha_site_content,/disha_event_notify --stop-after-init --db_host=localhost --db_user=odoo --db_password=odoo --without-demo=all` → last result 43 tests, 0 failures. Also verified IOF + DISHA modules installed together in one DB (89 tests, 0 failures).
 
 ## 8. Odoo 19 rules learned (avoid repeating)
+- A new `depends` on a module that is not installed in the target DB makes Odoo skip the addon: its routes vanish (`/api/disha/admin/*` 404, web shows "Odoo has no admin API"). Keep optional integrations out of `depends`; check `field in Model._fields` instead.
 - `assertRaises` takes one exception class, not a tuple. `fields.Image` raises UserError on non-image data before constraints.
 - `res.partner` has no `mobile`; use `phone`.
 - Boolean search on a non-stored computed field: needs `search=` method and may arrive as `('in', [True])` as well as `('=', True)`.
