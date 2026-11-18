@@ -6,7 +6,7 @@
     "website": "https://otomater.com",
     "license": "OPL-1",
     "category": "Customizations",
-    "depends": ["disha_site_content", "disha_membership", "disha_membership_card"],
+    "depends": ["disha_site_content", "disha_membership"],
     "data": ["security/security.xml"],
     "installable": True,
 }

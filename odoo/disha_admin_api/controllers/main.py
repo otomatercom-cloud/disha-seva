@@ -367,7 +367,10 @@ class DishaAdminApi(http.Controller):
     # ---- membership dashboard + member management. Only members created from DISHA applications are exposed
     # (IOF members share the same association.member table and are never listed or touched here).
     def _disha_apps_with_member(self, env):
-        return env["disha.membership.application"].search([("member_id", "!=", False)], limit=20000)
+        App = env["disha.membership.application"]
+        if "member_id" not in App._fields:  # disha_membership_card not installed: no members to manage
+            return App.browse()
+        return App.search([("member_id", "!=", False)], limit=20000)
 
     def _member_status(self, member):
         return member.status or ""
